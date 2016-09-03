@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,37 +11,45 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/yellow"
-    tools:context="com.example.nocomment.snapchat.MainActivity">
+    tools:context="com.example.nocomment.snapchat.MainActivity"
+    android:exported="true">
+
+
 
     <ImageView
         android:layout_height="200dp"
         android:layout_width="match_parent"
         android:src="@drawable/ghost"
-       android:layout_marginTop="30dp"
-        android:nestedScrollingEnabled="true" />
+        android:layout_marginTop="30dp"
+        android:nestedScrollingEnabled="true"
+        android:id="@+id/imageView2" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/action_login"
         android:id="@+id/login"
         android:background="@color/pink"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="67dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:textSize="30dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/signup"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="31dp" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="signup"
+        android:text="@string/action_signup"
         android:id="@+id/signup"
         android:textColor="#FFFFFF"
         android:background="@color/blue"
         android:textSize="30dp"
+        android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>
+
+

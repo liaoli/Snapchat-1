@@ -6,4 +6,6 @@
     <color name="yellow">#FFFF00</color>
     <color name="pink">#ff00ff</color>
     <color name="blue">#00ccff</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
