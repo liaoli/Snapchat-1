@@ -6,4 +6,7 @@
     <color name="yellow">#FFFF00</color>
     <color name="pink">#ff00ff</color>
     <color name="blue">#00ccff</color>
+    <color name="azure">#38ACEC</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

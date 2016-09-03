@@ -1,12 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.example.nocomment.snapchat.ChatScreen">
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center"
+            android:text="Chat"
+            android:textColor="@color/azure"
+            android:textSize="22dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/back"
+            />
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/msgContainer"
+        android:layout_width="match_parent"
+        android:layout_height="413dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:divider="@null"/>
+
+    <LinearLayout
+        android:id="@+id/msgSender"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/moreOption"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/more_button"
+            android:button="@null" />
+
+        <EditText
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_toLeftOf="@+id/sendBtn"
+            android:hint="Send a chat"
+            android:layout_alignParentBottom="true" />
+        <Button
+            android:id="@+id/sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:text="Send"
+            android:textColor="@color/background_material_light" />
+    </LinearLayout>
+
+</LinearLayout>
