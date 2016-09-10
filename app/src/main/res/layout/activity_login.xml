@@ -33,18 +33,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="User Name/Phone/Email"
+            android:hint="User Name/Phone/Email"
             android:ems="10"
             android:layout_marginLeft="47dp"
             android:layout_marginStart="47dp"
-            android:id="@+id/editText2"
+            android:id="@+id/login_userName"
             android:layout_weight="1" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-           android:text="password"
+            android:hint="password"
+            android:id="@+id/login_password"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="47dp"
@@ -57,7 +58,7 @@
             android:textColor="#ffffff"
             android:textSize="30dp"
             android:id="@+id/button"
-         />
+            />
 
     </LinearLayout>
 
