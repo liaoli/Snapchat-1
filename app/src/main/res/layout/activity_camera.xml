@@ -9,42 +9,71 @@
         <SurfaceView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/camera"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="take picture"
-                android:id="@+id/btnButton"
-                android:textSize="10dp"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Front Camera"
-                android:id="@+id/btnFront"
-                android:textSize="10dp"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back Camera"
-                android:id="@+id/btnBack"
-                android:textSize="10dp"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="save"
-                android:id="@+id/btnSave"
-                android:visibility="gone"
-                />
-        </LinearLayout>
+            android:id="@+id/camera" />
+
+
+        <!--android:visibility="gone" />-->
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/btnTakePhoto"
+            android:background="@drawable/take_photo"
+            android:layout_gravity="center_horizontal|bottom" />
+
+
+
+        <Button
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:id="@+id/btnDelete"
+            android:background="@drawable/delete"
+            android:visibility="gone"
+            android:layout_gravity="left|top" />
+
+
+
+        <Button
+            android:layout_width="42dp"
+            android:layout_height="56dp"
+            android:id="@+id/btnFlash"
+            android:background="@drawable/flash"
+            android:visibility="gone"
+            android:layout_gravity="left|top" />
+
+
+        <Button
+            android:layout_width="51dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnFlashOff"
+            android:background="@drawable/flash_off"
+            android:layout_gravity="left|top" />
+
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:id="@+id/btnSave"
+            android:background="@drawable/save_photo"
+            android:visibility="gone"
+            android:layout_gravity="left|bottom" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="43dp"
+            android:id="@+id/btnSend"
+            android:background="@drawable/send"
+            android:visibility="gone"
+            android:layout_gravity="right|bottom" />
+
+        <Button
+            android:layout_width="67dp"
+            android:layout_height="71dp"
+            android:id="@+id/btnSwitch"
+            android:background="@drawable/switch_camera"
+            android:layout_gravity="center_horizontal|top" />
+
+
     </FrameLayout>
+
 </RelativeLayout>

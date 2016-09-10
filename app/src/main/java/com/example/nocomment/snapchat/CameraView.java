@@ -1,9 +1,9 @@
 package com.example.nocomment.snapchat;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,16 +28,23 @@ import java.util.Date;
 public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
 
     Button btnTakePhoto;
-    Button btnBackCamera;
-    Button btnFrontCamera;
+    Button btnSwitchCamera;
     Button btnSavePhoto;
+    Button btnDelete;
+    Button btnFlash;
+    Button btnFlashOff;
+    Button btnSend;
+    private boolean isBackCamera = false;
+
+
+
 
     SurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
     Camera camera;
     Camera.Parameters parameters;
 
-    Bitmap photo;
+    Bitmap photo, bitmap;
 
 
 
@@ -69,7 +76,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
 
-                parameters.setPreviewSize(surfaceView.getMeasuredWidth(), surfaceView.getMeasuredHeight());
+                parameters.setFlashMode("OFF");
+
+//                parameters.setPreviewSize(surfaceView.getMeasuredWidth(), surfaceView.getMeasuredHeight());
 
                 camera.setParameters(parameters);
 
@@ -90,7 +99,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     public void initialize() {
 
-        btnTakePhoto = (Button) findViewById(R.id.btnButton);
+        btnTakePhoto = (Button) findViewById(R.id.btnTakePhoto);
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,21 +107,56 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             }
         });
 
-        btnBackCamera = (Button) findViewById(R.id.btnBack);
-        btnBackCamera.setOnClickListener(new View.OnClickListener() {
+
+
+        btnSwitchCamera = (Button) findViewById(R.id.btnSwitch);
+        btnSwitchCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchToBackFacingCamera();
+                switchCamera();
             }
         });
 
-        btnFrontCamera = (Button) findViewById(R.id.btnFront);
-        btnFrontCamera.setOnClickListener(new View.OnClickListener() {
+
+
+        btnFlash = (Button) findViewById(R.id.btnFlash);
+        btnFlash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchToFrontFacingCamera();
+                switchFlash();
             }
         });
+
+
+        btnFlashOff = (Button) findViewById(R.id.btnFlashOff);
+        btnFlashOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFlash();
+            }
+        });
+
+
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartCamera();
+            }
+        });
+
+
+
+        btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
 
         btnSavePhoto = (Button) findViewById(R.id.btnSave);
         btnSavePhoto.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +165,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 downloadImagePublic();
             }
         });
+
     }
 
     public void takePhoto() {
@@ -132,44 +177,109 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         }, null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
-                photo = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                 camera.stopPreview();
+                int orientation;
+
+                if (isBackCamera) {
+
+                    orientation = 90;
+
+                }
+                else {
+
+                    orientation = 270;
+
+                }
+
+                photo = rotateImage(bitmap, orientation);
+
+
                 btnSavePhoto.setVisibility(View.VISIBLE);
+                btnDelete.setVisibility(View.VISIBLE);
+                btnSend.setVisibility(View.VISIBLE);
+                btnFlashOff.setVisibility(View.GONE);
+                btnFlash.setVisibility(View.GONE);
+                btnSwitchCamera.setVisibility(View.GONE);
+
             }
         });
     }
 
-    public void switchToBackFacingCamera() {
-        camera.stopPreview();
-        if (camera!=null){
-            camera.release();
-            camera=null;
-        }
-        camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-        camera.setDisplayOrientation(90);
-        try {
-            camera.setPreviewDisplay(surfaceHolder);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        camera.startPreview();
+
+
+    public static Bitmap rotateImage(Bitmap bitmap, int degree) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+
+        Matrix mtx = new Matrix();
+        mtx.postRotate(degree);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
 
-    public void switchToFrontFacingCamera() {
+
+
+
+    public void switchCamera() {
+
+        int cameraFacing = 0;
+
         camera.stopPreview();
+        isBackCamera = (!isBackCamera);
+
         if (camera!=null){
             camera.release();
-            camera=null;
+            camera = null;
         }
-        camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+
+        if(isBackCamera){
+            cameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK;
+        }
+
+        else {
+            cameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT;
+        }
+
+        camera = Camera.open(cameraFacing);
         camera.setDisplayOrientation(90);
+
         try {
             camera.setPreviewDisplay(surfaceHolder);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        catch (IOException e) {
+                e.printStackTrace();
+            }
+
         camera.startPreview();
+
     }
+
+
+    public void switchFlash() {
+
+        parameters = camera.getParameters();
+
+
+        if (parameters.getFlashMode() == "OFF") {
+//            parameters.setFlashMode("ON");
+//            camera.setParameters(parameters);
+            btnFlashOff.setVisibility(View.GONE);
+            btnFlash.setVisibility(View.VISIBLE);
+        }
+
+        else {
+//            parameters.setFlashMode("OFF");
+//            camera.setParameters(parameters);
+            btnFlashOff.setVisibility(View.VISIBLE);
+            btnFlash.setVisibility(View.GONE);
+        }
+
+
+    }
+
+
 
     public void downloadImagePublic() {
         File dir = new File(Environment.getExternalStoragePublicDirectory
@@ -200,6 +310,25 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         Toast.makeText(getApplicationContext(),"Successfully saved ",Toast.LENGTH_LONG).show();
     }
 
+
+
+    private void restartCamera() {
+
+        btnSavePhoto.setVisibility(View.GONE);
+        btnDelete.setVisibility(View.GONE);
+        btnSend.setVisibility(View.GONE);
+        btnFlashOff.setVisibility(View.VISIBLE);
+        btnFlash.setVisibility(View.GONE);
+        btnSwitchCamera.setVisibility(View.VISIBLE);
+
+        camera.startPreview();
+
+
+    }
+
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -208,7 +337,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+        camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
         camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
             @Override
             public void onFaceDetection(Camera.Face[] faces, Camera camera) {
@@ -231,10 +360,13 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
+//
+
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
 
     }
 
