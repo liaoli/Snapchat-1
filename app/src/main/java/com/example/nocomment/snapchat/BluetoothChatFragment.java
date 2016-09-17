@@ -299,32 +299,32 @@ public class BluetoothChatFragment extends Fragment{
         mChatService.connect(bluethDevice, secure);
     }
 
-    @Override
+
     public void onCreateOptionMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.bluetooth_chat_menu, menu);
 
     }
 
-    @Override
-    public boolean onOptionItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.secure_connect_scan:{
-                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-                return true;
-            }
-            case R.id.secure_insecure_scan:{
-                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-                return true;
-            }
-            case R.id.discoverable:{
-                ensureDiscoverable();
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onOptionItemSelected(MenuItem item){
+//        switch (item.getItemId()){
+//            case R.id.secure_connect_scan:{
+//                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+//                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+//                return true;
+//            }
+//            case R.id.secure_insecure_scan:{
+//                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+//                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+//                return true;
+//            }
+//            case R.id.discoverable:{
+//                ensureDiscoverable();
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     // confirm device is discoverable
     private void ensureDiscoverable(){
