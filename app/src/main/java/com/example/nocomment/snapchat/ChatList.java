@@ -8,15 +8,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class ChatList extends AppCompatActivity {
 
-    ImageView addNewChat;
-    ImageView backToChatList;
-    ImageView goToCma;
-
+    private ImageView addNewChat;
+    private ImageView backToChatList;
+    private ImageView goToCma;
+    private TextView chat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,19 @@ public class ChatList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(ChatList.this, Stories.class);
+                startActivity(intent);
+                ChatList.this.finish();
+            }
+        });
+
+        chat = (TextView) findViewById(R.id.chatTitle);
+
+        chat.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(ChatList.this, ChatScreen.class);
                 startActivity(intent);
                 ChatList.this.finish();
             }
@@ -74,6 +90,8 @@ public class ChatList extends AppCompatActivity {
 
         });
     }
+
+
 
 
 }
