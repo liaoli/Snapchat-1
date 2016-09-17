@@ -72,7 +72,7 @@ public class BluetoothChatFragment extends Fragment{
     private BluetoothService mChatService = null;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -86,15 +86,14 @@ public class BluetoothChatFragment extends Fragment{
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_chat_screen, container, false);
 
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         sendButton = (Button) view.findViewById(R.id.sendBtn);
         msgET = (EditText) view.findViewById(R.id.msg);
         msgContainer = (ListView) view.findViewById(R.id.msgContainer);
@@ -140,8 +139,9 @@ public class BluetoothChatFragment extends Fragment{
         msgContainer.setAdapter(chatAdapter);
 
         // initialize the compose filed with a listener for the return key
-        //msgET.setOnEditorActionListener(mWriteListener);
+        msgET.setOnEditorActionListener(mWriteListener);
 
+        //msgET.setOnEditorActionListener(mWriteListener);
         sendButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 View view = getView();
@@ -158,9 +158,6 @@ public class BluetoothChatFragment extends Fragment{
 
         // initialize the buffer for outgoing msg
         mOutStringBuffer = new StringBuffer("");
-
-
-
     }
 
     private void sendMessage(String message){
@@ -203,6 +200,19 @@ public class BluetoothChatFragment extends Fragment{
             return;
 
         actionBar.setSubtitle(subTitle);
+    }
+
+    private void setStatus(int resId){
+        FragmentActivity activity = getActivity();
+        if(null == activity){
+            return;
+        }
+        final ActionBar actionBar = activity.getActionBar();
+        if(null == actionBar){
+            return;
+        }
+
+        actionBar.setSubtitle(resId);
     }
 
     // handler that gets information back from the BluetoothChatService
@@ -291,14 +301,27 @@ public class BluetoothChatFragment extends Fragment{
 
     @Override
     public void onCreateOptionMenu(Menu menu, MenuInflater inflater){
-        //inflater.inflate();
+        inflater.inflate(R.menu.bluetooth_chat_menu, menu);
 
     }
 
     @Override
     public boolean onOptionItemSelected(MenuItem item){
         switch (item.getItemId()){
-            //
+            case R.id.secure_connect_scan:{
+                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+                return true;
+            }
+            case R.id.secure_insecure_scan:{
+                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+                return true;
+            }
+            case R.id.discoverable:{
+                ensureDiscoverable();
+                return true;
+            }
         }
         return false;
     }
