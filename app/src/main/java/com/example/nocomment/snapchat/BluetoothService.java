@@ -129,7 +129,7 @@ public class BluetoothService {
     }
 
     private class ConnectThread extends Thread{
-        
+
     }
 
 
