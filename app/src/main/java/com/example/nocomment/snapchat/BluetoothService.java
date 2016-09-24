@@ -90,7 +90,7 @@ public class BluetoothService {
         // cancel the accept thread because we only want to connect to one device
         if(mSecureAcceptThread != null){
             mSecureAcceptThread.cancel();
-            mSecureAcceptThread = null
+            mSecureAcceptThread = null;
         }
 
         if(mInsecureAcceptThread != null){
@@ -167,7 +167,7 @@ public class BluetoothService {
         // cancel the accept thread because we only want to connect to one device
         if(mSecureAcceptThread != null){
             mSecureAcceptThread.cancel();
-            mSecureAcceptThread = null
+            mSecureAcceptThread = null;
         }
 
         if(mInsecureAcceptThread != null){
@@ -262,7 +262,7 @@ public class BluetoothService {
             BluetoothSocket socket = null;
 
             // listen to the server socket if we are not connected
-            while(!mState != STATE_CONNECTED){
+            while(mState != STATE_CONNECTED){
                 try{
                     // blocking call
                     socket = mmServerSocker.accept();
@@ -349,7 +349,7 @@ public class BluetoothService {
                 } catch (IOException e2){
                     Log.e(TAG, "unable to close() "
                             + mSocketType
-                            + " during connection failure", e2)
+                            + " during connection failure", e2);
                 }
                 connectionFailed();
                 return;

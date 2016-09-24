@@ -281,7 +281,7 @@ public class BluetoothChatFragment extends Fragment{
                     setupChat();
                 } else {
                     Log.d(TAG, "BT not enabled");
-                    Toast.makeText(getActivity(), ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.bt_not_enabled,Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                 }
         }
