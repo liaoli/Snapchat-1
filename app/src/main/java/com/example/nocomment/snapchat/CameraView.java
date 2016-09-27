@@ -3,11 +3,13 @@ package com.example.nocomment.snapchat;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.SurfaceView;
@@ -22,7 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.Random;
 
 
 public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -36,6 +38,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Button btnSend;
     private boolean isBackCamera = false;
 
+    CustomView cv ;
+
+
+    private static final String TAG = "Sina's SurfaceView";
 
 
 
@@ -78,14 +84,12 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 parameters.setFlashMode("OFF");
 
-//                parameters.setPreviewSize(surfaceView.getMeasuredWidth(), surfaceView.getMeasuredHeight());
-
                 camera.setParameters(parameters);
 
-                if (parameters.getMaxNumDetectedFaces()>0){
-                    camera.startFaceDetection();
-                    Toast.makeText(getApplicationContext(),"Face detection started",Toast.LENGTH_LONG).show();
-                }
+//                if (parameters.getMaxNumDetectedFaces()>0){
+//                    camera.startFaceDetection();
+//                    Toast.makeText(getApplicationContext(),"Face detection started",Toast.LENGTH_LONG).show();
+//                }
                 return false;
             }
         });
@@ -262,16 +266,18 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         parameters = camera.getParameters();
 
 
+
+
         if (parameters.getFlashMode() == "OFF") {
-//            parameters.setFlashMode("ON");
-//            camera.setParameters(parameters);
+            parameters.setFlashMode("ON");
+            camera.setParameters(parameters);
             btnFlashOff.setVisibility(View.GONE);
             btnFlash.setVisibility(View.VISIBLE);
         }
 
         else {
-//            parameters.setFlashMode("OFF");
-//            camera.setParameters(parameters);
+            parameters.setFlashMode("OFF");
+            camera.setParameters(parameters);
             btnFlashOff.setVisibility(View.VISIBLE);
             btnFlash.setVisibility(View.GONE);
         }
@@ -307,9 +313,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             }
         }
         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(mediaFile)));
-        Toast.makeText(getApplicationContext(),"Successfully saved ",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Image Saved to Galley",Toast.LENGTH_LONG).show();
     }
-
 
 
     private void restartCamera() {
@@ -335,17 +340,22 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         camera.release();
     }
 
+
+
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
-            @Override
-            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
-                if (faces.length>0){
-                    System.out.println("@ Location X "+faces[0].rect.centerX()+ "Location Y: "+faces[0].rect.centerY());
-                }
-            }
-        });
+        isBackCamera = false;
+//        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
+//            @Override
+//            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
+//                if (faces.length>0){
+//                    System.out.println("@ Location X "+faces[0].rect.centerX()+ "Location Y: "+faces[0].rect.centerY());
+//                }
+//            }
+//        });
+
+
         parameters = camera.getParameters();
         camera.setParameters(parameters);
         camera.setDisplayOrientation(90);
@@ -360,14 +370,41 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
-//
-
+//        parameters = camera.getParameters();
+//        parameters.setPreviewSize(i1, i2);
+//        try {
+//            camera.setPreviewDisplay(surfaceHolder);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        camera.startPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+//        camera.stopPreview();
+//        camera.release();
+    }
 
+
+
+    private void tryDrawing(SurfaceHolder holder) {
+        Log.i(TAG, "Trying to draw...");
+
+        Canvas canvas = holder.lockCanvas();
+        if (canvas == null) {
+            Log.e(TAG, "Cannot draw onto the canvas as it's null");
+        } else {
+            drawMyStuff(canvas);
+            holder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private void drawMyStuff(final Canvas canvas) {
+        Random random = new Random();
+        Log.i(TAG, "Drawing...");
+        canvas.drawRGB(255, 128, 128);
     }
 
 

@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button loginButton;
     Button signupButton;
+    Button cameraButton;
 
 
     @Override
@@ -24,13 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
         loginButton = (Button)findViewById(R.id.login);
         signupButton = (Button) findViewById(R.id.signup);
+        cameraButton = (Button) findViewById(R.id.camera);
+
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // move from ActivityOne to ActivityTwo
+                Intent intent = new Intent(MainActivity.this,CameraView.class);
+                //  intent.putExtra("keyOne","Hello world");
+                startActivity(intent);
+            }
+        });
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // move from ActivityOne to ActivityTwo
-                Intent intent = new Intent(MainActivity.this,CameraView.class);
+                Intent intent = new Intent(MainActivity.this,Login.class);
               //  intent.putExtra("keyOne","Hello world");
                 startActivity(intent);
             }

@@ -15,14 +15,19 @@
     android:exported="true">
 
 
-
-    <ImageView
-        android:layout_height="200dp"
+    <Button
         android:layout_width="match_parent"
-        android:src="@drawable/ghost"
-        android:layout_marginTop="30dp"
-        android:nestedScrollingEnabled="true"
-        android:id="@+id/imageView2" />
+        android:layout_height="wrap_content"
+        android:text="Camera"
+        android:id="@+id/camera"
+        android:background="@color/pink"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp"
+        android:layout_above="@+id/login"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="31dp" />
+
 
     <Button
         android:layout_width="match_parent"
@@ -50,6 +55,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/ghost"
+        android:nestedScrollingEnabled="true"
+        android:id="@+id/imageView2"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
