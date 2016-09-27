@@ -2,84 +2,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <SurfaceView
+
+    <SurfaceView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
+
+    <FrameLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/camera" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/camera"
-            android:id="@+id/view" />
-
-
-        <!--android:visibility="gone" />-->
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:id="@+id/btnTakePhoto"
-            android:background="@drawable/take_photo"
-            android:layout_gravity="center_horizontal|bottom" />
-
-
-
-        <Button
-            android:layout_width="42dp"
-            android:layout_height="40dp"
-            android:id="@+id/btnDelete"
-            android:background="@drawable/delete"
-            android:visibility="gone"
-            android:layout_gravity="left|top" />
-
-
-
-        <Button
-            android:layout_width="42dp"
-            android:layout_height="56dp"
-            android:id="@+id/btnFlash"
-            android:background="@drawable/flash"
-            android:visibility="gone"
-            android:layout_gravity="left|top" />
-
-
-        <Button
-            android:layout_width="51dp"
-            android:layout_height="50dp"
-            android:id="@+id/btnFlashOff"
-            android:background="@drawable/flash_off"
-            android:layout_gravity="left|top" />
-
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:id="@+id/btnSave"
-            android:background="@drawable/save_photo"
-            android:visibility="gone"
-            android:layout_gravity="left|bottom" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="43dp"
-            android:id="@+id/btnSend"
-            android:background="@drawable/send"
-            android:visibility="gone"
-            android:layout_gravity="right|bottom" />
-
-        <Button
-            android:layout_width="67dp"
-            android:layout_height="71dp"
-            android:id="@+id/btnSwitch"
-            android:background="@drawable/switch_camera"
-            android:layout_gravity="center_horizontal|top" />
-
+            />
 
     </FrameLayout>
 
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/take_photo" />
+
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|top"
+            android:background="@drawable/delete"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/btnFlash"
+            android:layout_width="42dp"
+            android:layout_height="56dp"
+            android:layout_gravity="left|top"
+            android:background="@drawable/flash"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/btnFlashOff"
+            android:layout_width="51dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|top"
+            android:background="@drawable/flash_off" />
+
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|bottom"
+            android:background="@drawable/save_photo"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="45dp"
+            android:layout_height="43dp"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/send"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnSwitch"
+            android:layout_width="67dp"
+            android:layout_height="71dp"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/switch_camera" />
+
+
+    </FrameLayout>
 </RelativeLayout>

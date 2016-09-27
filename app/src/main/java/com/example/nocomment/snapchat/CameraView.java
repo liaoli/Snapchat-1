@@ -4,18 +4,24 @@ package com.example.nocomment.snapchat;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 
@@ -36,13 +43,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Button btnFlash;
     Button btnFlashOff;
     Button btnSend;
-    private boolean isBackCamera = false;
+    private static boolean isBackCamera = false;
 
-    CustomView cv ;
-
-
-    private static final String TAG = "Sina's SurfaceView";
-
+    ImageView imageView;
+    FrameLayout imageLayout;
 
 
     SurfaceView surfaceView;
@@ -71,8 +75,15 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_camera);
         surfaceView = (SurfaceView) findViewById(R.id.camera);
+
+
+        imageView = (ImageView) findViewById(R.id.imageView);
+        imageLayout = (FrameLayout) findViewById(R.id.imageLayout);
+
+
 
         surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -183,6 +194,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             public void onPictureTaken(byte[] bytes, Camera camera) {
                 bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                 camera.stopPreview();
+
+
                 int orientation;
 
                 if (isBackCamera) {
@@ -197,6 +210,12 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 }
 
                 photo = rotateImage(bitmap, orientation);
+                imageLayout.setDrawingCacheEnabled(true);
+
+                imageView.setImageBitmap(photo);
+
+
+
 
 
                 btnSavePhoto.setVisibility(View.VISIBLE);
@@ -205,6 +224,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 btnFlashOff.setVisibility(View.GONE);
                 btnFlash.setVisibility(View.GONE);
                 btnSwitchCamera.setVisibility(View.GONE);
+                surfaceView.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -222,6 +242,36 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
 
+
+
+    public void downloadImagePublic() {
+        File dir = new File(Environment.getExternalStoragePublicDirectory
+                (Environment.DIRECTORY_PICTURES),"noComment.SnapChat");
+        if (!dir.exists()){
+            dir.mkdir();
+        }
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile = new File(dir.getPath()+File.separator+"IMG_"+timestamp+".jpg");
+        FileOutputStream outputStream =null;
+        try {
+            outputStream = new FileOutputStream(mediaFile);
+            photo.compress(Bitmap.CompressFormat.JPEG,90,outputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            if (outputStream!=null){
+                try {
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(mediaFile)));
+        Toast.makeText(getApplicationContext(),"Image Saved to Galley",Toast.LENGTH_LONG).show();
+    }
 
 
 
@@ -287,36 +337,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-    public void downloadImagePublic() {
-        File dir = new File(Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_PICTURES),"noComment.SnapChat");
-        if (!dir.exists()){
-            dir.mkdir();
-        }
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile = new File(dir.getPath()+File.separator+"IMG_"+timestamp+".jpg");
-        FileOutputStream outputStream =null;
-        try {
-            outputStream = new FileOutputStream(mediaFile);
-            photo.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }finally {
-            if (outputStream!=null){
-                try {
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(mediaFile)));
-        Toast.makeText(getApplicationContext(),"Image Saved to Galley",Toast.LENGTH_LONG).show();
-    }
-
-
     private void restartCamera() {
 
         btnSavePhoto.setVisibility(View.GONE);
@@ -325,13 +345,15 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         btnFlashOff.setVisibility(View.VISIBLE);
         btnFlash.setVisibility(View.GONE);
         btnSwitchCamera.setVisibility(View.VISIBLE);
+        surfaceView.setVisibility(View.VISIBLE);
+        imageView.setImageBitmap(null);
+
 
         camera.startPreview();
 
 
+
     }
-
-
 
 
     @Override
@@ -344,8 +366,14 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        isBackCamera = false;
+
+        if (isBackCamera) {
+            camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+        }
+        else {
+            camera  = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+        }
+
 //        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
 //            @Override
 //            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
@@ -357,6 +385,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
         parameters = camera.getParameters();
+
+
         camera.setParameters(parameters);
         camera.setDisplayOrientation(90);
         try {
@@ -370,42 +400,36 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
-//        parameters = camera.getParameters();
-//        parameters.setPreviewSize(i1, i2);
-//        try {
-//            camera.setPreviewDisplay(surfaceHolder);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        camera.startPreview();
+
+
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
 //        camera.stopPreview();
-//        camera.release();
+        camera.release();
     }
 
 
 
-    private void tryDrawing(SurfaceHolder holder) {
-        Log.i(TAG, "Trying to draw...");
-
-        Canvas canvas = holder.lockCanvas();
-        if (canvas == null) {
-            Log.e(TAG, "Cannot draw onto the canvas as it's null");
-        } else {
-            drawMyStuff(canvas);
-            holder.unlockCanvasAndPost(canvas);
-        }
-    }
-
-    private void drawMyStuff(final Canvas canvas) {
-        Random random = new Random();
-        Log.i(TAG, "Drawing...");
-        canvas.drawRGB(255, 128, 128);
-    }
+//    private void tryDrawing(SurfaceHolder holder) {
+//        Log.i(TAG, "Trying to draw...");
+//
+//        Canvas canvas = holder.lockCanvas();
+//        if (canvas == null) {
+//            Log.e(TAG, "Cannot draw onto the canvas as it's null");
+//        } else {
+//            drawMyStuff(canvas);
+//            holder.unlockCanvasAndPost(canvas);
+//        }
+//    }
+//
+//    private void drawMyStuff(final Canvas canvas) {
+//        Random random = new Random();
+//        Log.i(TAG, "Drawing...");
+//        canvas.drawRGB(255, 128, 128);
+//    }
 
 
 

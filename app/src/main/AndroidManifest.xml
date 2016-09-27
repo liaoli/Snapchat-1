@@ -43,7 +43,7 @@
 
         </activity>
         <activity android:name=".Login" />
-        <activity android:name=".CameraView" />
+        <activity android:name=".CameraView" android:theme="@style/CameraTheme" />
         <activity android:name=".PhotoEdit" />
         <activity android:name=".ChatList" />
         <activity android:name=".ChatScreen" />
