@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
@@ -22,10 +23,10 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
  */
 public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
-    private List<ChatMsg> msgList;
+    private ArrayList<ChatMsg> msgList;
     private Activity context;
 
-    public ChatAdapter (Context context, List<ChatMsg> msg) {
+    public ChatAdapter (Context context, ArrayList<ChatMsg> msg) {
         super(context, R.layout.msg_right ,msg);
     }
 

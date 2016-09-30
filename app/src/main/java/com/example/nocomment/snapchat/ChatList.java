@@ -2,9 +2,12 @@ package com.example.nocomment.snapchat;
 
 import android.content.Intent;
 import android.media.Image;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,20 +20,31 @@ import java.util.List;
 public class ChatList extends AppCompatActivity {
 
     private ImageView addNewChat;
-    private ImageView backToChatList;
     private ImageView goToCma;
     private TextView chat;
+
+    // test user
+    private String user1 = "Jason", user2 = "Park";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
 
+
         addNewChat = (ImageView) findViewById(R.id.crtNewChat);
         goToCma = (ImageView) findViewById(R.id.backToCam);
+        chat = (TextView) findViewById(R.id.chatTitle);
+
+
         addNewChat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                jumpToFriendList();
+                Intent intent = new Intent();
+                intent.setClass(ChatList.this, FriendList.class);
+                startActivity(intent);
+                ChatList.this.finish();
             }
 
         });
@@ -48,7 +62,7 @@ public class ChatList extends AppCompatActivity {
             }
         });
 
-        chat = (TextView) findViewById(R.id.chatTitle);
+
 
         chat.setOnClickListener(new View.OnClickListener(){
 
@@ -61,34 +75,6 @@ public class ChatList extends AppCompatActivity {
             }
         });
 
-
-        final String [] friends={"Rose","Jack"};
-
-    }
-
-    public void jumpToFriendList(){
-        setContentView(R.layout.chat_friend_list);
-        backToChatList = (ImageView) findViewById(R.id.backToChatList);
-        backToChatList.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                jumpBackToChatList();
-            }
-
-        });
-
-    }
-
-    public void jumpBackToChatList(){
-        setContentView(R.layout.activity_chat_list);
-        addNewChat = (ImageView) findViewById(R.id.crtNewChat);
-        addNewChat.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                jumpToFriendList();
-            }
-
-        });
     }
 
 

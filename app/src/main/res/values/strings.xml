@@ -32,4 +32,10 @@
     <string name="secure_connect">secure connect</string>
     <string name="unsecure_connect">unsecure connect</string>
 
+    <!--friend list related-->
+    <string name="recent">Recent</string>
+
+    <!--chat-->
+    <string name="send">SEND</string>
+    <string name="send_a_chat">Send a Chat</string>
 </resources>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/activity_chat_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <RelativeLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ghost"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/chatUserName"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:paddingTop="250dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:src="@mipmap/snapchat"/>
+                <Button
+                    android:id="@+id/editName"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/darkgray"
+                    android:textSize="15dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:text="Edit Name"
+                    android:background="@color/transparent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/block"/>
+
+                <Button
+                    android:id="@+id/blockFriend"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/darkgray"
+                    android:textSize="15dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:text="Block"
+                    android:background="@color/transparent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/remove"/>
+
+                <Button
+                    android:id="@+id/removeFriend"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/darkgray"
+                    android:textSize="15dp"
+                    android:gravity="start"
+                    android:paddingLeft="10dp"
+                    android:background="@color/transparent"
+                    android:text="Remove" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+
+</android.support.v4.widget.DrawerLayout>

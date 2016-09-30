@@ -50,8 +50,9 @@ public class BluetoothService {
     public static final int STATE_CONNECTED = 3;
 
     // unique UUID for this application
-    private static final UUID MY_UUID_SECURE = UUID.fromString("  ");
-    private static final UUID MY_UUID_INSECURE = UUID.fromString(" ");
+    // temp UUID, have not yet been tested
+    private static final UUID MY_UUID_SECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("");
 
 
 
@@ -234,7 +235,7 @@ public class BluetoothService {
     private class AcceptThread extends Thread{
 
         // the local server socket
-        private final BluetoothServerSocket mmServerSocker;
+        private final BluetoothServerSocket mmServerSocket;
         private String mSocketType;
 
         public AcceptThread(boolean secure){
@@ -251,7 +252,7 @@ public class BluetoothService {
             } catch (IOException e){
                 Log.e(TAG, "Socket Type: " + mSocketType + "listen() failed", e);
             }
-            mmServerSocker = tmp;
+            mmServerSocket = tmp;
         }
 
         public void run(){
@@ -265,7 +266,7 @@ public class BluetoothService {
             while(mState != STATE_CONNECTED){
                 try{
                     // blocking call
-                    socket = mmServerSocker.accept();
+                    socket = mmServerSocket.accept();
                 } catch(IOException e){
                     Log.e(TAG, "Socket Type: " + mSocketType + "accept() failed", e);
                     break;
@@ -300,7 +301,7 @@ public class BluetoothService {
         public void cancel(){
             Log.d(TAG, "Socket Type" + mSocketType);
             try{
-                mmServerSocker.close();
+                mmServerSocket.close();
             } catch(IOException e){
                 Log.e(TAG, "Socket type" + mSocketType + "close() of server failed", e);
             }
@@ -403,13 +404,17 @@ public class BluetoothService {
         public void run(){
             Log.i(TAG, "Begin mConnectedThread");
             byte[] buffer = new byte[1024];
+            byte[] imgBuffer = new byte[1024*1024];
             int bytes;
+            int pos = 0;
 
             // keep listening to the inputstream while connected
             while(mState == STATE_CONNECTED){
                 try{
                     // read from the inputstream
                     bytes = mmInputStream.read(buffer);
+                    System.arraycopy(buffer, 0, imgBuffer, pos, bytes);
+                    pos += bytes;
 
                     // send the obtained bytes to the inputstream
                     mHandler.obtainMessage(Constants.MESSAGE_READ, bytes, -1, buffer)
