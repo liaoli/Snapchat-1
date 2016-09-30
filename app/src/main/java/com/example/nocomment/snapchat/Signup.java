@@ -1,16 +1,17 @@
 package com.example.nocomment.snapchat;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import android.os.Handler;
-import android.os.Message;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.FileOutputStream;
 public class Signup extends AppCompatActivity {
 
     EditText userName;
@@ -57,84 +58,44 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void run() {
                         String response = "";
-                        try {
 
                             if (!pwd.getText().toString().equals(compwd.getText().toString())) {
-
                                 response = "Password is not consistent";
                             } else {
+                                response = util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
+                                if (response.trim().equals("Create user success!")) {
+                                    FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
+                                    firebaseInstanceIDService.registerToken(userName.getText().toString());
 
-                                URL url = new URL("http://130.56.252.250/snapchat/index.php");
-                                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                connection.setReadTimeout(15000);
-                                connection.setConnectTimeout(15000);
-                                connection.setRequestMethod("POST");
-                                connection.setDoInput(true);
-                                connection.setDoOutput(true);
+                                    Context context = getApplicationContext();
 
-                                OutputStream os = connection.getOutputStream();
-                                BufferedWriter writer = new BufferedWriter(
-                                        new OutputStreamWriter(os, "UTF-8"));
+                                    FileOutputStream outputStream;
 
-                                HashMap<String, String> postDataParams = new HashMap<>();
-                                postDataParams.put("ID", userName.getText().toString());
-                                postDataParams.put("Email", email.getText().toString());
-                                postDataParams.put("Password", pwd.getText().toString());
+                                    try {
+                                        outputStream = openFileOutput("user", Context.MODE_PRIVATE);
+                                        outputStream.write(userName.getText().toString().getBytes());
+                                        outputStream.write("\n".getBytes());
+                                        outputStream.write(pwd.getText().toString().getBytes());
+                                        outputStream.close();
 
-                                writer.write(getPostDataString(postDataParams));
-
-                                writer.flush();
-                                writer.close();
-
-                                int responseCode = connection.getResponseCode();
-                                if (responseCode == HttpURLConnection.HTTP_OK) {
-                                    String line;
-                                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                                    while ((line = br.readLine()) != null) {
-                                        response += line;
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                } else {
-                                    response = "";
                                 }
-                            }
 
+                            }
                             Message message = new Message();
                             message.what = MESSAGE_RETRIEVED;
                             message.obj = response;
                             handler.sendMessage(message);
 
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        } catch (ProtocolException e) {
-                            e.printStackTrace();
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
-                    }
-                }).start();
-            }
-        });
-    }
-
-
-
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException{
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                    }).start();
+                }
+            });
         }
 
-        return result.toString();
-    }
 
-}
+
+
+    }

@@ -1,31 +1,18 @@
 package com.example.nocomment.snapchat;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import android.content.Intent;
+import java.io.FileOutputStream;
+
 public class Login extends AppCompatActivity {
 
     EditText userName;
@@ -41,7 +28,6 @@ public class Login extends AppCompatActivity {
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, message.obj.toString(), duration);
-
 
                 toast.show();
                 if(message.obj.toString().contains("login successfully")){
@@ -67,73 +53,40 @@ public class Login extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String response = "";
-                        try {
 
-                            HashMap<String, String> postDataParams = new HashMap<>();
-                            postDataParams.put("ID", userName.getText().toString());
-                            postDataParams.put("Password", pwd.getText().toString());
-                            String urlstr=getPostDataString(postDataParams);
+                            String response =util.login(userName.getText().toString(),pwd.getText().toString());
+                            if(response.trim().equals("login successfully")){
+                                FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
+                                firebaseInstanceIDService.registerToken(userName.getText().toString());
 
+                                Context context=getApplicationContext ();
 
+                                FileOutputStream outputStream;
 
-                            URL url = new URL("http://130.56.252.250/snapchat/index.php"+"?"+urlstr);
-                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                                try {
+                                    outputStream = openFileOutput("user", Context.MODE_PRIVATE);
+                                    outputStream.write(userName.getText().toString().getBytes());
+                                    outputStream.write("\n".getBytes());
+                                    outputStream.write(pwd.getText().toString().getBytes());
+                                    outputStream.close();
 
-                            connection.setRequestMethod("GET");
-
-
-                            connection.connect();
-
-                            int responseCode = connection.getResponseCode();
-                            if (responseCode == HttpURLConnection.HTTP_OK) {
-                                String line;
-                                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                                while ((line = br.readLine()) != null) {
-                                    response += line;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                                br.close();
-                            } else {
-                                response = "fail";
                             }
-
-
-
                             Message message = new Message();
                             message.what = MESSAGE_RETRIEVED;
                             message.obj = response;
                             handler.sendMessage(message);
 
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        } catch (ProtocolException e) {
-                            e.printStackTrace();
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }).start();
             }
+
         });
     }
 
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException{
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
 
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
 
-        return result.toString();
-    }
 
 }
