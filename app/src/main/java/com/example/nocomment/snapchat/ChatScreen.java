@@ -71,6 +71,9 @@ public class ChatScreen extends AppCompatActivity {
     private ImageView callBtn;
     private ImageView cameraBtn;
     private ImageView videoCallBtn;
+    private Button editName;
+    private Button blockFriend;
+    private Button removeFriend;
 
 
 
@@ -123,11 +126,11 @@ public class ChatScreen extends AppCompatActivity {
         callBtn = (ImageView) findViewById(R.id.phoneCall);
         cameraBtn = (ImageView) findViewById(R.id.cameraBtn);
         videoCallBtn = (ImageView) findViewById(R.id.videoCallBtn);
+        editName = (Button) findViewById(R.id.editName);
+        blockFriend = (Button) findViewById(R.id.blockFriend);
+        removeFriend = (Button) findViewById(R.id.removeFriend);
 
 
-//
-//
-//
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 

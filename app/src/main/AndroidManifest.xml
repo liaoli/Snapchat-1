@@ -48,6 +48,7 @@
         <activity android:name=".UserScreen" />
         <activity android:name=".Stories" />
         <activity android:name=".Discover" />
+        <activity android:name=".FriendList"/>
         <activity android:name=".Signup"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

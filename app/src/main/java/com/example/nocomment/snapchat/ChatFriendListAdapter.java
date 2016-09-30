@@ -29,26 +29,26 @@ public class ChatFriendListAdapter extends ArrayAdapter<String>{
     }
 
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        if(convertView == null){
-            convertView = mInflater.inflate(R.layout.chat_friend_list, parent, false);
-            }
-        TextView header = (TextView) convertView.findViewById(R.id.frientListHeader);
-        String label = getItem(position);
-
-        if(position == 0 || getItem(position-1).charAt(0) != label.charAt(0)){
-            header.setVisibility(View.VISIBLE);
-            header.setText(label.substring(0,1));
-        } else{
-            header.setVisibility(View.GONE);
-        }
-        return super.getView(position, convertView, parent);
-    }
-
-    private void setTopHeader(int position){
-
-    }
+//    @Override
+//    public View getView(int position, View convertView, ViewGroup parent){
+//        if(convertView == null){
+//            convertView = mInflater.inflate(R.layout.chat_friend_list, parent, false);
+//            }
+//        TextView header = (TextView) convertView.findViewById(R.id.frientListHeader);
+//        String label = getItem(position);
+//
+//        if(position == 0 || getItem(position-1).charAt(0) != label.charAt(0)){
+//            header.setVisibility(View.VISIBLE);
+//            header.setText(label.substring(0,1));
+//        } else{
+//            header.setVisibility(View.GONE);
+//        }
+//        return super.getView(position, convertView, parent);
+//    }
+//
+//    private void setTopHeader(int position){
+//
+//    }
 
 
 }

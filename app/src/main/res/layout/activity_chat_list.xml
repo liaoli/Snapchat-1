@@ -43,6 +43,7 @@
 
     </FrameLayout>
 
+
     <!--<ListView-->
         <!--android:id="@+id/chatList"-->
         <!--android:layout_width="fill_parent"-->
