@@ -42,9 +42,7 @@
         <activity android:name=".CameraScreen" />
         <activity android:name=".PhotoEdit" />
         <activity android:name=".ChatList" />
-        <activity android:name=".ChatScreen"
-            android:windowSoftInputMode="adjustResize|stateUnspecified"
-            />
+        <activity android:name=".ChatScreen" />
         <activity android:name=".UserScreen" />
         <activity android:name=".Stories" />
         <activity android:name=".Discover" />

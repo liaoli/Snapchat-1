@@ -11,10 +11,11 @@ public class ChatMsg {
     private String userID;
     private String time;
 
-    public ChatMsg(boolean isMe, String msg) {
+    public ChatMsg(boolean isMe, String msg, String time) {
 
         this.isMe = isMe;
         this.msg = msg;
+        this.time = time;
 
     }
 

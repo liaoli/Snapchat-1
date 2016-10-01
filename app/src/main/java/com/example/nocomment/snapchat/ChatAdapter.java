@@ -52,7 +52,9 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             ChatMsg chatMsg = getItem(position);
             
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsg);
+            TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfo);
             textView.setText(getItem(position).getMsg());
+            txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.me_msg_pic);
             
             
@@ -61,7 +63,9 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left, parent, false);
             
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsg);
+            TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfoRcv);
             textView.setText(getItem(position).getMsg());
+            txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.frd_msg_pic);
         }
         
@@ -76,21 +80,21 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
     }
 
 
-    private void GoToAlbum(){
-        Intent intent;
-        if(Build.VERSION.SDK_INT < 19){
-            intent = new Intent();
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-
-        }else{
-            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-
-
-
-        }
-    }
+//    private void GoToAlbum(){
+//        Intent intent;
+//        if(Build.VERSION.SDK_INT < 19){
+//            intent = new Intent();
+//            intent.setAction(Intent.ACTION_GET_CONTENT);
+//            intent.setType("image/*");
+//
+//        }else{
+//            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            intent.setType("image/*");
+//
+//
+//
+//        }
+//    }
 
 
 }
