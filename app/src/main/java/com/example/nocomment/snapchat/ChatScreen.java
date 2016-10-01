@@ -24,9 +24,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -36,6 +38,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,7 +55,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class ChatScreen extends AppCompatActivity {
+public class ChatScreen extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
     /* ************************
      * UI related declaration *
@@ -74,6 +77,11 @@ public class ChatScreen extends AppCompatActivity {
     private Button editName;
     private Button blockFriend;
     private Button removeFriend;
+    private LinearLayout chatSrnLayout;
+    private GestureDetector mGestureDetector;
+
+    private int verticalMinDistance = 10;
+    private int minVelocity = 0;
 
 
 
@@ -129,7 +137,11 @@ public class ChatScreen extends AppCompatActivity {
         editName = (Button) findViewById(R.id.editName);
         blockFriend = (Button) findViewById(R.id.blockFriend);
         removeFriend = (Button) findViewById(R.id.removeFriend);
+        chatSrnLayout = (LinearLayout) findViewById(R.id.chatSrnLayout);
 
+        mGestureDetector = new GestureDetector(this);
+
+        chatSrnLayout.setOnTouchListener(this);
 
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
@@ -156,6 +168,7 @@ public class ChatScreen extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(ChatScreen.this, ChatList.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 ChatScreen.this.finish();
             }
         });
@@ -291,7 +304,57 @@ public class ChatScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
 
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        return mGestureDetector.onTouchEvent(me);
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+        if (e1.getX() - e2.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
+            Intent intent = new Intent();
+            intent.setClass(ChatScreen.this, ChatList.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.from_right, R.anim.to_left);
+            ChatScreen.this.finish();
+
+        } else if (e2.getX() - e1.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
+
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
 
 
     private void openDialog(String title, String content) {

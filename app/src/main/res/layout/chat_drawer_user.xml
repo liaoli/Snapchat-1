@@ -7,10 +7,171 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <include
-        layout="@layout/activity_chat_screen"
+    <!--<include-->
+        <!--layout="@layout/activity_chat_screen"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/chatSrnLayout"
+        tools:context="com.example.nocomment.snapchat.ChatScreen">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/chatTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center"
+                android:text="Chat"
+                android:textColor="@color/azure"
+                android:textSize="22dp"
+                />
+
+            <ImageView
+                android:id="@+id/chatSetting"
+                android:layout_width="32dp"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center_vertical|left"
+                android:src="@drawable/chatsetting"/>
+
+            <ImageView
+                android:id="@+id/bluetoothBtn"
+                android:layout_width="32dp"
+                android:layout_height="44dp"
+                android:layout_marginRight="70dp"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/bluetoothunclicked"/>
+
+            <ImageView
+                android:id="@+id/chatBackToChatList"
+                android:layout_width="32dp"
+                android:layout_height="44dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/backtochat"
+                />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/btnLine"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
+
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/galleryBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/photo"/>
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"/>
+
+
+                <ImageView
+                    android:id="@+id/phoneCall"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/call" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"/>
+
+
+                <ImageView
+                    android:id="@+id/cameraBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/camera" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/videoCallBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/videocall"
+                    android:layout_gravity="left"
+                    />
+
+
+            </LinearLayout>
+
+
+            <!--<CheckBox-->
+            <!--android:id="@+id/moreOption"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/more_button"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:paddingLeft="5dp"-->
+            <!--android:paddingBottom="5dp"-->
+
+            <!--android:button="@null" />-->
+
+            <EditText
+                android:id="@+id/msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_above="@id/btnLine"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/sendBtn"
+                android:layout_toStartOf="@+id/sendBtn"
+                android:hint="@string/send_a_chat" />
+
+            <Button
+                android:id="@+id/sendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape"
+                android:text="@string/send"
+                android:layout_above="@id/btnLine"
+                android:layout_alignParentRight="true"
+
+                android:textColor="@color/background_material_light" />
+
+            <ListView
+                android:id="@+id/msgContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_above="@id/sendBtn"/>
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
 
 
     <RelativeLayout
