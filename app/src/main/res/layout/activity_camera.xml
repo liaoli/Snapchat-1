@@ -1,7 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -10,8 +13,7 @@
     <SurfaceView
         android:id="@+id/camera"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         />
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/imageLayout"
@@ -21,26 +23,131 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/drawingPad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="100dp"
+            android:background="#000000"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:maxLength="50"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="10pt"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/smiley"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
         <Button
             android:id="@+id/btnTakePhoto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal|bottom"
             android:background="@drawable/take_photo" />
 
 
         <Button
             android:id="@+id/btnDelete"
-            android:layout_width="42dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="left|top"
             android:background="@drawable/delete"
             android:visibility="gone" />
+
+
+
+        <Button
+            android:id="@+id/btnText"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|center"
+            android:background="@drawable/text"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnSmiley"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|center"
+            android:background="@drawable/smiley"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/btnDraw"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|top"
+            android:background="@drawable/draw"
+            android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/colors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:layout_gravity="right|top">
+
+        <Button
+            android:id="@+id/btnRed"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/red"
+            android:layout_marginTop="50dp" />
+
+        <Button
+            android:id="@+id/btnBlue"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/blue"
+            android:layout_marginTop="100dp" />
+
+        <Button
+            android:id="@+id/btnYellow"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/yellow"
+            android:layout_marginTop="150dp" />
+
+        <Button
+            android:id="@+id/btnGreen"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/green"
+            android:layout_marginTop="200dp" />
+
+        <Button
+            android:id="@+id/btnWhite"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/white"
+            android:layout_marginTop="250dp" />
+
+        <Button
+            android:id="@+id/btnBlack"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:background="@drawable/black"
+            android:layout_marginTop="300dp" />
+
+        </FrameLayout>
+
 
 
         <Button
@@ -62,16 +169,16 @@
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="left|bottom"
             android:background="@drawable/save_photo"
             android:visibility="gone" />
 
         <Button
             android:id="@+id/btnSend"
-            android:layout_width="45dp"
-            android:layout_height="43dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="right|bottom"
             android:background="@drawable/send"
             android:visibility="gone" />
@@ -82,6 +189,66 @@
             android:layout_height="71dp"
             android:layout_gravity="center_horizontal|top"
             android:background="@drawable/switch_camera" />
+
+
+
+        <FrameLayout
+            android:id="@+id/emojis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginTop="130dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/imageSmiling"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="150dp"
+                android:background="@drawable/smiling" />
+
+            <Button
+                android:id="@+id/imageLaughing"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="200dp"
+                android:background="@drawable/laughing" />
+
+            <Button
+                android:id="@+id/imageSad"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="250dp"
+                android:background="@drawable/sad" />
+
+            <Button
+                android:id="@+id/imageAngry"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/angry" />
+
+            <Button
+                android:id="@+id/imageTeasing"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="350dp"
+                android:background="@drawable/teasing" />
+
+            <Button
+                android:id="@+id/imageInLove"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="400dp"
+                android:background="@drawable/inlove" />
+        </FrameLayout>
 
 
     </FrameLayout>
