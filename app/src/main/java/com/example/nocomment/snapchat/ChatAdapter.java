@@ -40,6 +40,12 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             return 0;
     }
 
+    // prevent msgContainer clickable
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         
@@ -54,23 +60,19 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsg);
             TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfo);
             textView.setText(getItem(position).getMsg());
+            textView.setTextIsSelectable(true);
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.me_msg_pic);
-            
-            
-            
+
         }else {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left, parent, false);
             
-            TextView textView = (TextView) convertView.findViewById(R.id.txtMsg);
+            TextView textView = (TextView) convertView.findViewById(R.id.txtMsgRcv);
             TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfoRcv);
             textView.setText(getItem(position).getMsg());
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.frd_msg_pic);
         }
-        
-        TextView textViewInfo = (TextView) convertView.findViewById(R.id.txtInfo);
-        textViewInfo.setText(getItem(position).getTime());
         
         //from name
         //            TextView textViewMsgOwner = (TextView) convertView.findViewById(R.id.msgOwner);

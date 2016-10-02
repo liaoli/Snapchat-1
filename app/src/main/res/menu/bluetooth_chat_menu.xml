@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/secure_connect_scan"
-        android:icon="@drawable/bluetoothclicked"
-        android:showAsAction="ifRoom"
-        android:title="@string/secure_connect"
-        />
-    <item
-        android:id="@+id/secure_insecure_scan"
-        android:icon="@drawable/bluetoothunclicked"
-        android:showAsAction="never"
-        android:title="@string/unsecure_connect"
+    <!--<item-->
+        <!--android:id="@+id/secure_connect_scan"-->
+        <!--android:icon="@drawable/bluetoothclicked"-->
+        <!--android:showAsAction="ifRoom"-->
+        <!--android:title="@string/secure_connect"-->
+        <!--/>-->
+    <!--<item-->
+        <!--android:id="@+id/secure_insecure_scan"-->
+        <!--android:icon="@drawable/bluetoothunclicked"-->
+        <!--android:showAsAction="never"-->
+        <!--android:title="@string/unsecure_connect"-->
 
-        />
-    <item
-        android:id="@+id/discoverable"
-        android:showAsAction="never"
-        android:title="@string/discoverable"/>
+        <!--/>-->
+    <!--<item-->
+        <!--android:id="@+id/discoverable"-->
+        <!--android:showAsAction="never"-->
+        <!--android:title="@string/discoverable"/>-->
 </menu>

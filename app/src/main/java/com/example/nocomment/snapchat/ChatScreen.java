@@ -1,6 +1,7 @@
 package com.example.nocomment.snapchat;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -27,10 +28,12 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +46,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.google.android.gms.appindexing.Action;
@@ -55,6 +60,7 @@ import java.util.ArrayList;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ChatScreen extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
@@ -82,7 +88,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private GestureDetector mGestureDetector;
     private TextView chatTitle;
 
-    private TextView txtInfo;
+    private TextView date;
+
+    private Button discoverBtn;
+    private Button scanBtn;
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
@@ -109,7 +118,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     // intent request code
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+//    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
 
@@ -127,6 +136,181 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.chat_drawer_user);
 
+        setupChat();
+//        msgContainer = (ListView) findViewById(R.id.msgContainer);
+//        msgET = (EditText) findViewById(R.id.msg);
+//        sendButton = (Button) findViewById(R.id.sendBtn);
+//        backToChatList = (ImageView) findViewById(R.id.chatBackToChatList);
+//        bluetoothBtn = (ImageView) findViewById(R.id.bluetoothBtn);
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+//        drawerLeft = (ImageView) findViewById(R.id.chatSetting);
+//        galleryBtn = (ImageView) findViewById(R.id.galleryBtn);
+//        callBtn = (ImageView) findViewById(R.id.phoneCall);
+//        cameraBtn = (ImageView) findViewById(R.id.cameraBtn);
+//        videoCallBtn = (ImageView) findViewById(R.id.videoCallBtn);
+//        editName = (Button) findViewById(R.id.editName);
+//        blockFriend = (Button) findViewById(R.id.blockFriend);
+//        removeFriend = (Button) findViewById(R.id.removeFriend);
+//        chatSrnLayout = (LinearLayout) findViewById(R.id.chatSrnLayout);
+//        chatTitle = (TextView) findViewById(R.id.chatTitle);
+//        txtInfo = (TextView) findViewById(R.id.txtInfo);
+//        date = (TextView) findViewById(R.id.dateToday);
+//
+//        discoverBtn = (Button) findViewById(R.id.discoverableBtn);
+//        scanBtn = (Button) findViewById(R.id.scanBtn);
+//
+//        Calendar dateToday = Calendar.getInstance();
+//        String dateForToday = dateToday.get(Calendar.DAY_OF_WEEK) + "";
+//        date.setText("Today");
+//
+//        mGestureDetector = new GestureDetector(this);
+//
+//        chatSrnLayout.setOnTouchListener(this);
+//
+//        chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
+//        msgContainer.setAdapter(chatAdapter);
+//
+//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+////
+//
+//        if(!mBluetoothAdapter.isEnabled()){
+//            openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
+//        }
+//
+//        bluetoothBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//            }
+//        });
+//
+//        backToChatList.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(ChatScreen.this, ChatList.class);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.from_right, R.anim.to_left);
+//                ChatScreen.this.finish();
+//            }
+//        });
+//
+//
+//        sendButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String msg = msgET.getText().toString();
+//                if (TextUtils.isEmpty(msg)) {
+//                    return;
+//                }else{
+//                    if(!mBluetoothAdapter.isEnabled()){
+//                        openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
+//                    } else{
+//                        sendMsg(msg);
+//                        msgET.setText("");
+//                    }
+//                }
+//
+//            }
+//        });
+//
+//
+//
+////
+//        drawerLeft.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+//            }
+//        });
+//
+//        galleryBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//
+//        cameraBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+//            }
+//        });
+//
+//        discoverBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ensureDiscoverable();
+//
+//            }
+//        });
+//
+//        scanBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent serverIntent = new Intent(ChatScreen.this, DeviceListActivity.class);
+////                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+//                Intent intent = new Intent();
+//                intent.setClass(ChatScreen.this, DeviceListActivity.class);
+//                startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SECURE);
+//
+//
+//            }
+//        });
+
+
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+//        // initialize the bluetooth service to perform bluetooth connection
+//        mChatService = new BluetoothService(this, mHandler);
+//
+//        // initialize the buffer for outgoing msg
+//        mOutStringBuffer = new StringBuffer("");
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mChatService != null)
+            mChatService.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mChatService != null){
+            if(mChatService.getState() == BluetoothService.STATE_NONE);{
+                mChatService.start();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
+
+        } else{
+            if(mChatService == null)
+                setupChat();
+        }
+    }
+
+    private void setupChat(){
+
         msgContainer = (ListView) findViewById(R.id.msgContainer);
         msgET = (EditText) findViewById(R.id.msg);
         sendButton = (Button) findViewById(R.id.sendBtn);
@@ -143,29 +327,58 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         removeFriend = (Button) findViewById(R.id.removeFriend);
         chatSrnLayout = (LinearLayout) findViewById(R.id.chatSrnLayout);
         chatTitle = (TextView) findViewById(R.id.chatTitle);
-        txtInfo = (TextView) findViewById(R.id.txtInfo);
+        date = (TextView) findViewById(R.id.dateToday);
 
+        discoverBtn = (Button) findViewById(R.id.discoverableBtn);
+        scanBtn = (Button) findViewById(R.id.scanBtn);
+
+        // set up top textview to day of the week
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+        Calendar dateToday = Calendar.getInstance();
+        String dateForToday = dayFormat.format(dateToday.getTime());
+        date.setText("Today" + " / " + dateForToday);
+
+        // enable gesture for going back chat list
         mGestureDetector = new GestureDetector(this);
-
         chatSrnLayout.setOnTouchListener(this);
 
+        // initialize and set adapter for chat msg container
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//
 
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(!mBluetoothAdapter.isEnabled()){
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
+
+
+        // notify user to turn on the bluetooth
         if(!mBluetoothAdapter.isEnabled()){
             openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
         }
 
-        bluetoothBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            }
-        });
+//        // button to turn on bluetooth
+//        bluetoothBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if(mBluetoothAdapter.isEnabled()){
+//
+//                } else {
+//                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//                    bluetoothBtn.setBackgroundResource(R.drawable.bluetoothclicked);
+//
+//                    mChatService = new BluetoothService(ChatScreen.this, mHandler);
+//
+//                    // initialize the buffer for outgoing msg
+//                    mOutStringBuffer = new StringBuffer("");
+//                }
+//
+//            }
+//        });
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
 
@@ -198,14 +411,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
-        msgET.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
-            }
-        });
 
 
 //
@@ -233,81 +438,59 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
+        discoverBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mBluetoothAdapter.isEnabled())
+                    ensureDiscoverable();
 
+            }
+        });
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        scanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mBluetoothAdapter.isEnabled()){
+                    Intent intent = new Intent();
+                    intent.setClass(ChatScreen.this, DeviceListActivity.class);
+                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SECURE);
+                }
 
-        // initialize the bluetooth service to perform bluetooth connection
-        //mChatService = new BluetoothService(this, mHandler);
+            }
+        });
 
-        // initialize the buffer for outgoing msg
+        mChatService = new BluetoothService(ChatScreen.this, mHandler);
         mOutStringBuffer = new StringBuffer("");
+
+
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        if(mChatService != null)
-//            mChatService.stop();
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getCurrentFocus();
+
+        if (v != null &&
+                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+                v instanceof EditText &&
+                !v.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            v.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+                hideKeyboard(this);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-//        if(mChatService != null){
-//            if(mChatService.getState() == BluetoothService.STATE_NONE);{
-//                mChatService.start();
-//            }
-//        }
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if( requestCode == CAMERA_PIC_REQUEST)
-//        {
-//            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-//            ImageView image =(ImageView) findViewById(R.id.PhotoCaptured);
-//            image.setImageBitmap(thumbnail);
-//        }
-//        else
-//        {
-//            //Toast.makeText(demo.this, "Picture NOt taken", Toast.LENGTH_LONG);
-//        }
-//
-//    }
-
-
-//    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-//        @Override
-//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            //selectItem(position);
-//        }
-//    }
-//
-//    /** Swaps fragments in the main content view */
-//    private void selectItem(int position) {
-//        // Create a new fragment and specify the planet to show based on position
-//        Fragment fragment = new PlanetFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-//        fragment.setArguments(args);
-//
-//        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.content_frame, fragment)
-//                .commit();
-//
-//        // Highlight the selected item, update the title, and close the drawer
-//        mDrawerList.setItemChecked(position, true);
-//        setTitle(mPlanetTitles[position]);
-//        mDrawerLayout.closeDrawer(mDrawerList);
-//    }
 
     private void scroll() {
         msgContainer.setSelection(msgContainer.getCount() - 1);
@@ -315,19 +498,15 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     }
 
     private void sendMsg(String msg) {
-        Calendar rightNow = Calendar.getInstance();
-        String timeForNow = rightNow.get(Calendar.HOUR) + ":" + rightNow.get(Calendar.MINUTE);
-        ChatMsg chatMsg = new ChatMsg(true, msg, timeForNow);
-
-
+//        Calendar rightNow = Calendar.getInstance();
+//        String timeForNow = rightNow.get(Calendar.HOUR) + ":" + rightNow.get(Calendar.MINUTE);
+//        ChatMsg chatMsg = new ChatMsg(true, msg, timeForNow);
         byte[] send = msg.getBytes();
-        //mChatService.write(send);
-        //mOutStringBuffer.setLength(0);
-
-        chatAdapter.add(chatMsg);
-        scrollMyListViewToBottom();
-
-
+        mChatService.write(send);
+        mOutStringBuffer.setLength(0);
+//
+//        chatAdapter.add(chatMsg);
+//        scrollMyListViewToBottom();
     }
 
     @Override
@@ -382,7 +561,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         return false;
     }
 
-
+    // provide suggestion (warning) to the user
     private void openDialog(String title, String content) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
@@ -400,6 +579,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 .show();
     }
 
+    // each time new message is come or sent, the list view will be update to last line
     private void scrollMyListViewToBottom() {
         msgContainer.post(new Runnable() {
             @Override
@@ -410,80 +590,95 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         });
     }
 
-//    // confirm device is discoverable
-//    private void ensureDiscoverable(){
-//        if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
-//            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-//            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-//            startActivity(discoverableIntent);
-//        }
-//    }
-//
-//    // establish connection with other device
-//    private void connectDevice(Intent data, boolean secure){
-//        // get the device mac address
-//        String macAddress = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-//
-//        // get the bluetooth object
-//        BluetoothDevice bluethDevice = mBluetoothAdapter.getRemoteDevice(macAddress);
-//
-//        // attemp to connect to the device
-//        mChatService.connect(bluethDevice, secure);
-//    }
+    // confirm device is discoverable
+    private void ensureDiscoverable(){
+        if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            startActivity(discoverableIntent);
+        }
+    }
+
+    private boolean me = true;
+
+    // handler that gets information back from the BluetoothChatService
+    private final Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case Constants.MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1){
+                        case BluetoothService.STATE_CONNECTED:
+                            chatTitle.setText(R.string.title_connected);
+                            chatTitle.append(mConnectedDeviceName);
+                            //chatAdapter.clear();
+                            break;
+                        case BluetoothService.STATE_CONNECTING:
+                            chatTitle.setText(R.string.title_connecting);
+                            break;
+                        case BluetoothService.STATE_LISTEN:
+                            break;
+                        case BluetoothService.STATE_NONE:
+                            chatTitle.setText(R.string.title_not_connected);
+                            break;
+                    }
+                    break;
+                case Constants.MESSAGE_WRITE:
+                    byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    String writeMsg = new String (writeBuf);
+                    Calendar rightNow = Calendar.getInstance();
+                    String timeForNow = rightNow.get(Calendar.HOUR_OF_DAY) + ":" + rightNow.get(Calendar.MINUTE);
+                    ChatMsg sendMsg = new ChatMsg(me, writeMsg, timeForNow);
+                    chatAdapter.add(sendMsg);
+                    scrollMyListViewToBottom();
+                    break;
+                case Constants.MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    String readMsg = new String(readBuf, 0, msg.arg1);
+                    Calendar rightNowRcv = Calendar.getInstance();
+                    String timeForNowRcv = rightNowRcv.get(Calendar.HOUR) + ":" + rightNowRcv.get(Calendar.MINUTE);
+                    ChatMsg rcvMsg = new ChatMsg(!me, readMsg, timeForNowRcv);
+                    chatAdapter.add(rcvMsg);
+                    scrollMyListViewToBottom();
+                    break;
+                case Constants.MESSAGE_DEVICE_NAME:
+                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
+                    Toast.makeText(ChatScreen.this,
+                            "Connected to " + mConnectedDeviceName,
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case Constants.MESSAGE_TOAST:
+                        Toast.makeText(ChatScreen.this,
+                                msg.getData().getString(Constants.TOAST),
+                                Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (requestCode){
+            case REQUEST_CONNECT_DEVICE_SECURE:
+                if(resultCode == Activity.RESULT_OK){
+                    String address =
+                            data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+
+                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                    mChatService.connect(device);
+                }
+                break;
+            case REQUEST_ENABLE_BT:
+                if(resultCode == Activity.RESULT_OK){
+                    setupChat();
+                } else {
+                    openDialog("Warning", "Bluetooth is still not enabled");
+                }
+        }
+    }
 
 
-
-
-
-//    // handler that gets information back from the BluetoothChatService
-//    private final Handler mHandler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg){
-//            //FragmentActivity activity = getActivity();
-//            switch (msg.what){
-//                case Constants.MESSAGE_STATE_CHANGE:
-//                    switch (msg.arg1){
-//                        case BluetoothService.STATE_CONNECTED:
-//                            chatTitle.setText(R.string.title_connected);
-//                            chatTitle.append(mConnectedDeviceName);
-//                            chatAdapter.clear();
-//                            break;
-//                        case BluetoothService.STATE_CONNECTING:
-//                            chatTitle.setText(R.string.title_connecting);
-//                            break;
-//                        case BluetoothService.STATE_LISTEN:
-//                            break;
-//                        case BluetoothService.STATE_NONE:
-//                            chatTitle.setText(R.string.title_not_connected);
-//                            break;
-//                    }
-//                    break;
-//                case Constants.MESSAGE_WRITE:
-//                    byte[] writeBuf = (byte[]) msg.obj;
-//                    // construct a string from the buffer
-//                    String writeMsg = new String (writeBuf);
-//                    //chatAdapter.add(mConnectedDeviceName + ": " + writeMsg);
-//                    break;
-//                case Constants.MESSAGE_READ:
-//                    byte[] readBuf = (byte[]) msg.obj;
-//                    // construct a string from the valid bytes in the buffer
-//                    String readMsg = new String(readBuf, 0, msg.arg1);
-//                    //chatAdapter.add(mConnectedDeviceName + ": " + readMsg);
-//                    break;
-//                case Constants.MESSAGE_DEVICE_NAME:
-//                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-//                    if(null != ChatScreen.this){
-//                        Toast.makeText(ChatScreen.this, "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                case Constants.MESSAGE_TOAST:
-//                    if(null != ChatScreen.this){
-//                        Toast.makeText(ChatScreen.this, msg.getData().getString(Constants.TOAST), Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//            }
-//        }
-//    };
 
 
 }
