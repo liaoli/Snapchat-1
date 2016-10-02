@@ -74,7 +74,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private ChatAdapter chatAdapter;
     private TextView chat;
     private ImageView backToChatList;
-    private ImageView bluetoothBtn;
     private DrawerLayout mDrawerLayout;
     private ImageView drawerLeft;
     private ImageView galleryBtn;
@@ -90,8 +89,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     private TextView date;
 
-    private Button discoverBtn;
-    private Button scanBtn;
+    private ImageView discoverBtn;
+    private ImageView scanBtn;
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
@@ -137,144 +136,11 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         setContentView(R.layout.chat_drawer_user);
 
         setupChat();
-//        msgContainer = (ListView) findViewById(R.id.msgContainer);
-//        msgET = (EditText) findViewById(R.id.msg);
-//        sendButton = (Button) findViewById(R.id.sendBtn);
-//        backToChatList = (ImageView) findViewById(R.id.chatBackToChatList);
-//        bluetoothBtn = (ImageView) findViewById(R.id.bluetoothBtn);
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-//        drawerLeft = (ImageView) findViewById(R.id.chatSetting);
-//        galleryBtn = (ImageView) findViewById(R.id.galleryBtn);
-//        callBtn = (ImageView) findViewById(R.id.phoneCall);
-//        cameraBtn = (ImageView) findViewById(R.id.cameraBtn);
-//        videoCallBtn = (ImageView) findViewById(R.id.videoCallBtn);
-//        editName = (Button) findViewById(R.id.editName);
-//        blockFriend = (Button) findViewById(R.id.blockFriend);
-//        removeFriend = (Button) findViewById(R.id.removeFriend);
-//        chatSrnLayout = (LinearLayout) findViewById(R.id.chatSrnLayout);
-//        chatTitle = (TextView) findViewById(R.id.chatTitle);
-//        txtInfo = (TextView) findViewById(R.id.txtInfo);
-//        date = (TextView) findViewById(R.id.dateToday);
-//
-//        discoverBtn = (Button) findViewById(R.id.discoverableBtn);
-//        scanBtn = (Button) findViewById(R.id.scanBtn);
-//
-//        Calendar dateToday = Calendar.getInstance();
-//        String dateForToday = dateToday.get(Calendar.DAY_OF_WEEK) + "";
-//        date.setText("Today");
-//
-//        mGestureDetector = new GestureDetector(this);
-//
-//        chatSrnLayout.setOnTouchListener(this);
-//
-//        chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
-//        msgContainer.setAdapter(chatAdapter);
-//
-//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-////
-//
-//        if(!mBluetoothAdapter.isEnabled()){
-//            openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
-//        }
-//
-//        bluetoothBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//            }
-//        });
-//
-//        backToChatList.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(ChatScreen.this, ChatList.class);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.from_right, R.anim.to_left);
-//                ChatScreen.this.finish();
-//            }
-//        });
-//
-//
-//        sendButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String msg = msgET.getText().toString();
-//                if (TextUtils.isEmpty(msg)) {
-//                    return;
-//                }else{
-//                    if(!mBluetoothAdapter.isEnabled()){
-//                        openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
-//                    } else{
-//                        sendMsg(msg);
-//                        msgET.setText("");
-//                    }
-//                }
-//
-//            }
-//        });
-//
-//
-//
-////
-//        drawerLeft.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDrawerLayout.openDrawer(Gravity.LEFT);
-//            }
-//        });
-//
-//        galleryBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, 0);
-//            }
-//        });
-//
-//        cameraBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-//            }
-//        });
-//
-//        discoverBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ensureDiscoverable();
-//
-//            }
-//        });
-//
-//        scanBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent serverIntent = new Intent(ChatScreen.this, DeviceListActivity.class);
-////                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-//                Intent intent = new Intent();
-//                intent.setClass(ChatScreen.this, DeviceListActivity.class);
-//                startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SECURE);
-//
-//
-//            }
-//        });
-
-
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-//        // initialize the bluetooth service to perform bluetooth connection
-//        mChatService = new BluetoothService(this, mHandler);
-//
-//        // initialize the buffer for outgoing msg
-//        mOutStringBuffer = new StringBuffer("");
     }
 
 
@@ -315,7 +181,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         msgET = (EditText) findViewById(R.id.msg);
         sendButton = (Button) findViewById(R.id.sendBtn);
         backToChatList = (ImageView) findViewById(R.id.chatBackToChatList);
-        bluetoothBtn = (ImageView) findViewById(R.id.bluetoothBtn);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerLeft = (ImageView) findViewById(R.id.chatSetting);
         galleryBtn = (ImageView) findViewById(R.id.galleryBtn);
@@ -329,8 +194,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatTitle = (TextView) findViewById(R.id.chatTitle);
         date = (TextView) findViewById(R.id.dateToday);
 
-        discoverBtn = (Button) findViewById(R.id.discoverableBtn);
-        scanBtn = (Button) findViewById(R.id.scanBtn);
+        discoverBtn = (ImageView) findViewById(R.id.discoverableBtn);
+        scanBtn = (ImageView) findViewById(R.id.scanBtn);
 
         // set up top textview to day of the week
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
@@ -345,7 +210,9 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         // initialize and set adapter for chat msg container
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
-
+        openDialog("Notification", "By clicking Circle upper left corner can make device " +
+                "\"Discoverable\"" +
+                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(!mBluetoothAdapter.isEnabled()){
@@ -353,32 +220,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
 
-
-        // notify user to turn on the bluetooth
-        if(!mBluetoothAdapter.isEnabled()){
-            openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
-        }
-
-//        // button to turn on bluetooth
-//        bluetoothBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if(mBluetoothAdapter.isEnabled()){
-//
-//                } else {
-//                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//                    bluetoothBtn.setBackgroundResource(R.drawable.bluetoothclicked);
-//
-//                    mChatService = new BluetoothService(ChatScreen.this, mHandler);
-//
-//                    // initialize the buffer for outgoing msg
-//                    mOutStringBuffer = new StringBuffer("");
-//                }
-//
-//            }
-//        });
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
 

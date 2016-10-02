@@ -43,28 +43,24 @@
                 android:layout_gravity="center_vertical|left"
                 android:src="@drawable/chatsetting"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/discoverableBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="80dp"
-                android:text="D"
+                android:layout_marginLeft="65dp"
+                android:textSize="15dp"
+                android:src="@drawable/discoverable"
                 android:layout_gravity="center_vertical|left"
                 />
-            <Button
-                android:id="@+id/scanBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="120dp"
-                android:text="S"
-                android:layout_gravity="center_vertical|left"/>
+
 
             <ImageView
-                android:id="@+id/bluetoothBtn"
+                android:id="@+id/scanBtn"
                 android:layout_width="32dp"
                 android:layout_height="44dp"
                 android:layout_marginRight="70dp"
                 android:layout_gravity="center_vertical|right"
+                android:src="@drawable/scanbtn"
                 />
 
             <ImageView
@@ -186,8 +182,7 @@
                 android:divider="@null"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_above="@id/sendBtn"/>
+                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
