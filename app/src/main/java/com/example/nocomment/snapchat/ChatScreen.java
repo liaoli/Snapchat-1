@@ -108,7 +108,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     // local bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    // member object for the chat services
+    // member object for the bluetooth chat services
     private BluetoothService mChatService = null;
 
     private String mConnectedDeviceName = null;
@@ -117,8 +117,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     // intent request code
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-//    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    private static final int REQUEST_ENABLE_BT = 3;
+    private static final int REQUEST_ENABLE_BT = 2;
 
 
     /**
@@ -135,7 +134,13 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.chat_drawer_user);
 
-        setupChat();
+        // get bluetooth adapter
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
+//        if(mBluetoothAdapter == null){
+//            openDialog("Warning", "Your device does not have bluetooth supports");
+//        }
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -167,7 +172,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         super.onStart();
 
         if (!mBluetoothAdapter.isEnabled()) {
-            openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 
         } else{
             if(mChatService == null)
@@ -210,15 +216,25 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         // initialize and set adapter for chat msg container
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
+
+        // notification for the user
         openDialog("Notification", "By clicking Circle upper left corner can make device " +
                 "\"Discoverable\"" +
                 "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(!mBluetoothAdapter.isEnabled()){
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        }
+//        // get bluetooth adapter
+//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//
+//        // ask user to turn on the bluetooth
+//        if(!mBluetoothAdapter.isEnabled()){
+//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//        }
+//
+//        if(mBluetoothAdapter == null){
+//            openDialog("Warning", "Your device does not have bluetooth supports");
+//        }
+
 
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
@@ -241,20 +257,13 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 if (TextUtils.isEmpty(msg)) {
                     return;
                 }else{
-                    if(!mBluetoothAdapter.isEnabled()){
-                        openDialog("Warning", "Bluetooth is not on\nPlease turn it on");
-                    } else{
-                        sendMsg(msg);
-                        msgET.setText("");
-                    }
+                    sendMsg(msg);
+                    msgET.setText("");
                 }
-
             }
         });
 
-
-
-//
+        // open the drawer by click the button upper left corner
         drawerLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -339,15 +348,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     }
 
     private void sendMsg(String msg) {
-//        Calendar rightNow = Calendar.getInstance();
-//        String timeForNow = rightNow.get(Calendar.HOUR) + ":" + rightNow.get(Calendar.MINUTE);
-//        ChatMsg chatMsg = new ChatMsg(true, msg, timeForNow);
         byte[] send = msg.getBytes();
         mChatService.write(send);
         mOutStringBuffer.setLength(0);
-//
-//        chatAdapter.add(chatMsg);
-//        scrollMyListViewToBottom();
+
     }
 
     @Override
@@ -380,6 +384,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         return mGestureDetector.onTouchEvent(me);
     }
 
+    // set swipe gestures for moving from one activity to another
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
@@ -450,9 +455,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1){
                         case BluetoothService.STATE_CONNECTED:
-                            chatTitle.setText(R.string.title_connected);
-                            chatTitle.append(mConnectedDeviceName);
-                            //chatAdapter.clear();
+                            chatTitle.setText(mConnectedDeviceName);
+                            chatAdapter.clear();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             chatTitle.setText(R.string.title_connecting);
@@ -469,7 +473,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                     // construct a string from the buffer
                     String writeMsg = new String (writeBuf);
                     Calendar rightNow = Calendar.getInstance();
-                    String timeForNow = rightNow.get(Calendar.HOUR_OF_DAY) + ":" + rightNow.get(Calendar.MINUTE);
+                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+                    String timeForNow = sdf.format(rightNow.getTime());
                     ChatMsg sendMsg = new ChatMsg(me, writeMsg, timeForNow);
                     chatAdapter.add(sendMsg);
                     scrollMyListViewToBottom();
@@ -479,7 +484,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                     // construct a string from the valid bytes in the buffer
                     String readMsg = new String(readBuf, 0, msg.arg1);
                     Calendar rightNowRcv = Calendar.getInstance();
-                    String timeForNowRcv = rightNowRcv.get(Calendar.HOUR) + ":" + rightNowRcv.get(Calendar.MINUTE);
+                    SimpleDateFormat sdfRcv = new SimpleDateFormat("hh:mm a");
+                    String timeForNowRcv = sdfRcv.format(rightNowRcv.getTime());
                     ChatMsg rcvMsg = new ChatMsg(!me, readMsg, timeForNowRcv);
                     chatAdapter.add(rcvMsg);
                     scrollMyListViewToBottom();

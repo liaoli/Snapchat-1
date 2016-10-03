@@ -31,8 +31,12 @@ public class BluetoothService {
 
     private static final String TAG = "BluetoothChatService";
 
-    private static final String NAME_SECURE = "BluetoothChat";
+    private static final String NAME = "BluetoothChat";
 
+    // unique UUID for this application
+    // temp UUID, have not yet been tested
+    private static final UUID MY_UUID =
+            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
     // member field
     private final BluetoothAdapter mAdapter;
@@ -40,7 +44,7 @@ public class BluetoothService {
     private final Handler mHandler;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
-    private AcceptThread mSecureAcceptThread;
+    private AcceptThread mAcceptThread;
 
 
     // constants that indicate the current connection state
@@ -49,10 +53,7 @@ public class BluetoothService {
     public static final int STATE_CONNECTING = 2;
     public static final int STATE_CONNECTED = 3;
 
-    // unique UUID for this application
-    // temp UUID, have not yet been tested
-    private static final UUID MY_UUID_SECURE =
-            UUID.fromString("a87c0d0-afac-11de-8a39-0800200c9a66");
+
 
 
 
@@ -91,9 +92,9 @@ public class BluetoothService {
         setState(STATE_LISTEN);
 
         // start the thread to listen on a Bluetooth Server Socket
-        if(mSecureAcceptThread == null){
-            mSecureAcceptThread = new AcceptThread();
-            mSecureAcceptThread.start();
+        if(mAcceptThread == null){
+            mAcceptThread = new AcceptThread();
+            mAcceptThread.start();
         }
 
 
@@ -114,9 +115,9 @@ public class BluetoothService {
         }
 
         // cancel the accept thread because we only want to connect to one device
-        if(mSecureAcceptThread != null){
-            mSecureAcceptThread.cancel();
-            mSecureAcceptThread = null;
+        if(mAcceptThread != null){
+            mAcceptThread.cancel();
+            mAcceptThread = null;
         }
 
         setState(STATE_NONE);
@@ -162,9 +163,9 @@ public class BluetoothService {
         }
 
         // cancel the accept thread because we only want to connect to one device
-        if(mSecureAcceptThread != null){
-            mSecureAcceptThread.cancel();
-            mSecureAcceptThread = null;
+        if(mAcceptThread != null){
+            mAcceptThread.cancel();
+            mAcceptThread = null;
         }
 
         // start the thread to manage the connection and perform transmission
@@ -187,7 +188,8 @@ public class BluetoothService {
         ConnectedThread r;
         //synchronize a copy of the connected thread
         synchronized (this){
-            if(mState != STATE_CONNECTED) return;
+            if(mState != STATE_CONNECTED)
+                return;
             r = mConnectedThread;
         }
         //perform the write unsynchronize
@@ -211,7 +213,6 @@ public class BluetoothService {
 
     // indicate that the connection was lost and notify the UI activity
     private void connectionLost(){
-        setState(STATE_LISTEN);
 
         // send the failure message back to the activity
         Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
@@ -233,7 +234,7 @@ public class BluetoothService {
             BluetoothServerSocket tmp = null;
 
             try{
-                tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE, MY_UUID_SECURE);
+                tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
             } catch (IOException e){
                 Log.e(TAG, "Listen() failed", e);
             }
@@ -299,7 +300,7 @@ public class BluetoothService {
             BluetoothSocket tmp = null;
 
             try{
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
             } catch(IOException e){
                 Log.e(TAG, "create() failed", e);
             }
@@ -407,7 +408,6 @@ public class BluetoothService {
         public void write(byte[] out){
             try{
                 mmOutputStream.write(out);
-
                 // share the sent message back to the UI Activity
                 mHandler.obtainMessage(Constants.MESSAGE_WRITE,  -1, -1, out).sendToTarget();
             } catch (IOException e){

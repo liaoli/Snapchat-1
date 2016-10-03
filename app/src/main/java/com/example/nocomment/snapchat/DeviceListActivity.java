@@ -30,6 +30,7 @@ public class DeviceListActivity extends Activity {
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
     private BluetoothAdapter mBluethAdapter;
+    private TextView titleDeviceList;
 
     // new discovered devices
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
@@ -49,6 +50,7 @@ public class DeviceListActivity extends Activity {
 
         // initialize the button to perform device discovery
         Button scanButton = (Button) findViewById(R.id.buttonScan);
+        titleDeviceList = (TextView) findViewById(R.id.titleDeviceList);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 doDiscovery();
@@ -118,7 +120,7 @@ public class DeviceListActivity extends Activity {
 
         // indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
-        setTitle(R.string.scanning);
+        titleDeviceList.setText(R.string.scanning);
 
         // turn on subtitle for new devices
         findViewById(R.id.titleNewDevice).setVisibility(View.VISIBLE);
@@ -171,7 +173,7 @@ public class DeviceListActivity extends Activity {
                 }
             } else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
                 setProgressBarIndeterminateVisibility(false);
-                setTitle(R.string.select_device);
+                titleDeviceList.setText("Device List");
                 if(mNewDevicesArrayAdapter.getCount() == 0){
                     String noDevices = getResources().getText(R.string.none_found).toString();
                     mNewDevicesArrayAdapter.add(noDevices);

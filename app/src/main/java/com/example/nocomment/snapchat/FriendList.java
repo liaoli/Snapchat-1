@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by guomingsun on 30/9/16.
  */
@@ -20,6 +23,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
     private ListView friendList;
     private ImageView backToChatList;
+
+    private ChatFriendListAdapter frdAdapter;
 
     private GestureDetector mGestureDetector;
     private RelativeLayout friendLayout;
@@ -35,6 +40,12 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
         friendList = (ListView) findViewById(R.id.chatFriendList);
         backToChatList = (ImageView) findViewById(R.id.backToChatList);
         friendLayout = (RelativeLayout) findViewById(R.id.friendLayout);
+        ArrayList<String> a = new ArrayList<String>();
+        a.add("hello");
+        a.add("bye bye");
+
+        frdAdapter = new ChatFriendListAdapter(this, a);
+        friendList.setAdapter(frdAdapter);
 
         mGestureDetector = new GestureDetector(this);
 
@@ -50,6 +61,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                 FriendList.this.finish();
             }
         });
+
+
 
     }
 

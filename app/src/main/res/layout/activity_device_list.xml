@@ -5,14 +5,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/titlePairedDevice"
+        android:id="@+id/titleDeviceList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:paddingLeft="5dp"
-        android:text="@string/title_paired_devices"
-        android:textColor="#fff"
-        android:visibility="gone"/>
+        android:layout_height="30dp"
+        android:text="Device List"
+        android:textSize="20dp"
+        android:textColor="@color/azure"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/titleNewDevice"
@@ -30,6 +29,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:stackFromBottom="true"></ListView>
+
+    <TextView
+        android:id="@+id/titlePairedDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:paddingLeft="5dp"
+        android:text="@string/title_paired_devices"
+        android:textColor="#fff"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/pairedDevice"
