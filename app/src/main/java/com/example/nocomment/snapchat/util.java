@@ -51,8 +51,6 @@ public class util {
         String reponse="";
         try {
             URL url = new URL("http://130.56.252.250/snapchat/login.php");
-
-            connection=(HttpURLConnection) url.openConnection();
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(15000);
             connection.setConnectTimeout(15000);
@@ -152,7 +150,7 @@ public class util {
         try {
             URL url = new URL("http://130.56.252.250/snapchat/acceptRequest.php");
 
-            connection=(HttpURLConnection) url.openConnection();
+
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(15000);
             connection.setConnectTimeout(15000);
@@ -194,4 +192,104 @@ public class util {
         return reponse;
     }
 
+
+
+    public static String sendFriendRequest(String id,String friendID){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/notification.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("Body",friendID+" is sending a friend request");
+            postDataParams.put("Title", "Fridends request");
+            postDataParams.put("ID", id);
+            postDataParams.put("Type", "fridendshipRequest");
+            postDataParams.put("User", friendID);
+            postDataParams.put("Message", "Hi! "+id);
+            writer.write(util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+    public static String getUsers(String id){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/getUsers.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            writer.write(util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
 }
