@@ -250,26 +250,13 @@ public class util {
         HttpURLConnection connection=null;
         String reponse="";
         try {
-            URL url = new URL("http://130.56.252.250/snapchat/getUsers.php");
-
-
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setReadTimeout(15000);
-            connection.setConnectTimeout(15000);
-            connection.setRequestMethod("GET");
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-
-            OutputStream os = connection.getOutputStream();
-            writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
-            writer.write(util.getPostDataString(postDataParams));
-            writer.flush();
-            writer.close();
+            String paramater= util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
+            URL url = new URL(str);
 
+            connection = (HttpURLConnection) url.openConnection();
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
