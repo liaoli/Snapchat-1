@@ -36,8 +36,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="100dp"
-            android:background="#000000"
-            android:alpha="0.5"
+            android:background="#80000000"
             android:cursorVisible="false"
             android:focusable="true"
             android:maxLength="50"
@@ -96,9 +95,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right|top"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="75dp"
             android:background="@drawable/eraser"
             android:visibility="gone" />
+
 
     <FrameLayout
         android:id="@+id/colors"
@@ -202,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="175dp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -211,7 +211,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/smiling" />
 
             <Button
@@ -219,7 +220,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/laughing" />
 
             <Button
@@ -227,7 +229,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="250dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/sad" />
 
             <Button
@@ -235,7 +238,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="300dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/angry" />
 
             <Button
@@ -243,7 +247,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="350dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/teasing" />
 
             <Button
@@ -251,8 +256,65 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="400dp"
+                android:layout_marginTop="300dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/inlove" />
+
+            <Button
+                android:id="@+id/imageCry"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/cry" />
+
+            <Button
+                android:id="@+id/imageLaughCry"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/laugh_cry" />
+
+            <Button
+                android:id="@+id/imageCool"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="150dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/cool" />
+
+            <Button
+                android:id="@+id/imageKiss"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="200dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/kiss" />
+
+            <Button
+                android:id="@+id/imageShocked"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="250dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/shocked" />
+
+            <Button
+                android:id="@+id/imageShit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginTop="300dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/shit" />
+
+
         </FrameLayout>
 
 

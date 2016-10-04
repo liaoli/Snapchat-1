@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.test.suitebuilder.annotation.Suppress;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,10 +45,12 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     Button btnRed, btnBlack, btnWhite, btnBlue, btnYellow, btnGreen;
 
-    Button imageSmiling, imageLaughing, imageSad, imageAngry, imageTeasing, imageInLove;
+    Button imageSmiling, imageLaughing, imageSad, imageAngry, imageTeasing, imageInLove,
+            imageCry, imageLaughCry, imageShit, imageShocked, imageKiss, imageCool;
 
     ImageView imageSmilingView, imageLaughingView, imageSadView, imageAngryView,
-            imageTeasingView, imageInLoveView;
+            imageTeasingView, imageInLoveView, imageCryView, imageLaughCryView,
+            imageShitView, imageShockedView, imageKissView, imageCoolView;
 
     private static boolean isBackCamera = false;
 
@@ -100,6 +103,12 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         imageAngryView = new ImageView(getApplicationContext());
         imageTeasingView = new ImageView(getApplicationContext());
         imageInLoveView = new ImageView(getApplicationContext());
+        imageShockedView = new ImageView(getApplicationContext());
+        imageKissView = new ImageView(getApplicationContext());
+        imageShitView = new ImageView(getApplicationContext());
+        imageCoolView = new ImageView(getApplicationContext());
+        imageLaughCryView = new ImageView(getApplicationContext());
+        imageCryView = new ImageView(getApplicationContext());
 
 
 
@@ -123,9 +132,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         initialize();
     }
-
-
-
 
 
 
@@ -375,8 +381,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageSmilingView) == -1) {
                     imageSmilingView.setImageResource(R.drawable.smiling);
                     imageSmilingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageSmilingView.setX(150);
-                    imageSmilingView.setY(150);
+                    imageSmilingView.setX(300);
+                    imageSmilingView.setY(300);
                     imageLayout.addView(imageSmilingView);
                 }
 
@@ -420,8 +426,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageLaughingView) == -1) {
                     imageLaughingView.setImageResource(R.drawable.laughing);
                     imageLaughingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageLaughingView.setX(300);
-                    imageLaughingView.setY(150);
+                    imageLaughingView.setX(500);
+                    imageLaughingView.setY(300);
                     imageLayout.addView(imageLaughingView);
                 }
 
@@ -465,8 +471,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageSadView) == -1) {
                     imageSadView.setImageResource(R.drawable.sad);
                     imageSadView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageSadView.setX(450);
-                    imageSadView.setY(150);
+                    imageSadView.setX(700);
+                    imageSadView.setY(300);
                     imageLayout.addView(imageSadView);
                 }
 
@@ -509,8 +515,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageAngryView) == -1) {
                     imageAngryView.setImageResource(R.drawable.angry);
                     imageAngryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageAngryView.setX(150);
-                    imageAngryView.setY(300);
+                    imageAngryView.setX(300);
+                    imageAngryView.setY(500);
                     imageLayout.addView(imageAngryView);
                 }
 
@@ -553,8 +559,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageTeasingView) == -1) {
                     imageTeasingView.setImageResource(R.drawable.teasing);
                     imageTeasingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageTeasingView.setX(300);
-                    imageTeasingView.setY(300);
+                    imageTeasingView.setX(500);
+                    imageTeasingView.setY(500);
                     imageLayout.addView(imageTeasingView);
                 }
 
@@ -597,8 +603,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 if (imageLayout.indexOfChild(imageInLoveView) == -1) {
                     imageInLoveView.setImageResource(R.drawable.inlove);
                     imageInLoveView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageInLoveView.setX(450);
-                    imageInLoveView.setY(300);
+                    imageInLoveView.setX(700);
+                    imageInLoveView.setY(500);
                     imageLayout.addView(imageInLoveView);
                 }
 
@@ -634,7 +640,286 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         });
 
 
+
+
+        imageCry = (Button) findViewById(R.id.imageCry);
+        imageCry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageCryView) == -1) {
+                    imageCryView.setImageResource(R.drawable.cry);
+                    imageCryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageCryView.setX(300);
+                    imageCryView.setY(700);
+                    imageLayout.addView(imageCryView);
+                }
+
+                else {
+                    imageCryView.setImageBitmap(null);
+                    imageCryView.invalidate();
+                    imageLayout.removeView(imageCryView);
+                }
+
+
+            }
+        });
+
+
+        imageCryView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageCryView.setX(event.getRawX() + xPosition);
+                        imageCryView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
+        imageLaughCry = (Button) findViewById(R.id.imageLaughCry);
+        imageLaughCry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageLaughCryView) == -1) {
+                    imageLaughCryView.setImageResource(R.drawable.laugh_cry);
+                    imageLaughCryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageLaughCryView.setX(500);
+                    imageLaughCryView.setY(700);
+                    imageLayout.addView(imageLaughCryView);
+                }
+
+                else {
+                    imageLaughCryView.setImageBitmap(null);
+                    imageLaughCryView.invalidate();
+                    imageLayout.removeView(imageLaughCryView);
+                }
+
+
+            }
+        });
+
+
+        imageLaughCryView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageLaughCryView.setX(event.getRawX() + xPosition);
+                        imageLaughCryView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
+
+
+        imageCool = (Button) findViewById(R.id.imageCool);
+        imageCool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageCoolView) == -1) {
+                    imageCoolView.setImageResource(R.drawable.cool);
+                    imageCoolView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageCoolView.setX(700);
+                    imageCoolView.setY(700);
+                    imageLayout.addView(imageCoolView);
+                }
+
+                else {
+                    imageCoolView.setImageBitmap(null);
+                    imageCoolView.invalidate();
+                    imageLayout.removeView(imageCoolView);
+                }
+
+
+            }
+        });
+
+
+        imageCoolView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageCoolView.setX(event.getRawX() + xPosition);
+                        imageCoolView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
+
+        imageKiss = (Button) findViewById(R.id.imageKiss);
+        imageKiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageKissView) == -1) {
+                    imageKissView.setImageResource(R.drawable.kiss);
+                    imageKissView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageKissView.setX(300);
+                    imageKissView.setY(900);
+                    imageLayout.addView(imageKissView);
+                }
+
+                else {
+                    imageKissView.setImageBitmap(null);
+                    imageKissView.invalidate();
+                    imageLayout.removeView(imageKissView);
+                }
+
+
+            }
+        });
+
+
+        imageKissView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageKissView.setX(event.getRawX() + xPosition);
+                        imageKissView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
+
+
+        imageShocked = (Button) findViewById(R.id.imageShocked);
+        imageShocked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageShockedView) == -1) {
+                    imageShockedView.setImageResource(R.drawable.shocked);
+                    imageShockedView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageShockedView.setX(500);
+                    imageShockedView.setY(900);
+                    imageLayout.addView(imageShockedView);
+                }
+
+                else {
+                    imageShockedView.setImageBitmap(null);
+                    imageShockedView.invalidate();
+                    imageLayout.removeView(imageShockedView);
+                }
+
+
+            }
+        });
+
+
+        imageShockedView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageShockedView.setX(event.getRawX() + xPosition);
+                        imageShockedView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
+
+
+        imageShit = (Button) findViewById(R.id.imageShit);
+        imageShit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageShitView) == -1) {
+                    imageShitView.setImageResource(R.drawable.shit);
+                    imageShitView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageShitView.setX(700);
+                    imageShitView.setY(900);
+                    imageLayout.addView(imageShitView);
+                }
+
+                else {
+                    imageShitView.setImageBitmap(null);
+                    imageShitView.invalidate();
+                    imageLayout.removeView(imageShitView);
+                }
+
+
+            }
+        });
+
+
+        imageShitView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageShitView.setX(event.getRawX() + xPosition);
+                        imageShitView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
     }
+
 
     public void takePhoto() {
         camera.takePicture(new Camera.ShutterCallback() {
@@ -645,43 +930,21 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         }, null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
+                int orientation;
+
                 bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 camera.stopPreview();
 
-
-                int orientation;
-
                 if (isBackCamera) {
-
                     orientation = 90;
-
-                } else {
-
+                }
+                else {
                     orientation = 270;
-
                 }
 
                 photo = rotateImage(bitmap, orientation);
-
-
                 capturedImageView.setImageBitmap(photo);
-
-
-                btnTakePhoto.setVisibility(View.GONE);
-                btnSavePhoto.setVisibility(View.VISIBLE);
-                btnDelete.setVisibility(View.VISIBLE);
-                btnSend.setVisibility(View.VISIBLE);
-                btnFlashOff.setVisibility(View.GONE);
-                btnFlash.setVisibility(View.GONE);
-                btnSwitchCamera.setVisibility(View.GONE);
-                btnDraw.setVisibility(View.VISIBLE);
-                btnErase.setVisibility(View.VISIBLE);
-
-                btnText.setVisibility(View.VISIBLE);
-                btnSmiley.setVisibility(View.VISIBLE);
-
-                surfaceView.setVisibility(View.INVISIBLE);
-                drawingPad.setVisibility(View.VISIBLE);
+                takePhotoOptions();
 
             }
         });
@@ -740,7 +1003,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         if (isBackCamera) {
             cameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK;
-        } else {
+        }
+        else {
             cameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT;
         }
 
@@ -749,7 +1013,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         try {
             camera.setPreviewDisplay(surfaceHolder);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -763,13 +1028,13 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         parameters = camera.getParameters();
 
-
         if (parameters.getFlashMode() == "OFF") {
             parameters.setFlashMode("ON");
             camera.setParameters(parameters);
             btnFlashOff.setVisibility(View.GONE);
             btnFlash.setVisibility(View.VISIBLE);
-        } else {
+        }
+        else {
             parameters.setFlashMode("OFF");
             camera.setParameters(parameters);
             btnFlash.setVisibility(View.GONE);
@@ -781,55 +1046,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     private void restartCamera() {
 
-        btnSavePhoto.setVisibility(View.GONE);
-        btnDelete.setVisibility(View.GONE);
-        btnSend.setVisibility(View.GONE);
-        btnFlashOff.setVisibility(View.VISIBLE);
-        btnFlash.setVisibility(View.GONE);
-        btnSwitchCamera.setVisibility(View.VISIBLE);
-        btnTakePhoto.setVisibility(View.VISIBLE);
-        btnDraw.setVisibility(View.GONE);
-        btnErase.setVisibility(View.GONE);
-        btnText.setVisibility(View.GONE);
-        btnSmiley.setVisibility(View.GONE);
-
-        allColors.setVisibility(View.GONE);
-        allEmojis.setVisibility(View.GONE);
-
-
-        surfaceView.setVisibility(View.VISIBLE);
-        capturedImageView.setImageBitmap(null);
-        capturedImageView.invalidate();
-
-        if (drawing.draw) {
-            drawing.reset();
-        }
-
-        drawingPad.removeView(drawing);
-        drawingPad.setVisibility(View.GONE);
-        text.getText().clear();
-        text.setVisibility(View.GONE);
-        imageSmilingView.setImageBitmap(null);
-        imageSmilingView.invalidate();
-        imageAngryView.setImageBitmap(null);
-        imageAngryView.invalidate();
-        imageSadView.setImageBitmap(null);
-        imageSadView.invalidate();
-        imageLaughingView.setImageBitmap(null);
-        imageLaughingView.invalidate();
-        imageInLoveView.setImageBitmap(null);
-        imageInLoveView.invalidate();
-        imageTeasingView.setImageBitmap(null);
-        imageTeasingView.invalidate();
-        imageLayout.removeView(imageSmilingView);
-        imageLayout.removeView(imageAngryView);
-        imageLayout.removeView(imageSadView);
-        imageLayout.removeView(imageInLoveView);
-        imageLayout.removeView(imageLaughingView);
-        imageLayout.removeView(imageTeasingView);
-
-
-
+        restartCameraOptions();
+        removeSmileys();
         camera.startPreview();
 
     }
@@ -853,6 +1071,93 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
 
+
+
+    private void removeSmileys() {
+        imageSmilingView.setImageBitmap(null);
+        imageSmilingView.invalidate();
+        imageAngryView.setImageBitmap(null);
+        imageAngryView.invalidate();
+        imageSadView.setImageBitmap(null);
+        imageSadView.invalidate();
+        imageLaughingView.setImageBitmap(null);
+        imageLaughingView.invalidate();
+        imageInLoveView.setImageBitmap(null);
+        imageInLoveView.invalidate();
+        imageTeasingView.setImageBitmap(null);
+        imageTeasingView.invalidate();
+        imageCryView.setImageBitmap(null);
+        imageCryView.invalidate();
+        imageLaughCryView.setImageBitmap(null);
+        imageLaughCryView.invalidate();
+        imageShitView.setImageBitmap(null);
+        imageShitView.invalidate();
+        imageShockedView.setImageBitmap(null);
+        imageShockedView.invalidate();
+        imageCoolView.setImageBitmap(null);
+        imageCoolView.invalidate();
+        imageKissView.setImageBitmap(null);
+        imageKissView.invalidate();
+        imageLayout.removeView(imageSmilingView);
+        imageLayout.removeView(imageAngryView);
+        imageLayout.removeView(imageSadView);
+        imageLayout.removeView(imageInLoveView);
+        imageLayout.removeView(imageLaughingView);
+        imageLayout.removeView(imageTeasingView);
+        imageLayout.removeView(imageKissView);
+        imageLayout.removeView(imageShockedView);
+        imageLayout.removeView(imageCoolView);
+        imageLayout.removeView(imageShitView);
+        imageLayout.removeView(imageLaughCryView);
+        imageLayout.removeView(imageCryView);
+    }
+
+
+    private void takePhotoOptions() {
+        btnTakePhoto.setVisibility(View.GONE);
+        btnSavePhoto.setVisibility(View.VISIBLE);
+        btnDelete.setVisibility(View.VISIBLE);
+        btnSend.setVisibility(View.VISIBLE);
+        btnFlashOff.setVisibility(View.GONE);
+        btnFlash.setVisibility(View.GONE);
+        btnSwitchCamera.setVisibility(View.GONE);
+        btnDraw.setVisibility(View.VISIBLE);
+        btnErase.setVisibility(View.VISIBLE);
+        btnText.setVisibility(View.VISIBLE);
+        btnSmiley.setVisibility(View.VISIBLE);
+        surfaceView.setVisibility(View.GONE);
+        drawingPad.setVisibility(View.VISIBLE);
+    }
+
+
+    private void restartCameraOptions () {
+        btnSavePhoto.setVisibility(View.GONE);
+        btnDelete.setVisibility(View.GONE);
+        btnSend.setVisibility(View.GONE);
+        btnFlashOff.setVisibility(View.VISIBLE);
+        btnFlash.setVisibility(View.GONE);
+        btnSwitchCamera.setVisibility(View.VISIBLE);
+        btnTakePhoto.setVisibility(View.VISIBLE);
+        btnDraw.setVisibility(View.GONE);
+        btnErase.setVisibility(View.GONE);
+        btnText.setVisibility(View.GONE);
+        btnSmiley.setVisibility(View.GONE);
+        allColors.setVisibility(View.GONE);
+        allEmojis.setVisibility(View.GONE);
+
+        surfaceView.setVisibility(View.VISIBLE);
+        capturedImageView.setImageBitmap(null);
+        capturedImageView.invalidate();
+
+        if (drawing.draw) {
+            drawing.reset();
+        }
+
+        drawingPad.removeView(drawing);
+        drawingPad.setVisibility(View.GONE);
+        text.getText().clear();
+        text.setVisibility(View.GONE);
+    }
 
 
 
