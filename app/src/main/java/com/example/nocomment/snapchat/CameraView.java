@@ -21,10 +21,9 @@ import android.hardware.Camera;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import io.github.rockerhieu.emojiconize.Emojiconize;
+//import io.github.rockerhieu.emojiconize.Emojiconize;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,18 +40,21 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Button btnSavePhoto, btnDelete;
     Button btnFlash, btnFlashOff;
     Button btnSend;
-    Button btnDraw, btnSmiley, btnText;
+    Button btnDraw, btnErase, btnSmiley, btnText;
 
     Button btnRed, btnBlack, btnWhite, btnBlue, btnYellow, btnGreen;
 
     Button imageSmiling, imageLaughing, imageSad, imageAngry, imageTeasing, imageInLove;
+
+    ImageView imageSmilingView, imageLaughingView, imageSadView, imageAngryView,
+            imageTeasingView, imageInLoveView;
 
     private static boolean isBackCamera = false;
 
     SurfaceHolder surfaceHolder;
     SurfaceView surfaceView;
     FrameLayout imageLayout, drawingPad, allColors, allEmojis;
-    ImageView imageView, smiley;
+    ImageView capturedImageView;
     EditText text;
 
     Camera camera;
@@ -77,7 +79,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Emojiconize.activity(this).go();
+//        Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
@@ -85,14 +87,19 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         surfaceView = (SurfaceView) findViewById(R.id.camera);
         imageLayout = (FrameLayout) findViewById(R.id.imageLayout);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        capturedImageView = (ImageView) findViewById(R.id.imageView);
         drawingPad = (FrameLayout) findViewById(R.id.drawingPad);
         allColors = (FrameLayout) findViewById(R.id.colors);
         text = (EditText) findViewById(R.id.text);
         text.setSingleLine();
-        smiley = (ImageView) findViewById(R.id.smiley);
         allEmojis = (FrameLayout) findViewById(R.id.emojis);
 
+        imageSmilingView = new ImageView(getApplicationContext());
+        imageLaughingView = new ImageView(getApplicationContext());
+        imageSadView = new ImageView(getApplicationContext());
+        imageAngryView = new ImageView(getApplicationContext());
+        imageTeasingView = new ImageView(getApplicationContext());
+        imageInLoveView = new ImageView(getApplicationContext());
 
 
 
@@ -205,6 +212,21 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                     allColors.setVisibility(View.VISIBLE);
                 }
 
+            }
+
+        });
+
+
+        btnErase = (Button) findViewById(R.id.btnErase);
+        btnErase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (drawing.draw) {
+                    drawingPad.removeView(drawing);
+                    drawing.reset();
+                    allColors.setVisibility(View.GONE);
+                }
             }
 
         });
@@ -344,7 +366,30 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         });
 
 
-        smiley.setOnTouchListener(new View.OnTouchListener() {
+
+        imageSmiling = (Button) findViewById(R.id.imageSmiling);
+        imageSmiling.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (imageLayout.indexOfChild(imageSmilingView) == -1) {
+                    imageSmilingView.setImageResource(R.drawable.smiling);
+                    imageSmilingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageSmilingView.setX(150);
+                    imageSmilingView.setY(150);
+                    imageLayout.addView(imageSmilingView);
+                }
+
+                else {
+                    imageSmilingView.setImageBitmap(null);
+                    imageSmilingView.invalidate();
+                    imageLayout.removeView(imageSmilingView);
+                }
+            }
+        });
+
+
+        imageSmilingView.setOnTouchListener(new View.OnTouchListener() {
             float xPosition, yPosition;
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -354,8 +399,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                         yPosition = view.getY() - event.getRawY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        smiley.setX(event.getRawX() + xPosition);
-                        smiley.setY(event.getRawY() + yPosition);
+                        imageSmilingView.setX(event.getRawX() + xPosition);
+                        imageSmilingView.setY(event.getRawY() + yPosition);
                         break;
                     default:
                         return false;
@@ -366,29 +411,50 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-        imageSmiling = (Button) findViewById(R.id.imageSmiling);
-        imageSmiling.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                smiley.setImageResource(R.drawable.smiling);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
-            }
-        });
-
-
 
         imageLaughing = (Button) findViewById(R.id.imageLaughing);
         imageLaughing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                smiley.setImageResource(R.drawable.laughing);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
+                if (imageLayout.indexOfChild(imageLaughingView) == -1) {
+                    imageLaughingView.setImageResource(R.drawable.laughing);
+                    imageLaughingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageLaughingView.setX(300);
+                    imageLaughingView.setY(150);
+                    imageLayout.addView(imageLaughingView);
+                }
+
+                else {
+                    imageLaughingView.setImageBitmap(null);
+                    imageLaughingView.invalidate();
+                    imageLayout.removeView(imageLaughingView);
+                }
             }
         });
+
+
+        imageLaughingView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageLaughingView.setX(event.getRawX() + xPosition);
+                        imageLaughingView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
+
 
 
         imageSad = (Button) findViewById(R.id.imageSad);
@@ -396,11 +462,43 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onClick(View view) {
 
-                smiley.setImageResource(R.drawable.sad);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
+                if (imageLayout.indexOfChild(imageSadView) == -1) {
+                    imageSadView.setImageResource(R.drawable.sad);
+                    imageSadView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageSadView.setX(450);
+                    imageSadView.setY(150);
+                    imageLayout.addView(imageSadView);
+                }
+
+                else {
+                    imageSadView.setImageBitmap(null);
+                    imageSadView.invalidate();
+                    imageLayout.removeView(imageSadView);
+                }
             }
         });
+
+
+        imageSadView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageSadView.setX(event.getRawX() + xPosition);
+                        imageSadView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
 
 
         imageAngry = (Button) findViewById(R.id.imageAngry);
@@ -408,11 +506,43 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onClick(View view) {
 
-                smiley.setImageResource(R.drawable.angry);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
+                if (imageLayout.indexOfChild(imageAngryView) == -1) {
+                    imageAngryView.setImageResource(R.drawable.angry);
+                    imageAngryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageAngryView.setX(150);
+                    imageAngryView.setY(300);
+                    imageLayout.addView(imageAngryView);
+                }
+
+                else {
+                    imageAngryView.setImageBitmap(null);
+                    imageAngryView.invalidate();
+                    imageLayout.removeView(imageAngryView);
+                }
             }
         });
+
+
+        imageAngryView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageAngryView.setX(event.getRawX() + xPosition);
+                        imageAngryView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
 
 
         imageTeasing = (Button) findViewById(R.id.imageTeasing);
@@ -420,11 +550,43 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onClick(View view) {
 
-                smiley.setImageResource(R.drawable.teasing);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
+                if (imageLayout.indexOfChild(imageTeasingView) == -1) {
+                    imageTeasingView.setImageResource(R.drawable.teasing);
+                    imageTeasingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageTeasingView.setX(300);
+                    imageTeasingView.setY(300);
+                    imageLayout.addView(imageTeasingView);
+                }
+
+                else {
+                    imageTeasingView.setImageBitmap(null);
+                    imageTeasingView.invalidate();
+                    imageLayout.removeView(imageTeasingView);
+                }
             }
         });
+
+
+        imageTeasingView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageTeasingView.setX(event.getRawX() + xPosition);
+                        imageTeasingView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+
 
 
         imageInLove = (Button) findViewById(R.id.imageInLove);
@@ -432,13 +594,44 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onClick(View view) {
 
-                smiley.setImageResource(R.drawable.inlove);
-                smiley.setLayoutParams(new FrameLayout.LayoutParams(150,150));
-                smiley.setY(200);
+                if (imageLayout.indexOfChild(imageInLoveView) == -1) {
+                    imageInLoveView.setImageResource(R.drawable.inlove);
+                    imageInLoveView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
+                    imageInLoveView.setX(450);
+                    imageInLoveView.setY(300);
+                    imageLayout.addView(imageInLoveView);
+                }
+
+                else {
+                    imageInLoveView.setImageBitmap(null);
+                    imageInLoveView.invalidate();
+                    imageLayout.removeView(imageInLoveView);
+                }
+
+
             }
         });
 
 
+        imageInLoveView.setOnTouchListener(new View.OnTouchListener() {
+            float xPosition, yPosition;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xPosition = view.getX() - event.getRawX();
+                        yPosition = view.getY() - event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        imageInLoveView.setX(event.getRawX() + xPosition);
+                        imageInLoveView.setY(event.getRawY() + yPosition);
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
 
 
     }
@@ -471,7 +664,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 photo = rotateImage(bitmap, orientation);
 
 
-                imageView.setImageBitmap(photo);
+                capturedImageView.setImageBitmap(photo);
 
 
                 btnTakePhoto.setVisibility(View.GONE);
@@ -482,6 +675,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 btnFlash.setVisibility(View.GONE);
                 btnSwitchCamera.setVisibility(View.GONE);
                 btnDraw.setVisibility(View.VISIBLE);
+                btnErase.setVisibility(View.VISIBLE);
 
                 btnText.setVisibility(View.VISIBLE);
                 btnSmiley.setVisibility(View.VISIBLE);
@@ -595,6 +789,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         btnSwitchCamera.setVisibility(View.VISIBLE);
         btnTakePhoto.setVisibility(View.VISIBLE);
         btnDraw.setVisibility(View.GONE);
+        btnErase.setVisibility(View.GONE);
         btnText.setVisibility(View.GONE);
         btnSmiley.setVisibility(View.GONE);
 
@@ -603,8 +798,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
         surfaceView.setVisibility(View.VISIBLE);
-        imageView.setImageBitmap(null);
-        imageView.invalidate();
+        capturedImageView.setImageBitmap(null);
+        capturedImageView.invalidate();
 
         if (drawing.draw) {
             drawing.reset();
@@ -614,8 +809,25 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         drawingPad.setVisibility(View.GONE);
         text.getText().clear();
         text.setVisibility(View.GONE);
-        smiley.setImageBitmap(null);
-        smiley.invalidate();
+        imageSmilingView.setImageBitmap(null);
+        imageSmilingView.invalidate();
+        imageAngryView.setImageBitmap(null);
+        imageAngryView.invalidate();
+        imageSadView.setImageBitmap(null);
+        imageSadView.invalidate();
+        imageLaughingView.setImageBitmap(null);
+        imageLaughingView.invalidate();
+        imageInLoveView.setImageBitmap(null);
+        imageInLoveView.invalidate();
+        imageTeasingView.setImageBitmap(null);
+        imageTeasingView.invalidate();
+        imageLayout.removeView(imageSmilingView);
+        imageLayout.removeView(imageAngryView);
+        imageLayout.removeView(imageSadView);
+        imageLayout.removeView(imageInLoveView);
+        imageLayout.removeView(imageLaughingView);
+        imageLayout.removeView(imageTeasingView);
+
 
 
         camera.startPreview();

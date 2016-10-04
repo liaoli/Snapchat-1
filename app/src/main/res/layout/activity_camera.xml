@@ -37,6 +37,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="100dp"
             android:background="#000000"
+            android:alpha="0.5"
             android:cursorVisible="false"
             android:focusable="true"
             android:maxLength="50"
@@ -44,11 +45,6 @@
             android:textColor="#FFFFFF"
             android:textSize="10pt"
             android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/smiley"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </FrameLayout>
 
@@ -93,6 +89,15 @@
             android:layout_height="50dp"
             android:layout_gravity="right|top"
             android:background="@drawable/draw"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnErase"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|top"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/eraser"
             android:visibility="gone" />
 
     <FrameLayout
