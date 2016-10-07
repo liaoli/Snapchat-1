@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,7 +24,7 @@ public class FriendShipRequest extends AppCompatActivity {
     TextView message;
     Button accept;
     Button deny;
-
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,9 @@ public class FriendShipRequest extends AppCompatActivity {
 
         user.setText(userid);
         message.setText(messages);
+        Context context = getApplicationContext();
+        imageView=(ImageView)findViewById(R.id.imageView);
+        Picasso.with(context).load(messages).into(imageView);
 
         accept.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
