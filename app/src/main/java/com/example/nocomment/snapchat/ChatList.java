@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
-
 public class ChatList extends AppCompatActivity {
     ListView listView;
     ArrayAdapter adapter;
@@ -17,7 +15,7 @@ public class ChatList extends AppCompatActivity {
 
         final String [] friends={"Rose","Jack"};
         listView=(ListView)findViewById(R.id.listView);
-        adapter=new ArrayAdapter(ChatList.this, R.layout.listviewitem,friends);
+        adapter=new ArrayAdapter(ChatList.this, R.layout.shareimage,friends);
         listView.setAdapter(adapter);
     }
 }
