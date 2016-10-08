@@ -19,6 +19,8 @@ public class Login extends AppCompatActivity {
     EditText pwd;
     Button login;
 
+    static String userID;
+
     private final int MESSAGE_RETRIEVED = 0;
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
@@ -57,9 +59,10 @@ public class Login extends AppCompatActivity {
 
                             String response =util.login(userName.getText().toString(),pwd.getText().toString());
                             if(response.trim().equals("login successfully")){
+
                                 FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
                                 firebaseInstanceIDService.registerToken(userName.getText().toString());
-
+                                userID=userName.getText().toString();
                                 Context context=getApplicationContext ();
 
                                 FileOutputStream outputStream;
