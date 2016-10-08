@@ -52,16 +52,16 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
             HashMap<String, String> postDataParams= new HashMap<>();
             postDataParams.put("ID", userID);
             postDataParams.put("Token", getToken());
-            writer.write(Util.getPostDataString(postDataParams));
+            writer.write(util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
 
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
                 System.out.print(responseCode);
-            } else {
+        } else {
 
-            }
+        }
         } catch (MalformedURLException e) {
             e.printStackTrace();
 

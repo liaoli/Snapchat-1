@@ -38,11 +38,18 @@ public class ChatFriendListAdapter extends ArrayAdapter<String>{
         if(convertView == null){
             mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.item_in_friend_list, null);
-            ImageView addFriend = (ImageView) convertView.findViewById(R.id.addFriend);
-            TextView friend = (TextView) convertView.findViewById(R.id.userNameFriend);
+            final ImageView addFriend = (ImageView) convertView.findViewById(R.id.addFriend);
+            final TextView friend = (TextView) convertView.findViewById(R.id.userNameFriend);
             addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String response =Util.sendFriendRequest("a", friend.getText().toString());
+                            addFriend.setVisibility(View.GONE);
+                        }
+                    }).start();
 
                 }
             });

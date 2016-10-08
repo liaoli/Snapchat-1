@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 });
                 if(checkUserLogin()){
-                    Intent intent = new Intent(MainActivity.this,CameraView.class);
+                    Intent intent = new Intent(MainActivity.this,ChatList.class);
                     startActivity(intent);
                 }
             }

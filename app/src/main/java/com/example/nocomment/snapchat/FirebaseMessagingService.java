@@ -23,7 +23,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         switch (remoteMessage.getData().get("type")){
             case "fridendshipRequest":
                 fridendshipRequest(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
-
+                break;
+            case "sendMessage":
+                sendMessage(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
+                break;
+            case "sendImage":
+                sendImage(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
         }
        // showNotification(remoteMessage.getData().get("type"),remoteMessage.getData().get("message"));
     }
@@ -34,8 +39,22 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         intent.putExtra("message",message);
         startActivity(intent);
 
+    }
+    private void sendMessage(String userid,String message){
+//        Intent intent = new Intent(this, FriendRequest.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.putExtra("userid",userid);
+//        intent.putExtra("message",message);
+//        startActivity(intent);
 
+    }
 
+    private void sendImage(String userid,String message){
+        Intent intent = new Intent(this, FriendRequest.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("userid",userid);
+        intent.putExtra("message",message);
+        startActivity(intent);
 
     }
     //  show a notification for received message

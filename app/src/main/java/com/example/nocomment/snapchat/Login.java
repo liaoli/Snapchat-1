@@ -18,7 +18,7 @@ public class Login extends AppCompatActivity {
     EditText userName;
     EditText pwd;
     Button login;
-    static String userId = "";
+    static String myId = "";
 
     private final int MESSAGE_RETRIEVED = 0;
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
                 toast.show();
                 if(message.obj.toString().contains("login successfully")){
 
-                    Intent intent =new Intent(Login.this, CameraView.class);
+                    Intent intent =new Intent(Login.this, ChatList.class);
                     startActivity(intent);
                 }
 
@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
                             if(response.trim().equals("login successfully")){
                                 FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
                                 firebaseInstanceIDService.registerToken(userName.getText().toString());
-                                userId = userName.getText().toString();
+                                myId = userName.getText().toString();
 
                                 Context context=getApplicationContext ();
 
@@ -91,7 +91,7 @@ public class Login extends AppCompatActivity {
 
 
     public static String getLoggedinUserId() {
-        return userId;
+        return myId;
     }
 
 
