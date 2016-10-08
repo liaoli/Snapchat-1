@@ -110,7 +110,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String b = util.getUsers("a");
+                        String b = util.getUsers("b");
                         ArrayList<String> a = new ArrayList<String>();
                         a.add(b);
                         a.add("bye bye");
