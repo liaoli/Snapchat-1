@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:paddingBottom="5dp"
+
+    android:paddingTop="5dp">
+
+
+    <TextView
+        android:id="@+id/msgOwner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_gravity="start"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/txtInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/txtMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/me_msg_pic"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/black"
+            android:maxWidth="200dp" />
+
+
+    </LinearLayout>
+</LinearLayout>
+
+

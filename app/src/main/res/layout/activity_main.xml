@@ -16,6 +16,11 @@
 
 
     <Button
+        android:id="@+id/ChatListButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to ChatList"/>
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_login"

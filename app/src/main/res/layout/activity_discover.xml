@@ -3,10 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/discoverLayout"
     tools:context="com.example.nocomment.snapchat.Discover">
+
+    <FrameLayout
+        android:id="@+id/themeFrame"
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center"
+            android:text="Discover"
+            android:textColor="@color/purple"
+            android:textSize="22sp"
+            />
+
+        <ImageView
+            android:id="@+id/backToStories"
+            android:layout_width="32dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/discoverbacktostory"
+            />
+
+
+    </FrameLayout>
 
 </RelativeLayout>
