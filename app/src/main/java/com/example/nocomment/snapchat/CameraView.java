@@ -42,7 +42,7 @@ import java.util.Date;
 
 
 
-public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback{
+public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
 
     Button btnTakePhoto, btnSwitchCamera;
     Button btnSavePhoto, btnDelete;
@@ -74,9 +74,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     HandDrawing drawing;
 
-    private int verticalMinDistance = 10;
-    private int minVelocity = 0;
-    private GestureDetector mGestureDetector;
+
 
 
 
@@ -149,6 +147,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     public void initialize() {
 
 
+
         btnTakePhoto = (Button) findViewById(R.id.btnTakePhoto);
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +197,12 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                    }
+                }).start();
             }
         });
 
@@ -391,9 +395,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageSmilingView) == -1) {
                     imageSmilingView.setImageResource(R.drawable.smiling);
-                    imageSmilingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageSmilingView.setX(300);
-                    imageSmilingView.setY(300);
+                    imageSmilingView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageSmilingView.setX(100);
+                    imageSmilingView.setY(100);
                     imageLayout.addView(imageSmilingView);
                 }
 
@@ -436,9 +440,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageLaughingView) == -1) {
                     imageLaughingView.setImageResource(R.drawable.laughing);
-                    imageLaughingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageLaughingView.setX(500);
-                    imageLaughingView.setY(300);
+                    imageLaughingView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageLaughingView.setX(200);
+                    imageLaughingView.setY(100);
                     imageLayout.addView(imageLaughingView);
                 }
 
@@ -481,9 +485,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageSadView) == -1) {
                     imageSadView.setImageResource(R.drawable.sad);
-                    imageSadView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageSadView.setX(700);
-                    imageSadView.setY(300);
+                    imageSadView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageSadView.setX(300);
+                    imageSadView.setY(100);
                     imageLayout.addView(imageSadView);
                 }
 
@@ -525,9 +529,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageAngryView) == -1) {
                     imageAngryView.setImageResource(R.drawable.angry);
-                    imageAngryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageAngryView.setX(300);
-                    imageAngryView.setY(500);
+                    imageAngryView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageAngryView.setX(100);
+                    imageAngryView.setY(200);
                     imageLayout.addView(imageAngryView);
                 }
 
@@ -569,9 +573,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageTeasingView) == -1) {
                     imageTeasingView.setImageResource(R.drawable.teasing);
-                    imageTeasingView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageTeasingView.setX(500);
-                    imageTeasingView.setY(500);
+                    imageTeasingView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageTeasingView.setX(200);
+                    imageTeasingView.setY(200);
                     imageLayout.addView(imageTeasingView);
                 }
 
@@ -613,9 +617,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageInLoveView) == -1) {
                     imageInLoveView.setImageResource(R.drawable.inlove);
-                    imageInLoveView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageInLoveView.setX(700);
-                    imageInLoveView.setY(500);
+                    imageInLoveView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageInLoveView.setX(300);
+                    imageInLoveView.setY(200);
                     imageLayout.addView(imageInLoveView);
                 }
 
@@ -660,9 +664,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageCryView) == -1) {
                     imageCryView.setImageResource(R.drawable.cry);
-                    imageCryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageCryView.setX(300);
-                    imageCryView.setY(700);
+                    imageCryView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageCryView.setX(100);
+                    imageCryView.setY(300);
                     imageLayout.addView(imageCryView);
                 }
 
@@ -705,9 +709,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageLaughCryView) == -1) {
                     imageLaughCryView.setImageResource(R.drawable.laugh_cry);
-                    imageLaughCryView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageLaughCryView.setX(500);
-                    imageLaughCryView.setY(700);
+                    imageLaughCryView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageLaughCryView.setX(200);
+                    imageLaughCryView.setY(300);
                     imageLayout.addView(imageLaughCryView);
                 }
 
@@ -752,9 +756,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageCoolView) == -1) {
                     imageCoolView.setImageResource(R.drawable.cool);
-                    imageCoolView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageCoolView.setX(700);
-                    imageCoolView.setY(700);
+                    imageCoolView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageCoolView.setX(300);
+                    imageCoolView.setY(300);
                     imageLayout.addView(imageCoolView);
                 }
 
@@ -798,9 +802,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageKissView) == -1) {
                     imageKissView.setImageResource(R.drawable.kiss);
-                    imageKissView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageKissView.setX(300);
-                    imageKissView.setY(900);
+                    imageKissView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageKissView.setX(100);
+                    imageKissView.setY(400);
                     imageLayout.addView(imageKissView);
                 }
 
@@ -845,9 +849,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageShockedView) == -1) {
                     imageShockedView.setImageResource(R.drawable.shocked);
-                    imageShockedView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageShockedView.setX(500);
-                    imageShockedView.setY(900);
+                    imageShockedView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageShockedView.setX(200);
+                    imageShockedView.setY(400);
                     imageLayout.addView(imageShockedView);
                 }
 
@@ -892,9 +896,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 if (imageLayout.indexOfChild(imageShitView) == -1) {
                     imageShitView.setImageResource(R.drawable.shit);
-                    imageShitView.setLayoutParams(new ViewGroup.LayoutParams(150,150));
-                    imageShitView.setX(700);
-                    imageShitView.setY(900);
+                    imageShitView.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                    imageShitView.setX(300);
+                    imageShitView.setY(400);
                     imageLayout.addView(imageShitView);
                 }
 
@@ -1056,18 +1060,21 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         parameters = camera.getParameters();
 
-        if (parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_OFF)) {
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
-            camera.setParameters(parameters);
-            btnFlashOff.setVisibility(View.GONE);
-            btnFlash.setVisibility(View.VISIBLE);
+        if (parameters.getSupportedFlashModes() != null) {
+            if (parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_OFF)) {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+                camera.setParameters(parameters);
+                btnFlashOff.setVisibility(View.GONE);
+                btnFlash.setVisibility(View.VISIBLE);
+            }
+            else {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(parameters);
+                btnFlash.setVisibility(View.GONE);
+                btnFlashOff.setVisibility(View.VISIBLE);
+            }
         }
-        else {
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            camera.setParameters(parameters);
-            btnFlash.setVisibility(View.GONE);
-            btnFlashOff.setVisibility(View.VISIBLE);
-        }
+
     }
 
 
@@ -1210,9 +1217,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         Util.postImage(loggedInUser, encodedImage, false);
 
-
-
-
     }
 
 
@@ -1316,28 +1320,23 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
-        int facing;
-
-
         if (camera != null) {
             camera.release();
             camera = null;
         }
-        else {
-            camera = getCameraInstance();
-        }
 
+        int facing = 0;
 
         if (isBackCamera) {
-            camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
             facing = Camera.CameraInfo.CAMERA_FACING_BACK;
+            camera = Camera.open(facing);
             parameters = camera.getParameters();
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
             btnFlashOff.setVisibility(View.VISIBLE);
 
         } else {
-            camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
             facing = Camera.CameraInfo.CAMERA_FACING_FRONT;
+            camera = Camera.open(facing);
             parameters = camera.getParameters();
             btnFlashOff.setVisibility(View.GONE);
         }
@@ -1348,7 +1347,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(surfaceHolder);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         setCameraDisplayOrientation(this, facing, camera);

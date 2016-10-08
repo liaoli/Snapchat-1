@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:visibility="gone"
         android:layout_gravity="right|top">
 
@@ -114,42 +114,45 @@
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/red"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"/>
 
         <Button
             android:id="@+id/btnBlue"
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/blue"
-            android:layout_marginTop="100dp" />
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="50dp"/>
 
         <Button
             android:id="@+id/btnYellow"
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/yellow"
-            android:layout_marginTop="150dp" />
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="50dp"/>
 
         <Button
             android:id="@+id/btnGreen"
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/green"
-            android:layout_marginTop="200dp" />
+            android:layout_marginTop="50dp"/>
 
         <Button
             android:id="@+id/btnWhite"
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/white"
-            android:layout_marginTop="250dp" />
+            android:layout_marginTop="100dp"/>
 
         <Button
             android:id="@+id/btnBlack"
             android:layout_width="42dp"
             android:layout_height="40dp"
             android:background="@drawable/black"
-            android:layout_marginTop="300dp" />
+            android:layout_marginTop="150dp"/>
 
         </FrameLayout>
 
@@ -202,7 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="100dp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -247,8 +250,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="250dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="100dp"
                 android:background="@drawable/teasing" />
 
             <Button
@@ -256,8 +259,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="300dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="100dp"
                 android:background="@drawable/inlove" />
 
             <Button
@@ -265,8 +268,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginLeft="100dp"
                 android:background="@drawable/cry" />
 
             <Button
@@ -274,8 +277,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="100dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginLeft="100dp"
                 android:background="@drawable/laugh_cry" />
 
             <Button
@@ -283,8 +286,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="150dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/cool" />
 
             <Button
@@ -292,8 +294,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="200dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="100dp"
                 android:background="@drawable/kiss" />
 
             <Button
@@ -301,8 +302,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="250dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="150dp"
                 android:background="@drawable/shocked" />
 
             <Button
@@ -310,8 +310,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:layout_marginTop="300dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginTop="200dp"
                 android:background="@drawable/shit" />
 
 
