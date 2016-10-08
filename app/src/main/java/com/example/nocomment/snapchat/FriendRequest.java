@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FriendShipRequest extends AppCompatActivity {
+public class FriendRequest extends AppCompatActivity {
 
     TextView user;
     TextView message;
@@ -45,22 +45,22 @@ public class FriendShipRequest extends AppCompatActivity {
                     @Override
                     public void run() {
                         try{
-                        Context context = getApplicationContext();
-                        FileInputStream fis = context.openFileInput("user");
-                        InputStreamReader isr = new InputStreamReader(fis);
+                            Context context = getApplicationContext();
+                            FileInputStream fis = context.openFileInput("user");
+                            InputStreamReader isr = new InputStreamReader(fis);
 
-                        BufferedReader bufferedReader = new BufferedReader(isr);
+                            BufferedReader bufferedReader = new BufferedReader(isr);
 
-                        String userid=bufferedReader.readLine();
+                            String userid=bufferedReader.readLine();
                             bufferedReader.close();
-                        util.acceptFriend(userid,user.getText().toString());
-                    } catch (FileNotFoundException e) {
-                        Log.e("",e.getMessage());
+                            Util.acceptFriend(userid,user.getText().toString());
+                        } catch (FileNotFoundException e) {
+                            Log.e("",e.getMessage());
 
-                    } catch (IOException e) {
-                        Log.e("", e.getMessage());
+                        } catch (IOException e) {
+                            Log.e("", e.getMessage());
 
-                    }
+                        }
                     }
                 }).start();
             }

@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by Luna on 17/09/2016.
  */
-public class util {
+public class Util {
 
     public  static String getPostDataString(HashMap<String, String> params){
         try {
@@ -66,7 +66,7 @@ public class util {
             postDataParams.put("ID", user);
             postDataParams.put("Password", password);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -96,41 +96,41 @@ public class util {
         String response = "";
         try {
 
-                URL url = new URL("http://130.56.252.250/snapchat/signup.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setReadTimeout(15000);
-                connection.setConnectTimeout(15000);
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
+            URL url = new URL("http://130.56.252.250/snapchat/signup.php");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
 
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
 
-                HashMap<String, String> postDataParams = new HashMap<>();
-                postDataParams.put("ID", user);
-                postDataParams.put("Email",email);
-                postDataParams.put("Password", password);
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID", user);
+            postDataParams.put("Email",email);
+            postDataParams.put("Password", password);
 
-                writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
 
-                writer.flush();
-                writer.close();
+            writer.flush();
+            writer.close();
 
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    response =br.readLine();
-                    br.close();
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                response =br.readLine();
+                br.close();
 
-                } else {
-                    response = "fail";
-                }
-            connection.disconnect();
+            } else {
+                response = "fail";
             }
-         catch (UnsupportedEncodingException e) {
+            connection.disconnect();
+        }
+        catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -141,7 +141,7 @@ public class util {
         }
 
         return response;
-        }
+    }
 
     public static String acceptFriend(String id,String friendID){
         BufferedWriter writer=null;
@@ -166,7 +166,7 @@ public class util {
             postDataParams.put("ID", id);
             postDataParams.put("friendID", friendID);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -220,7 +220,7 @@ public class util {
             postDataParams.put("Type", "fridendshipRequest");
             postDataParams.put("User", friendID);
             postDataParams.put("Message", "Hi! "+id);
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -252,11 +252,94 @@ public class util {
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+    public static String getFriends(String id){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            String paramater= Util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+    public static String postImage(String id,String bitmap){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/postImage.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("imageCode",bitmap);
+            postDataParams.put("user", id);
+
+            writer.write(Util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
