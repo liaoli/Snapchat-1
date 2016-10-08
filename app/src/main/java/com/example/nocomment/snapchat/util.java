@@ -1,5 +1,7 @@
 package com.example.nocomment.snapchat;
 
+import org.json.JSONArray;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -194,14 +197,12 @@ public class util {
 
 
 
-    public static String sendFriendRequest(String id,String friendID){
+    public static String sendNotification(String id, ArrayList friendID, String message, int catagory){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
         String reponse="";
         try {
             URL url = new URL("http://130.56.252.250/snapchat/notification.php");
-
-
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(15000);
             connection.setConnectTimeout(15000);
@@ -214,12 +215,34 @@ public class util {
                     new OutputStreamWriter(os, "UTF-8"));
 
             HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("Body",friendID+" is sending a friend request");
-            postDataParams.put("Title", "Fridends request");
-            postDataParams.put("ID", id);
-            postDataParams.put("Type", "fridendshipRequest");
-            postDataParams.put("User", friendID);
-            postDataParams.put("Message", "Hi! "+id);
+            JSONArray mJSONArray = new JSONArray(friendID);
+            switch (catagory){
+                case 0:
+
+                    postDataParams.put("Body","Fridends request");
+                    postDataParams.put("Title", "Fridends request");
+                    postDataParams.put("ID", id);
+                    postDataParams.put("Type", "fridendshipRequest");
+                    postDataParams.put("User", mJSONArray.toString());
+                    postDataParams.put("Message", message);
+                    break;
+                case 1:
+                    postDataParams.put("Body","Send Message");
+                    postDataParams.put("Title", "Send Message");
+                    postDataParams.put("ID", id);
+                    postDataParams.put("Type", "sendMessage");
+                    postDataParams.put("User", mJSONArray.toString());
+                    postDataParams.put("Message", message);
+                    break;
+                case 2:
+                    postDataParams.put("Body","Send Image");
+                    postDataParams.put("Title", "Send Image");
+                    postDataParams.put("ID", id);
+                    postDataParams.put("Type", "sendImage");
+                    postDataParams.put("User", mJSONArray.toString());
+                    postDataParams.put("Message", message);
+                    break;
+            }
             writer.write(util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
