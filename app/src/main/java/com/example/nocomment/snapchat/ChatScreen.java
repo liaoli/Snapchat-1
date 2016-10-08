@@ -61,6 +61,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatScreen extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
@@ -94,6 +96,14 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
+
+    private String userName;
+
+    /*
+     * video call related
+     */
+    String login = "login";
+
 
 
 
@@ -188,6 +198,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         discoverBtn = (ImageView) findViewById(R.id.discoverableBtn);
         scanBtn = (ImageView) findViewById(R.id.scanBtn);
 
+        Bundle extras = getIntent().getExtras();
+        userName = extras.getString("userName");
+        chatTitle.setText(userName);
+
         // set up top textview to day of the week
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
         Calendar dateToday = Calendar.getInstance();
@@ -258,6 +272,12 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
         });
+
+        cameraBtn.postDelayed(new Runnable() {
+            public void run() {
+                cameraBtn.setVisibility(View.INVISIBLE);
+            }
+        }, 6000);
 
 
     }

@@ -17,7 +17,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude  'META-INF/maven/com.squareup.picasso/picasso/pom.properties'
+        exclude  'META-INF/maven/com.squareup.picasso/picasso/pom.xml'}
 }
+repositories{
+    maven{
+        url "https://github.com/QuickBlox/quickblox-android-sdk-releases/raw/master/"
+
+    }
+}
+
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -25,5 +37,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile "com.quickblox:quickblox-android-sdk-videochat-webrtc:2.6.1"
+    compile files('libs/picasso-2.5.2.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 }

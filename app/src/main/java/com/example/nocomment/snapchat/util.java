@@ -245,6 +245,61 @@ public class util {
         }
         return reponse;
     }
+    public static String sendMessage(String id,String friendID, String message){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/notification.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("Body",friendID+" is sending a friend request");
+            postDataParams.put("Title", "message");
+            postDataParams.put("ID", id);
+            postDataParams.put("Type", "message");
+            postDataParams.put("User", friendID);
+            postDataParams.put("Message", message);
+            writer.write(util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+
+
+
     public static String getUsers(String id){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
@@ -257,6 +312,89 @@ public class util {
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+    public static String getFriends(String id){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            String paramater= util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getFriends.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+    public static String postImage(String id,String bitmap){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/postImage.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("imageCode",bitmap);
+            postDataParams.put("user", id);
+
+            writer.write(util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
