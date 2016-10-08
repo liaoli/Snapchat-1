@@ -18,6 +18,7 @@ public class Login extends AppCompatActivity {
     EditText userName;
     EditText pwd;
     Button login;
+    static String userId = "";
 
     private final int MESSAGE_RETRIEVED = 0;
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
@@ -32,7 +33,7 @@ public class Login extends AppCompatActivity {
                 toast.show();
                 if(message.obj.toString().contains("login successfully")){
 
-                    Intent intent =new Intent(Login.this,CameraScreen.class);
+                    Intent intent =new Intent(Login.this, CameraView.class);
                     startActivity(intent);
                 }
 
@@ -55,10 +56,11 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                            String response =util.login(userName.getText().toString(),pwd.getText().toString());
+                            String response = Util.login(userName.getText().toString(),pwd.getText().toString());
                             if(response.trim().equals("login successfully")){
                                 FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
                                 firebaseInstanceIDService.registerToken(userName.getText().toString());
+                                userId = userName.getText().toString();
 
                                 Context context=getApplicationContext ();
 
@@ -85,6 +87,11 @@ public class Login extends AppCompatActivity {
             }
 
         });
+    }
+
+
+    public static String getLoggedinUserId() {
+        return userId;
     }
 
 

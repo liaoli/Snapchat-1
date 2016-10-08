@@ -3,14 +3,41 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_verify">Repeat Password</string>
+    <string name="action_login">Login</string>
+    <string name="action_signup">Signup</string>
     <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_info">This email address or password is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="prompt_username">Username</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!--bluetooth related-->
+    <string name="title_connecting">connecting</string>
+    <string name="title_not_connected">not connected</string>
+    <string name="title_paired_devices">paired devices</string>
+    <string name="title_other_devices">other devices</string>
+    <string name="button_scan">scan</string>
+    <string name="none_paired">none paired</string>
+    <string name="scanning">scanning</string>
+    <string name="none_found">no devices found</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="select_device">select a deviceto connect</string>
+    <string name="bt_not_enabled">Bluetooth was not enabled</string>
+
+    <string name="discoverable">discoverable</string>
+    <string name="secure_connect">secure connect</string>
+    <string name="unsecure_connect">unsecure connect</string>
+
+    <!--friend list related-->
+    <string name="recent">Recent</string>
+
+    <!--chat-->
+    <string name="send">SEND</string>
+    <string name="send_a_chat">Send a Chat</string>
 </resources>

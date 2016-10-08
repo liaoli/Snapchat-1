@@ -11,7 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.test.suitebuilder.annotation.Suppress;
+import android.util.Base64;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -27,18 +28,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-//import io.github.rockerhieu.emojiconize.Emojiconize;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 
-public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
+public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback{
 
     Button btnTakePhoto, btnSwitchCamera;
     Button btnSavePhoto, btnDelete;
@@ -70,6 +74,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     HandDrawing drawing;
 
+    private int verticalMinDistance = 10;
+    private int minVelocity = 0;
+    private GestureDetector mGestureDetector;
+
 
 
     public static Camera getCameraInstance() {
@@ -85,7 +93,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
@@ -121,9 +128,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 camera = getCameraInstance();
                 parameters = camera.getParameters();
 
+                if (parameters.getSupportedFlashModes() != null) {
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                }
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
 
                 camera.setParameters(parameters);
 
@@ -983,7 +991,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             imageLayout.setDrawingCacheEnabled(true);
             Bitmap finalImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
             imageLayout.setDrawingCacheEnabled(false);
-            finalImage.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+            finalImage.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -1125,6 +1133,90 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    private void createStory() {
+        String loggedInUser = "";
+
+        if (Login.getLoggedinUserId() == "") {
+            FileInputStream fis = null;
+
+            try {
+                fis =CameraView.this.openFileInput("user");
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+                loggedInUser = bufferedReader.readLine();
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+            loggedInUser = Login.getLoggedinUserId();
+        }
+
+
+        imageLayout.setDrawingCacheEnabled(true);
+        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+        imageLayout.setDrawingCacheEnabled(false);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        Util.postImage(loggedInUser, encodedImage, true);
+
+    }
+
+
+
+    private void sendImage() {
+        String loggedInUser = "";
+
+        if (Login.getLoggedinUserId() == "") {
+            FileInputStream fis = null;
+
+            try {
+                fis =CameraView.this.openFileInput("user");
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+                loggedInUser = bufferedReader.readLine();
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+            loggedInUser = Login.getLoggedinUserId();
+        }
+
+        imageLayout.setDrawingCacheEnabled(true);
+        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+        imageLayout.setDrawingCacheEnabled(false);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        Util.postImage(loggedInUser, encodedImage, false);
+
+
+
+
+    }
+
+
+
     private void removeSmileys() {
         imageSmilingView.setImageBitmap(null);
         imageSmilingView.invalidate();
@@ -1226,6 +1318,14 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         int facing;
 
+
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
+        else {
+            camera = getCameraInstance();
+        }
 
 
         if (isBackCamera) {

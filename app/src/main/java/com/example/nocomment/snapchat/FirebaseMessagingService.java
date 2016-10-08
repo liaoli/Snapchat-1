@@ -28,7 +28,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
        // showNotification(remoteMessage.getData().get("type"),remoteMessage.getData().get("message"));
     }
     private void fridendshipRequest(String userid,String message){
-        Intent intent = new Intent(this, FriendShipRequest.class);
+        Intent intent = new Intent(this, FriendRequest.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);
         intent.putExtra("message",message);
