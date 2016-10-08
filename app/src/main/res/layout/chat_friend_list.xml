@@ -30,6 +30,13 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/backtochat" />
 
+        <ImageView
+            android:id="@+id/add"
+            android:paddingLeft="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/adduser"/>
+
     </FrameLayout>
 
 
