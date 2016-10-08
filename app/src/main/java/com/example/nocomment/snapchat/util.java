@@ -287,7 +287,7 @@ public class util {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
             String paramater= util.getPostDataString(postDataParams);
-            String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
+            String str="http://130.56.252.250/snapchat/getFriends.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
