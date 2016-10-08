@@ -52,7 +52,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
             HashMap<String, String> postDataParams= new HashMap<>();
             postDataParams.put("ID", userID);
             postDataParams.put("Token", getToken());
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
 

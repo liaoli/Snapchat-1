@@ -4,8 +4,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -92,13 +95,16 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     private TextView date;
 
-    private ImageView discoverBtn;
-    private ImageView scanBtn;
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
 
     private String userName;
+    private IntentFilter filter;
+
+
+    // send and receive related constants (result code)
+    private int PICK_IMAGE = 5;
 
     /*
      * video call related
@@ -110,23 +116,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     private final int CAMERA_PIC_REQUEST = 2;
 
+    private FirebaseMessagingService mChatService = null;
+    public static final int MESSAGE_READ = 2;
+    public static final int IMAGE_READ = 3;
 
-
-    /* *******************************
-     * Bluetooth related declaration *
-     * *******************************
-     */
-    // local bluetooth adapter
-    private BluetoothAdapter mBluetoothAdapter = null;
-
-
-    private String mConnectedDeviceName = null;
-
-    private StringBuffer mOutStringBuffer;
-
-    // intent request code
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
 
 
     /**
@@ -143,13 +136,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.chat_drawer_user);
         setupChat();
-        // get bluetooth adapter
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
-//        if(mBluetoothAdapter == null){
-//            openDialog("Warning", "Your device does not have bluetooth supports");
-//        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(FirebaseMessagingService.FRIEND_MESSAGE_ACCEPTED));
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -160,6 +150,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
 
     }
@@ -197,8 +188,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         date = (TextView) findViewById(R.id.dateToday);
         chatUserName = (TextView) findViewById(R.id.chatUserName);
 
-        discoverBtn = (ImageView) findViewById(R.id.discoverableBtn);
-        scanBtn = (ImageView) findViewById(R.id.scanBtn);
 
         Bundle extras = getIntent().getExtras();
         userName = extras.getString("userName");
@@ -219,10 +208,10 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 
-        // notification for the user
-        openDialog("Notification", "By clicking Circle upper left corner can make device " +
-                "\"Discoverable\"" +
-                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
+//        // notification for the user
+//        openDialog("Notification", "By clicking Circle upper left corner can make device " +
+//                "\"Discoverable\"" +
+//                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
 
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
@@ -262,10 +251,14 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                intent.setType("image/*");
+//                startActivityForResult(intent, 0);
+                Intent intent = new Intent();
                 intent.setType("image/*");
-                startActivityForResult(intent, 0);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
 
 
             }
@@ -286,6 +279,20 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         }, 6000);
 
 
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            // do decode and send image
+        }
     }
 
     @Override
@@ -346,12 +353,11 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     public void receiveMsg(String msg){
 
-        final String newMsg = msg;
         Calendar rightNow = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         String timeForNow = sdf.format(rightNow.getTime());
-        ChatMsg sendMsg = new ChatMsg(!me, msg, timeForNow);
-        chatAdapter.add(sendMsg);
+        ChatMsg rcvMsg = new ChatMsg(!me, msg, timeForNow);
+        chatAdapter.add(rcvMsg);
         scrollMyListViewToBottom();
 
     }
@@ -438,8 +444,13 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         });
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-
+            String msg=intent.getStringExtra("message");
+            receiveMsg(msg);
+        }};
 
 
 

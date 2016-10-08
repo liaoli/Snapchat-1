@@ -4,8 +4,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -16,6 +20,10 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
+
+    public static final String FRIEND_MESSAGE_ACCEPTED = "FRIEND_MESSAGE_ACCEPTED";
+
+
     //onMessageReceived() get called if a new message is received from Firebase Cloud Message
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -41,11 +49,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     }
     private void sendMessage(String userid,String message){
-//        Intent intent = new Intent(this, FriendRequest.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.putExtra("userid",userid);
-//        intent.putExtra("message",message);
-//        startActivity(intent);
+        Intent intent = new Intent(FRIEND_MESSAGE_ACCEPTED);
+        intent.putExtra("userid",userid);
+        intent.putExtra("message",message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
 
     }
 

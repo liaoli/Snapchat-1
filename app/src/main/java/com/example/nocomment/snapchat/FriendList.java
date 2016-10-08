@@ -66,6 +66,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                     frdAdapter = new ChatFriendListAdapter(FriendList.this, listdata);
                     friendList.setAdapter(frdAdapter);
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

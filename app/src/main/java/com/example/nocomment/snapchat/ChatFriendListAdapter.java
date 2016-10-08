@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AlphabetIndexer;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,9 +38,12 @@ public class ChatFriendListAdapter extends ArrayAdapter<String>{
 
         if(convertView == null){
             mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             convertView = mInflater.inflate(R.layout.item_in_friend_list, null);
             final ImageView addFriend = (ImageView) convertView.findViewById(R.id.addFriend);
             final TextView friend = (TextView) convertView.findViewById(R.id.userNameFriend);
+
+
             addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
