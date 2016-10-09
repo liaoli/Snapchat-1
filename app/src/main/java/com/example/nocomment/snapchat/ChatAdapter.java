@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -33,26 +35,47 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
 public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
     private ArrayList<ChatMsg> msgList;
-    private Activity context;
+    private Context context;
 
 
 
     public ChatAdapter (Context context, ArrayList<ChatMsg> msg) {
         super(context, R.layout.msg_right ,msg);
+        this.context = context;
     }
 
 
     @Override
     public  int getItemViewType(int position){
         ChatMsg item = getItem(position);
-        if(item.getMsgType() == ChatMsg.RIGHT_MSG)
-            return 0;
-        else if(item.getMsgType() == ChatMsg.LEFT_MSG)
-            return 1;
-        else if(item.getMsgType() == ChatMsg.RIGHT_IMG)
-            return 2;
-        else
-            return 3;
+//        if(item.getMsgType() == ChatMsg.RIGHT_MSG)
+//            return 0;
+//        else if(item.getMsgType() == ChatMsg.LEFT_MSG)
+//            return 1;
+//        else if(item.getMsgType() == ChatMsg.RIGHT_IMG)
+//            return 2;
+//        else if(item.getMsgType() == ChatMsg.LEFT_IMG)
+//            return 3;
+
+        int returnType = 5;
+        switch (item.getMsgType()){
+            case(ChatMsg.RIGHT_MSG):
+                returnType = 0;
+                break;
+            case(ChatMsg.LEFT_MSG):
+                returnType = 1;
+                break;
+            case(ChatMsg.RIGHT_IMG):
+                returnType = 2;
+                break;
+            case(ChatMsg.LEFT_IMG):
+                returnType = 3;
+                break;
+
+
+        }
+
+        return returnType;
     }
 
     // prevent msgContainer clickable
@@ -100,24 +123,25 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
         } else if(viewType == 3){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left_img, parent, false);
 
-            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsg);
-            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfo);
-//            new DownloadImageTask(imgMsg)
-//                    .execute(getItem(position).getMsg());
-            URL newurl = null;
-            try {
-                newurl = new URL(getItem(position).getMsg());
+            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsgRcv);
+            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfoRcv);
+            Picasso.with(context)
+                    .load(getItem(position).getMsg())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(imgMsg);
 
-                imgMsg.setImageBitmap(BitmapFactory.decodeStream(newurl.openConnection().getInputStream()));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            URL newurl = null;
+//            try {
+//                newurl = new URL(getItem(position).getMsg());
+//
+//                imgMsg.setImageBitmap(BitmapFactory.decodeStream(newurl.openConnection().getInputStream()));
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 10;
-//            imgMsg.setImageBitmap(BitmapFactory.decodeFile(getItem(position).getMsg(),options));
             imgInfo.setText(getItem(position).getTime());
 
         }

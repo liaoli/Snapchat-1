@@ -28,7 +28,7 @@
             android:background="@drawable/frd_msg_pic">
 
             <ImageView
-                android:id="@+id/imgMsg"
+                android:id="@+id/imgMsgRcv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"

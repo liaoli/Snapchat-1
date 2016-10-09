@@ -446,8 +446,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         Calendar rightNow = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         String timeForNow = sdf.format(rightNow.getTime());
-        ChatMsg rcvMsg = new ChatMsg(ChatMsg.LEFT_IMG, img, timeForNow);
-        chatAdapter.add(rcvMsg);
+        ChatMsg rcvImg = new ChatMsg(ChatMsg.LEFT_IMG, img, timeForNow);
+        chatAdapter.add(rcvImg);
         scrollMyListViewToBottom();
 
     }
