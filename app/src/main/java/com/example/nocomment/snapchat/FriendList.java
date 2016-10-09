@@ -1,5 +1,6 @@
 package com.example.nocomment.snapchat;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -11,10 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -43,6 +46,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
+    private int topVisiblePosition = -1;
+    private TextView topHeader;
 
     private ArrayList<String> listdata;
 
@@ -65,6 +70,24 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                     }
                     frdAdapter = new ChatFriendListAdapter(FriendList.this, listdata);
                     friendList.setAdapter(frdAdapter);
+                    friendList.setOnScrollListener(new AbsListView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                            if (firstVisibleItem != topVisiblePosition) {
+//                                topVisiblePosition = firstVisibleItem;
+//                                final String header = listdata.get(firstVisibleItem).substring(0,1);
+//                                topHeader.setText(header);
+                            }
+                        }
+                    });
+
+
+
 
 
                 } catch (JSONException e) {
@@ -83,8 +106,10 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
         backToChatList = (ImageView) findViewById(R.id.backToChatList);
         friendLayout = (RelativeLayout) findViewById(R.id.friendLayout);
+        topHeader = (TextView) findViewById(R.id.frientListHeader);
 
         friendList = (ListView) findViewById(R.id.chatFriendList);
+
 
 
 
@@ -136,6 +161,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
 
     }
+
+
 
     @Override
     public boolean onDown(MotionEvent e) {

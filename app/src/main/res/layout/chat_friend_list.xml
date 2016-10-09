@@ -7,7 +7,6 @@
     tools:context="com.example.nocomment.snapchat.FriendList">
 
 
-
     <FrameLayout
     android:id="@+id/themeFrame"
     android:layout_width="fill_parent"
