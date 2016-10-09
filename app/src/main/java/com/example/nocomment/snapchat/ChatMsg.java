@@ -6,14 +6,19 @@ package com.example.nocomment.snapchat;
 public class ChatMsg {
 
     private long msgID;
-    private boolean isMe;
+    private int msgType;
     private String msg;
     private String userID;
     private String time;
 
-    public ChatMsg(boolean isMe, String msg, String time) {
+    public static final int RIGHT_MSG = 0;
+    public static final int LEFT_MSG = 1;
+    public static final int RIGHT_IMG = 2;
+    public static final int LEFT_IMG = 3;
 
-        this.isMe = isMe;
+    public ChatMsg(int msgType, String msg, String time) {
+
+        this.msgType = msgType;
         this.msg = msg;
         this.time = time;
 
@@ -28,12 +33,12 @@ public class ChatMsg {
         this.msgID = msgID;
     }
 
-    public boolean isMe() {
-        return isMe;
+    public int getMsgType() {
+        return msgType;
     }
 
-    public void setMe(boolean me) {
-        isMe = me;
+    public void setMe(int msgType) {
+        this.msgType = msgType;
     }
 
     public String getMsg() {

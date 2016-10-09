@@ -8,7 +8,9 @@ import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
@@ -27,6 +29,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -50,6 +53,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -60,6 +69,7 @@ import com.google.android.gms.common.server.converter.StringToIntConverter;
 
 import java.util.ArrayList;
 
+import org.jivesoftware.smack.chat.Chat;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -105,6 +115,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     // send and receive related constants (result code)
     private int PICK_IMAGE = 5;
+    private String selectedImagePath;
 
     /*
      * video call related
@@ -140,6 +151,9 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(FirebaseMessagingService.FRIEND_MESSAGE_ACCEPTED));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mImageReceiver,
+                new IntentFilter(FirebaseMessagingService.FRIEND_IMAGE_ACCEPTED));
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -292,8 +306,39 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 return;
             }
             // do decode and send image
+            Uri selectedImageUri = data.getData();
+            final Bitmap bitmap;
+            selectedImagePath = getPath(selectedImageUri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                sendImg(selectedImagePath, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
+
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here
+        return uri.getPath();
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -327,7 +372,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    private boolean me = true;
+
 
     private void sendMsg(String msg) {
 //        byte[] send = msg.getBytes();
@@ -335,7 +380,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         Calendar rightNow = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         String timeForNow = sdf.format(rightNow.getTime());
-        ChatMsg sendMsg = new ChatMsg(me, msg, timeForNow);
+        ChatMsg sendMsg = new ChatMsg(ChatMsg.RIGHT_MSG, msg, timeForNow);
         chatAdapter.add(sendMsg);
         scrollMyListViewToBottom();
 
@@ -351,15 +396,104 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     }
 
+    private void sendImg(String img, final Bitmap bitmap){
+        final String newImg = img;
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        final String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg sendImg = new ChatMsg(ChatMsg.RIGHT_IMG, img, timeForNow);
+        chatAdapter.add(sendImg);
+        scrollMyListViewToBottom();
+
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> friend = new ArrayList<String>();
+                friend.add(userName);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+
+
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                String response = Util.postImage(Login.myId, encodedImage, false);
+                Util.sendNotification("b", friend, response, 2);
+
+//                Util.postImage(Login.myId, response, false);
+
+            }
+        }).start();
+    }
+
     public void receiveMsg(String msg){
 
         Calendar rightNow = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         String timeForNow = sdf.format(rightNow.getTime());
-        ChatMsg rcvMsg = new ChatMsg(!me, msg, timeForNow);
+        ChatMsg rcvMsg = new ChatMsg(ChatMsg.LEFT_MSG, msg, timeForNow);
         chatAdapter.add(rcvMsg);
         scrollMyListViewToBottom();
 
+    }
+    public void receiveImg(String img){
+
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg rcvMsg = new ChatMsg(ChatMsg.LEFT_IMG, img, timeForNow);
+        chatAdapter.add(rcvMsg);
+        scrollMyListViewToBottom();
+
+    }
+
+    public Bitmap loadBitmap(String url)
+    {
+        Bitmap bm = null;
+        InputStream is = null;
+        BufferedInputStream bis = null;
+        try
+        {
+            URLConnection conn = new URL(url).openConnection();
+            conn.connect();
+            is = conn.getInputStream();
+            bis = new BufferedInputStream(is, 8192);
+            bm = BitmapFactory.decodeStream(bis);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (bis != null)
+            {
+                try
+                {
+                    bis.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            if (is != null)
+            {
+                try
+                {
+                    is.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bm;
     }
 
     @Override
@@ -447,10 +581,23 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(FirebaseMessagingService.FRIEND_MESSAGE_ACCEPTED)){
+                String msg=intent.getStringExtra("message");
+                receiveMsg(msg);
+            }
 
-            String msg=intent.getStringExtra("message");
-            receiveMsg(msg);
+
         }};
+
+    private BroadcastReceiver mImageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(FirebaseMessagingService.FRIEND_IMAGE_ACCEPTED)){
+                String img=intent.getStringExtra("image");
+                receiveImg(img);
+            }
+        }
+    };
 
 
 

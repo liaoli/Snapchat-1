@@ -22,6 +22,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
 
     public static final String FRIEND_MESSAGE_ACCEPTED = "FRIEND_MESSAGE_ACCEPTED";
+    public static final String FRIEND_IMAGE_ACCEPTED = "FRIEND_IMAGE_ACCEPTED";
 
 
     //onMessageReceived() get called if a new message is received from Firebase Cloud Message
@@ -57,12 +58,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     }
 
-    private void sendImage(String userid,String message){
-        Intent intent = new Intent(this, FriendRequest.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    private void sendImage(String userid,String image){
+        Intent intent = new Intent(FRIEND_IMAGE_ACCEPTED);
         intent.putExtra("userid",userid);
-        intent.putExtra("message",message);
-        startActivity(intent);
+        intent.putExtra("image",image);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
     }
     //  show a notification for received message
