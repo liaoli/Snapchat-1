@@ -13,7 +13,7 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
 
     private ImageView backToChat;
     private ImageView storyGoToDcv;
-    private RelativeLayout storiesLayout;
+//    private RelativeLayout storiesLayout;
     private StoryListViewHorizontal storyListView;
     private StoryListViewHorizontalAdapter storyListViewAdapter;
 
@@ -31,14 +31,14 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
         mGestureDetector = new GestureDetector(this);
 
         backToChat = (ImageView) findViewById(R.id.storyBackToCma);
-        storiesLayout = (RelativeLayout) findViewById(R.id.storiesLayout);
+//        storiesLayout = (RelativeLayout) findViewById(R.id.storiesLayout);
         storyGoToDcv = (ImageView) findViewById(R.id.storyGoToDcv);
-
-        storiesLayout.setOnTouchListener(this);
-        storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
-        storyListViewAdapter = new StoryListViewHorizontalAdapter(this);
-        storyListViewAdapter.notifyDataSetChanged();
-        storyListView.setAdapter(storyListViewAdapter);
+//
+//        storiesLayout.setOnTouchListener(this);
+//        storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
+//        storyListViewAdapter = new StoryListViewHorizontalAdapter(this);
+//        storyListViewAdapter.notifyDataSetChanged();
+//        storyListView.setAdapter(storyListViewAdapter);
 
         backToChat.setOnClickListener(new View.OnClickListener() {
             @Override
