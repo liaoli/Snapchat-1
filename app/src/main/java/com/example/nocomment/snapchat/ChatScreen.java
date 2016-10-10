@@ -560,7 +560,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // TODO Auto-generated method stub
-                                //按下按鈕後執行的動作，沒寫則退出Dialog
+
                             }
                         }
                 )
