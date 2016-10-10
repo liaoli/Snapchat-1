@@ -2,6 +2,8 @@ package com.example.nocomment.snapchat;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
@@ -12,7 +14,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -37,12 +38,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 
-public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
+public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback, Serializable {
 
     Button btnTakePhoto, btnSwitchCamera;
     Button btnSavePhoto, btnDelete;
@@ -73,8 +75,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Bitmap photo, bitmap;
 
     HandDrawing drawing;
-
-
 
 
 
@@ -119,23 +119,40 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         imageCryView = new ImageView(getApplicationContext());
 
 
+//        surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                camera = getCameraInstance();
+//                parameters = camera.getParameters();
+//
+//                if (parameters.getSupportedFlashModes() != null) {
+//                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//                }
+//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//
+//                camera.setParameters(parameters);
+//
+//                return false;
+//            }
+//        });
 
-        surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                camera = getCameraInstance();
-                parameters = camera.getParameters();
 
-                if (parameters.getSupportedFlashModes() != null) {
-                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                }
-                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        surfaceView.setOnTouchListener(new OnSwipeTouchListener(CameraView.this) {
 
-                camera.setParameters(parameters);
-
-                return false;
+            public void onSwipeRight() {
+//                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CameraView.this, Discover.class);
+                startActivity(i);
             }
+            public void onSwipeLeft() {
+//                Toast.makeText(CameraView.this, "left", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CameraView.this, Stories.class);
+                startActivity(i);
+            }
+
         });
+
+
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -200,6 +217,46 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+
+                        imageLayout.setDrawingCacheEnabled(true);
+                        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+                        imageLayout.setDrawingCacheEnabled(false);
+
+                        try {
+                            //Write file
+                            String filename = "bitmap.png";
+                            FileOutputStream stream = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
+                            tempImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                            //Cleanup
+                            stream.close();
+                            tempImage.recycle();
+
+                            //Pop intent
+                            Intent in1 = new Intent(getApplicationContext(), ShareImage.class);
+                            in1.putExtra("image", filename);
+//                            startActivity(in1);
+                            FragmentManager fm = getFragmentManager();
+                            ShareImage imageDialog = new ShareImage();
+                            imageDialog.show(fm, "Share Image");
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+//                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+//                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+//
+//                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+//                        Intent i = new Intent(getApplicationContext(), ShareImage.class);
+//                        i.putExtra("image", tempImage);
+//
+//                        FragmentManager fm = getFragmentManager();
+//                        ShareImage shareImage = new ShareImage();
+
 
                     }
                 }).start();
@@ -936,6 +993,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+
+
+
+
     public void takePhoto() {
         camera.takePicture(new Camera.ShutterCallback() {
             @Override
@@ -1147,7 +1208,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             FileInputStream fis = null;
 
             try {
-                fis =CameraView.this.openFileInput("user");
+                fis = CameraView.this.openFileInput("user");
                 InputStreamReader isr = new InputStreamReader(fis);
                 BufferedReader bufferedReader = new BufferedReader(isr);
                 loggedInUser = bufferedReader.readLine();

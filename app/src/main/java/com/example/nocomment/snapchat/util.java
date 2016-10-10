@@ -338,7 +338,7 @@ public class Util {
                     new OutputStreamWriter(os, "UTF-8"));
 
             HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("imageCode",bitmap);
+            postDataParams.put("imageCode", bitmap);
             postDataParams.put("user", id);
             postDataParams.put("isPostStory", isPostStory);
 
