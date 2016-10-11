@@ -55,6 +55,7 @@
         <activity android:name=".FriendList"/>
         <activity android:name=".DeviceListActivity"/>
         <activity android:name=".QRScanner"/>
+        <activity android:name=".AddFriend"/>
 
         <service android:name=".FirebaseMessagingService">
             <intent-filter>

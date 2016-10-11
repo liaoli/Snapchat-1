@@ -44,12 +44,12 @@ import java.util.Date;
 
 
 
-public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback, Serializable {
+public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
 
     Button btnTakePhoto, btnSwitchCamera;
     Button btnSavePhoto, btnDelete;
     Button btnFlash, btnFlashOff;
-    Button btnSend;
+    Button btnSend, btnAddFriend;
     Button btnDraw, btnErase, btnSmiley, btnText;
 
     Button btnRed, btnBlack, btnWhite, btnBlue, btnYellow, btnGreen;
@@ -161,6 +161,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+
     public void initialize() {
 
 
@@ -215,17 +216,31 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             @Override
             public void onClick(View view) {
 
-                        imageLayout.setDrawingCacheEnabled(true);
-                        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
-                        imageLayout.setDrawingCacheEnabled(false);
+                imageLayout.setDrawingCacheEnabled(true);
+                Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+                imageLayout.setDrawingCacheEnabled(false);
 
-                        FragmentManager fm = getFragmentManager();
-                        ShareImage imageDialog = new ShareImage(tempImage);
-                        imageDialog.show(fm, "Share Image");
-
+                FragmentManager fm = getFragmentManager();
+                ShareImageDialog imageDialog = new ShareImageDialog(tempImage);
+                imageDialog.show(fm, "Share Image");
 
             }
         });
+
+
+        btnAddFriend = (Button) findViewById(R.id.btnAddFriend);
+        btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fm = getFragmentManager();
+                AddFriendDialog addFriendDialog = new AddFriendDialog();
+                addFriendDialog.show(fm, "Add Friend");
+
+            }
+        });
+
+
 
 
         btnSavePhoto = (Button) findViewById(R.id.btnSave);
@@ -1288,6 +1303,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     private void takePhotoOptions() {
         btnTakePhoto.setVisibility(View.GONE);
+        btnAddFriend.setVisibility(View.GONE);
         btnSavePhoto.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.VISIBLE);
         btnSend.setVisibility(View.VISIBLE);
@@ -1311,6 +1327,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         btnFlash.setVisibility(View.GONE);
         btnSwitchCamera.setVisibility(View.VISIBLE);
         btnTakePhoto.setVisibility(View.VISIBLE);
+        btnAddFriend.setVisibility(View.VISIBLE);
         btnDraw.setVisibility(View.GONE);
         btnErase.setVisibility(View.GONE);
         btnText.setVisibility(View.GONE);
@@ -1340,6 +1357,17 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         camera.release();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (getIntent().getExtras() != null) {
+            FragmentManager fm = getFragmentManager();
+            AddFriendDialog addFriendDialog = new AddFriendDialog();
+            addFriendDialog.show(fm, "Add Friend");
+        }
+    }
 
 
     @Override

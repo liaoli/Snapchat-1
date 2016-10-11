@@ -218,9 +218,9 @@ public class Util {
 
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("Body",friendID+" is sending a friend request");
-            postDataParams.put("Title", "Fridends request");
+            postDataParams.put("Title", "Friends request");
             postDataParams.put("ID", id);
-            postDataParams.put("Type", "fridendshipRequest");
+            postDataParams.put("Type", "friendshipRequest");
             postDataParams.put("User", friendID);
             postDataParams.put("Message", "Hi! "+id);
             writer.write(Util.getPostDataString(postDataParams));

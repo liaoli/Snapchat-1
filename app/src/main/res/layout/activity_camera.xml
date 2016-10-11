@@ -195,8 +195,16 @@
             android:id="@+id/btnSwitch"
             android:layout_width="67dp"
             android:layout_height="71dp"
-            android:layout_gravity="center_horizontal|top"
+            android:layout_gravity="center_horizontal|right"
             android:background="@drawable/switch_camera" />
+
+
+        <Button
+            android:id="@+id/btnAddFriend"
+            android:layout_width="67dp"
+            android:layout_height="71dp"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/add_friend" />
 
 
 

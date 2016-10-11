@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/addFriendFrag">
+
+
+        <ImageView
+            android:id="@+id/ghostLogo"
+            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:src="@drawable/ghost"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:id="@+id/showUserName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:textColor="@color/azure"
+            android:textSize="10pt"
+            android:visibility="visible"
+            android:layout_below="@+id/ghostLogo"/>
+
+
+        <Button
+            android:id="@+id/addFriend"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="100dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Add Friend" />
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
