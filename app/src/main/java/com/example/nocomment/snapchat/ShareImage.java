@@ -34,12 +34,17 @@ import java.io.ObjectInputStream;
 public class ShareImage extends DialogFragment {
 
     Button btnStory;
-//    Button btnShare;
-//    String encodedImage;
+    Button btnShare;
+    Bitmap bitmap=null;
 
 
-    public ShareImage() {
+    public ShareImage () {
+        super();
+    }
 
+    public ShareImage(Bitmap bitmap) {
+        this.bitmap = bitmap;
+        System.out.println("bitmap "+bitmap);
     }
 
 
@@ -49,11 +54,19 @@ public class ShareImage extends DialogFragment {
         final View view = inflater.inflate(R.layout.share_image, container, false);
 
         btnStory  = (Button) view.findViewById(R.id.story);
-
         btnStory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createStory();
+            }
+        });
+
+
+        btnShare  = (Button) view.findViewById(R.id.share);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendImage();
             }
         });
 
@@ -65,73 +78,96 @@ public class ShareImage extends DialogFragment {
 
 
     private void createStory() {
-        String loggedInUser = "";
 
-        if (Login.getLoggedinUserId() == "") {
-            FileInputStream fis = null;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-            try {
-                fis = getActivity().openFileInput("user");
-                InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader bufferedReader = new BufferedReader(isr);
-                loggedInUser = bufferedReader.readLine();
+                String loggedInUser = "";
+
+                if (Login.getLoggedinUserId() == "") {
+                    FileInputStream fis = null;
+
+                    try {
+                        fis = getActivity().openFileInput("user");
+                        InputStreamReader isr = new InputStreamReader(fis);
+                        BufferedReader bufferedReader = new BufferedReader(isr);
+                        loggedInUser = bufferedReader.readLine();
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                else {
+                    loggedInUser = Login.getLoggedinUserId();
+                }
+
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                Util.postImage(loggedInUser, encodedImage, true);
+
+
             }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
+        }).start();
+
+    }
+
+
+
+    private void sendImage() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String loggedInUser = "";
+
+                if (Login.getLoggedinUserId() == "") {
+                    FileInputStream fis = null;
+
+                    try {
+                        fis = getActivity().openFileInput("user");
+                        InputStreamReader isr = new InputStreamReader(fis);
+                        BufferedReader bufferedReader = new BufferedReader(isr);
+                        loggedInUser = bufferedReader.readLine();
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                else {
+                    loggedInUser = Login.getLoggedinUserId();
+                }
+
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                Util.postImage(loggedInUser, encodedImage, false);
+
+
             }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            loggedInUser = Login.getLoggedinUserId();
-        }
-
-
-
-            Intent i = new Intent();
-//            ByteArrayInputStream image = (ByteArrayInputStream) i.getSerializableExtra("image");
-////
-//            ObjectInputStream objectInputStream = null;
-//            objectInputStream = new ObjectInputStream(image);
-//            Bitmap tmp = (Bitmap) objectInputStream.readObject();
-
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            tmp.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-//            byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-//            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-//            byte[] decodedString = Base64.decode(tmp, Base64.DEFAULT);
-//            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-
-
-            Bitmap bmp = null;
-            String filename = i.getStringExtra("image");
-            try {
-                FileInputStream is = getActivity().openFileInput(filename);
-                bmp = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-//
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-            bmp.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-            Util.postImage(loggedInUser, encodedImage, true);
-
-
-
-
+        }).start();
 
     }
 

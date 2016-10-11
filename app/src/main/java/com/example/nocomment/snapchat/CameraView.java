@@ -214,52 +214,16 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
 
                         imageLayout.setDrawingCacheEnabled(true);
                         Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
                         imageLayout.setDrawingCacheEnabled(false);
 
-                        try {
-                            //Write file
-                            String filename = "bitmap.png";
-                            FileOutputStream stream = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
-                            tempImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-                            //Cleanup
-                            stream.close();
-                            tempImage.recycle();
-
-                            //Pop intent
-                            Intent in1 = new Intent(getApplicationContext(), ShareImage.class);
-                            in1.putExtra("image", filename);
-//                            startActivity(in1);
-                            FragmentManager fm = getFragmentManager();
-                            ShareImage imageDialog = new ShareImage();
-                            imageDialog.show(fm, "Share Image");
+                        FragmentManager fm = getFragmentManager();
+                        ShareImage imageDialog = new ShareImage(tempImage);
+                        imageDialog.show(fm, "Share Image");
 
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-//                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-//                        byte[] byteArray = byteArrayOutputStream.toByteArray();
-//
-//                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-//                        Intent i = new Intent(getApplicationContext(), ShareImage.class);
-//                        i.putExtra("image", tempImage);
-//
-//                        FragmentManager fm = getFragmentManager();
-//                        ShareImage shareImage = new ShareImage();
-
-
-                    }
-                }).start();
             }
         });
 
@@ -1201,84 +1165,84 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-    private void createStory() {
-        String loggedInUser = "";
-
-        if (Login.getLoggedinUserId() == "") {
-            FileInputStream fis = null;
-
-            try {
-                fis = CameraView.this.openFileInput("user");
-                InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader bufferedReader = new BufferedReader(isr);
-                loggedInUser = bufferedReader.readLine();
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            loggedInUser = Login.getLoggedinUserId();
-        }
-
-
-        imageLayout.setDrawingCacheEnabled(true);
-        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
-        imageLayout.setDrawingCacheEnabled(false);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-        Util.postImage(loggedInUser, encodedImage, true);
-
-    }
-
-
-
-    private void sendImage() {
-        String loggedInUser = "";
-
-        if (Login.getLoggedinUserId() == "") {
-            FileInputStream fis = null;
-
-            try {
-                fis =CameraView.this.openFileInput("user");
-                InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader bufferedReader = new BufferedReader(isr);
-                loggedInUser = bufferedReader.readLine();
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            loggedInUser = Login.getLoggedinUserId();
-        }
-
-        imageLayout.setDrawingCacheEnabled(true);
-        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
-        imageLayout.setDrawingCacheEnabled(false);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-        Util.postImage(loggedInUser, encodedImage, false);
-
-    }
+//    private void createStory() {
+//        String loggedInUser = "";
+//
+//        if (Login.getLoggedinUserId() == "") {
+//            FileInputStream fis = null;
+//
+//            try {
+//                fis = CameraView.this.openFileInput("user");
+//                InputStreamReader isr = new InputStreamReader(fis);
+//                BufferedReader bufferedReader = new BufferedReader(isr);
+//                loggedInUser = bufferedReader.readLine();
+//            }
+//            catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else {
+//            loggedInUser = Login.getLoggedinUserId();
+//        }
+//
+//
+//        imageLayout.setDrawingCacheEnabled(true);
+//        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+//        imageLayout.setDrawingCacheEnabled(false);
+//
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+//        byte[] byteArray = byteArrayOutputStream.toByteArray();
+//
+//        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//
+//        Util.postImage(loggedInUser, encodedImage, true);
+//
+//    }
+//
+//
+//
+//    private void sendImage() {
+//        String loggedInUser = "";
+//
+//        if (Login.getLoggedinUserId() == "") {
+//            FileInputStream fis = null;
+//
+//            try {
+//                fis =CameraView.this.openFileInput("user");
+//                InputStreamReader isr = new InputStreamReader(fis);
+//                BufferedReader bufferedReader = new BufferedReader(isr);
+//                loggedInUser = bufferedReader.readLine();
+//            }
+//            catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else {
+//            loggedInUser = Login.getLoggedinUserId();
+//        }
+//
+//        imageLayout.setDrawingCacheEnabled(true);
+//        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+//        imageLayout.setDrawingCacheEnabled(false);
+//
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+//        byte[] byteArray = byteArrayOutputStream.toByteArray();
+//
+//        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//
+//        Util.postImage(loggedInUser, encodedImage, false);
+//
+//    }
 
 
 

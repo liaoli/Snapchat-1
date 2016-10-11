@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class Util {
 
-    public  static String getPostDataString(HashMap<String, String> params){
+    public static String getPostDataString(HashMap<String, String> params){
         try {
             StringBuilder result = new StringBuilder();
             boolean first = true;

@@ -3,444 +3,444 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.0_1ddf79644e066f90de602a4c2e817a9452a6b175\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="8a36d229011e75f0caef408e1adf0d3fd4d94e02">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-tasks-9.4.0_982be26f26e129d51001816c87afa1efbec2dcb0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_e95b8bdd0337047106c60232d04e6774168ad250\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-sasl-provided-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="0c0b9c74a41a70e3b3870a2a49eda1b706623f83">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-sasl-provided-4.1.6-SNAPSHOT_403bbe9ac021487813333b56a2f20c1af09b7e16\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="88848548ab56d4fbf3d2d1b0c85bf1ff9b4c1f4b">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-9.4.0_54de1fa4a31bf39f10c0343bdcf71f3a7cc779e8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.0_901974e38ec4e1347bdf0e5131d0a28b5d1a995e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="3dee4ce5844d39d843d503fb8fe04e51e5bfffac">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-9.4.0_ca259654e66fe2356e166d94cb5be02d833259e0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-android-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="1d04ad00fb0c7491aa8d262b3458c6b05440018a">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-android-4.1.6-SNAPSHOT_84c402ef6afaf83e038a156ba3af3d8d1efd3206\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_a8972f4c733747e47e8ca4bf9c41c61d9ddfb450\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-videochat-webrtc\2.6.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="2bd872901b1b0fed5662bf773e73a192b0443da7">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.quickblox-quickblox-android-sdk-videochat-webrtc-2.6.1_6aca7a99861319e790c53d7b8c42e61cc19bcb66\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_cbf52f0b09c20dc926225c32d51ebed84b92fcd7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-core\2.6.1\jars\libs\qb-gson2.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="6c57970ea4e56ab3ba566bed5848dba5ae6f3df8">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\qb-gson2.2.1_cac46216a4cbe39928ea9d948b4fc6da7c5d3552\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.0_04f82f154ace4856dab82b1896d5654127ebd76b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.0_b00868616abdee243afabc169b7f8f9496e5b191\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.0_7f3e0e8d8fbabf20c9b76d5d7e134abd1058a653\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\de.measite.minidns\minidns\0.1.7\993582d1455b93a5723d2af4b39d8679735b3550\minidns-0.1.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="993582d1455b93a5723d2af4b39d8679735b3550">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\minidns-0.1.7_8a0ae85bfc505db1c3f22e6465a4b115a1118abb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.0_e4b3a5ff91518b4fd9e25b5fece140656a4d7045\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-im-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="1b0f44d1d6a86a61274132238265e432fb7a3da0">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-im-4.1.6-SNAPSHOT_d7fe4d3068cf0914d538f5aa2dfa9dbb8a8c7001\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\me.dm7.barcodescanner\zxing\1.9\jars\classes.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/me.dm7.barcodescanner/zxing/1.9/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
         sha1="760ff0a866a9b3b7fe4a91cfe6439d9dc93cea7c">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.dm7.barcodescanner-zxing-1.9_50255cf4a076dd7d530c9cfbdb20262318aca2d4\classes.dex" />
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.dm7.barcodescanner-zxing-1.9_75817520a3ea82e935a7e12077c394dbe3e7a3df/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-util-cache\0.4.2\4aa590f2a44d49444dcd3bb082017bf0b46f2ff7\jxmpp-util-cache-0.4.2.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.4.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="4aa590f2a44d49444dcd3bb082017bf0b46f2ff7">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\jxmpp-util-cache-0.4.2_570168d234d4dee38ccf000fb86323dbc388e081\classes.dex" />
+        sha1="8a36d229011e75f0caef408e1adf0d3fd4d94e02">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.4.0_810c39d2f6c4d90104b477b7864acef1ceb54309/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="3b7173b3df4c7029699919414400041f64519e34">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-iid-9.4.0_28053504c7f5af89009413936b947e3f08ba20ff\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="c2ef302c7ba10133feaa4c47a330b1d6b32ed8b3">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_f739dfc8818dd655da169535ebec2f8269ed77ae\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.1\2287494d4f5f9f3a9a2bb6980e3f32053721b315\core-3.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\core-3.2.1_e8e20c0542c1651c4c5237326ffc6bf335903d2a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.0_572f324177391fb83827f8662372e49769a30abf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\me.dm7.barcodescanner\core\1.9\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="ceda0650ec225b9c0143ed8ff1c010d4e621a423">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.dm7.barcodescanner-core-1.9_89326edabff08951eeea063e64dd282e356cca0d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.3_3f0f5b81494d90d52af39b3392a3b7439cd01032\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\design\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="23eb0d2998a782213b56168cbf23a0688b9111d9">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-24.2.0_1dd6d05053f52ebc0bdf1244204dc7e4b5f571f8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="c10df7344e31161852c20bb8143fc37319aa10ec">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-9.4.0_1d41cc5cdf2e1b0dce101e4e706c44179fea8339\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-experimental-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="b3bdd06e8f3d8e9e7790d7ee5fe7350ce11bd040">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-experimental-4.1.6-SNAPSHOT_a67fdc9a62f71f5a68df60e58ad8d21c723fa7af\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-resolver-minidns-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="a11e3fa0d9a7c44815a0346bd1db1b18f3950770">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-resolver-minidns-4.1.6-SNAPSHOT_af59470bf4c05913540f59d2cc892df253661caa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-core-4.1.6-SNAPSHOT.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="143cea8f9f37319afb5c47c40d2c51da6abe2691">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-core-4.1.6-SNAPSHOT_54f84ed91b7c6b1c32f1fafb6c67c83ee1365a5d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.0_a0d6ec296905f93b3d107f82a0ab11057cee91fa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="7c9d76060914982499f6daaae8d0c9406be69eb5">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_bd6196fa35dc1fe72da1009e589b685ed3b8d42d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.0\support-annotations-24.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.0_95462b848841063793254448c59e3d33c35abb5e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-videochat-webrtc\2.6.1\jars\libs\libjingle_peerconnection.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-videochat-webrtc/2.6.1/jars/libs/libjingle_peerconnection.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
         sha1="5d2d533a55ebb6352ffa74991609d76c6ecc4daa">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\libjingle_peerconnection_20d36bfbee0413bb9b88e2a5f59284a90ea0522f\classes.dex" />
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/libjingle_peerconnection_f1aeb60be7c77eecd83e537a2931a25fdfda26fe/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.4.0\jars\classes.jar"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-util-cache/0.4.2/4aa590f2a44d49444dcd3bb082017bf0b46f2ff7/jxmpp-util-cache-0.4.2.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="4b6d9b70f93bbeb872d0948bc064ae3f3f2bcbac">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-messaging-9.4.0_433547c390a2e15c154bb99301bba5331b8cd919\classes.dex" />
+        sha1="4aa590f2a44d49444dcd3bb082017bf0b46f2ff7">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/jxmpp-util-cache-0.4.2_28f8389123704b87c0482346da8a6d65a5cf5543/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/design/24.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_cd62d6baebe88acb3dcfca66940ad8cc57cce593\classes.dex" />
+        sha1="23eb0d2998a782213b56168cbf23a0688b9111d9">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.0_563c96d9af9736f015892502b3e9bed902f7128b/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-core\2.6.1\jars\classes.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-im-4.1.6-SNAPSHOT.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="0846aa8e4e32b86e63f820877ab518e09ffa22d3">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.quickblox-quickblox-android-sdk-core-2.6.1_cd6268ffea29684e7c5109fa2a48e5ca4f2b4e4d\classes.dex" />
+        sha1="1b0f44d1d6a86a61274132238265e432fb7a3da0">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-im-4.1.6-SNAPSHOT_f629fb2a318103c36bc67787848dd1b7b41b99b0/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-extensions-4.1.6-SNAPSHOT.jar"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="03433e8a40c6dd2f10d155947ade6ffa6e85b539">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-extensions-4.1.6-SNAPSHOT_272391bce3757225c3f8f865ce9d00deeb181b60\classes.dex" />
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.3_36157e994ede0b57e0b484668972aee8b6e0c7cc/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\libs\smack-tcp-4.1.6-SNAPSHOT.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-core-4.1.6-SNAPSHOT.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="977e0f15437e3135fd71fcfc43ff016d26db6e0c">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-tcp-4.1.6-SNAPSHOT_1c5b7c1696dcb98b87ab0271abf846bbc33ed265\classes.dex" />
+        sha1="143cea8f9f37319afb5c47c40d2c51da6abe2691">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-core-4.1.6-SNAPSHOT_55bd783705367f134c2a8b1aeadb79e252c19466/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.0\jars\classes.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.0_373b0da90d538a8eaef0b6e61913aea3493ad697\classes.dex" />
+        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.0_be1c1a254adc426b4657d4799ab4287986dae325/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-core\0.4.2\a4c8ce09be6ec90479be74290e381de4288c9569\jxmpp-core-0.4.2.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="a4c8ce09be6ec90479be74290e381de4288c9569">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\jxmpp-core-0.4.2_fc79ee193011f6be8c81ad711c9dd8ac85a17a82\classes.dex" />
+        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.0_1cac6601f33df3ef1328d3e72915c7f6d3cddb2b/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.4.0\jars\classes.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="a440fb3fec30ff925e9f601cc458fb6671834cb2">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.4.0_4d5ebf4732ba76d9fd6e95bf68612c2b8542b586\classes.dex" />
+        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_3eed218374f45eb4686a7d1cd23da1fa0bb0c4b3/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.quickblox\quickblox-android-sdk-chat\2.6.1\jars\classes.jar"
+        jar="/Users/Sina/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.0/support-annotations-24.2.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="720b36b822d3f6a7ec3e32c693e8a7e81ebd0d53">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.quickblox-quickblox-android-sdk-chat-2.6.1_8a07173e6dc645e883a2311fd5d3afc50ae34be7\classes.dex" />
+        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.0_c36486486aa2153e984e8246d9347e16136b9d9d/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.4.0\jars\classes.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="18b5697c65c4fe5b7381613b8b8ae9ac52e26fa7">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-9.4.0_403df1ec95fda46c9ded24d100e885c875fb5b66\classes.dex" />
+        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.0_2ae7fbe537a51b8a67b789f42d5d08e75d407f9c/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="618485fef3ebe12127f7622abbc9b5b39057b5c2">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-9.4.0_bedc133eb78c7f3a5d8773aa2b8151004008ab78\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.0_75f8ce6be2a447860d65fbebc2d415a1cbc4f5fc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\libs\internal_impl-24.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.1"
-        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_ef06adc68e2f57245bb542f2d6ae6ac7e01ace84\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/libs/internal_impl-24.2.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
         sha1="60d7b23621d31e6f42f4f76f16af467e57a20cda">
-        <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_643fab4d8cc665acd515632ff7f5c78a2bfe44c2\classes.dex" />
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_2f37ebeaabe015667224fabac6214bbc13911e10/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="3b7173b3df4c7029699919414400041f64519e34">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-9.4.0_81c0e24ce557e94a56f11fb13425420b9f67f7f3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-android-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="1d04ad00fb0c7491aa8d262b3458c6b05440018a">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-android-4.1.6-SNAPSHOT_e9cdfd828a5c3774c26468d766467136edf0a7b5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.0_9276e7dfc2424777b28215088a613f97dc47b078/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.0_4c74a3dad8d5bee206c2198dbfeff699699842aa/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="618485fef3ebe12127f7622abbc9b5b39057b5c2">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.4.0_4ab4654f27e2afa278475634d74ad933e657e22a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.2.1/2287494d4f5f9f3a9a2bb6980e3f32053721b315/core-3.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/core-3.2.1_4209cf5947a7ac5e3fb62106ac6edf7aa5fbe064/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-tcp-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="977e0f15437e3135fd71fcfc43ff016d26db6e0c">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-tcp-4.1.6-SNAPSHOT_52d75ea0b9f594e658b70848fbad29db2e67832d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_ff971683bc7b5e289ec9d09edf3e4e7a20b41d62/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="3dee4ce5844d39d843d503fb8fe04e51e5bfffac">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.4.0_51001fa41f807a94ab49fc0981f782703861d83f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/de.measite.minidns/minidns/0.1.7/993582d1455b93a5723d2af4b39d8679735b3550/minidns-0.1.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="993582d1455b93a5723d2af4b39d8679735b3550">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/minidns-0.1.7_fda6c4d21fd58899a750e7cb2ffb99a4d2994ff8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c10df7344e31161852c20bb8143fc37319aa10ec">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-9.4.0_4f350183ed78e5182a6958e1c545174d1712b389/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-experimental-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="b3bdd06e8f3d8e9e7790d7ee5fe7350ce11bd040">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-experimental-4.1.6-SNAPSHOT_8841000242e0956a7292f9e45b92329deb7d01d5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-extensions-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="03433e8a40c6dd2f10d155947ade6ffa6e85b539">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-extensions-4.1.6-SNAPSHOT_92bc335f4dec2da1ba700a158e26db93c9d10d09/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="a440fb3fec30ff925e9f601cc458fb6671834cb2">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-9.4.0_09b9df16f3f10cc2bf618c14482c16b2cef1e20c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="4b6d9b70f93bbeb872d0948bc064ae3f3f2bcbac">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-9.4.0_9c6798f51daed3cd399fa9c471dccd12a8098146/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-core/2.6.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="0846aa8e4e32b86e63f820877ab518e09ffa22d3">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.quickblox-quickblox-android-sdk-core-2.6.1_9b40c46081a067b8a0547bbc7c20929820a75b95/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_3c41db3b6c78986e8390149da2b30e475167997d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.0_d5d6d56faf2d4944c736a10e9ccee3ec4d774896/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.0_0d781b31fe880fa492ed50b4b448df1251573ec3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="ea6dde3abffa5d0e16af23a67be788bd78d968a3">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_24680d2f37ea5769d4ad6dfad4e292d268f7b3ff/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.0_8e940d0d06028ad4071a40da031649532334cd27/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.0_d675738e37ad7125af5b8bc1987e1ad7d240470f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/me.dm7.barcodescanner/core/1.9/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="ceda0650ec225b9c0143ed8ff1c010d4e621a423">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.dm7.barcodescanner-core-1.9_d34f5456a213731265a23ebed754c93bb5657d27/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_69c541030c38cbc1f5050ea57a5070fb285d8fba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-sasl-provided-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="0c0b9c74a41a70e3b3870a2a49eda1b706623f83">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-sasl-provided-4.1.6-SNAPSHOT_8754b0b0c0a96086b076aebac971dbd564b972d4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/libs/smack-resolver-minidns-4.1.6-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="a11e3fa0d9a7c44815a0346bd1db1b18f3950770">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-resolver-minidns-4.1.6-SNAPSHOT_cf356ffc1314e1071c24bfd4c104d12f4f3e7679/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-chat/2.6.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="720b36b822d3f6a7ec3e32c693e8a7e81ebd0d53">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.quickblox-quickblox-android-sdk-chat-2.6.1_08dad99e272df4d1878b3d5e4529aec62aa93756/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_63d4f823e9ff7cf300985597224d1ca0a237dea2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-videochat-webrtc/2.6.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="2bd872901b1b0fed5662bf773e73a192b0443da7">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.quickblox-quickblox-android-sdk-videochat-webrtc-2.6.1_c8484b41b6b506fededea378656d3ff04c1d70c3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.0_7eec60a626ab2caad056cfbbfda1ae2f4b4aa0af/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.quickblox/quickblox-android-sdk-core/2.6.1/jars/libs/qb-gson2.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6c57970ea4e56ab3ba566bed5848dba5ae6f3df8">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/qb-gson2.2.1_f64942c7e175b08e95c0787d31e3c12dd1192dee/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="18b5697c65c4fe5b7381613b8b8ae9ac52e26fa7">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.4.0_3efd9bb9b73c51d16488fb339607484be2363e97/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6fbf93201ec705236309a00143be6a6c50d6d00a">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_2c3d849308178ca64ddf681da06e3807703f2e34/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="88848548ab56d4fbf3d2d1b0c85bf1ff9b4c1f4b">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.4.0_0f85fd5ec52a01343fcbe9c6c5b6efa916b6c170/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Sina/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-core/0.4.2/a4c8ce09be6ec90479be74290e381de4288c9569/jxmpp-core-0.4.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="a4c8ce09be6ec90479be74290e381de4288c9569">
+        <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/jxmpp-core-0.4.2_6fa6b49b7d0afffbd6b3d5b8aad76586df6d0b27/classes.dex" />
     </item>
 
 </items>
