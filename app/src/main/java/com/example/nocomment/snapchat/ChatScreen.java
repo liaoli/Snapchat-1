@@ -215,7 +215,22 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         date.setText("Today" + " / " + dateForToday);
 
         // enable gesture for going back chat list
+//        mGestureDetector = new GestureDetector(this);
         mGestureDetector = new GestureDetector(this);
+
+
+        // enable gesture on listview but also disable gesture to open drawer
+        msgContainer.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(mGestureDetector.onTouchEvent(motionEvent)){
+                    return true;
+                }
+                return false;
+            }
+        });
+
         chatSrnLayout.setOnTouchListener(this);
 
         // initialize and set adapter for chat msg container
@@ -405,9 +420,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatAdapter.add(sendImg);
         scrollMyListViewToBottom();
 
-
-
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -424,8 +436,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
                 String response = Util.postImage(Login.myId, encodedImage, false);
                 Util.sendNotification("b", friend, response, 2);
-
-//                Util.postImage(Login.myId, response, false);
 
             }
         }).start();

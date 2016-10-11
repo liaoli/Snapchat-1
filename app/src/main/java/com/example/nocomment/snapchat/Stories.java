@@ -75,7 +75,7 @@ public class Stories extends AppCompatActivity{
 
     private GestureDetector.OnGestureListener mOnGesture = new GestureDetector.SimpleOnGestureListener() {
 
-        private int verticalMinDistance = 10;
+        private int verticalMinDistance = 200;
         private int minVelocity = 0;
         @Override
         public boolean onDown(MotionEvent e) {

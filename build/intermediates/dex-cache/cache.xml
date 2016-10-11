@@ -102,21 +102,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="21.1.2"
-        sha1="88848548ab56d4fbf3d2d1b0c85bf1ff9b4c1f4b">
-        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.4.0_d640fbefed5858dd2fbef0ff4e5724b3877aceaf/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.4.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
         sha1="4b6d9b70f93bbeb872d0948bc064ae3f3f2bcbac">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-9.4.0_947d6e4e26734ccaadc6ffc0c6035c7afc504d05/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="21.1.2"
+        sha1="88848548ab56d4fbf3d2d1b0c85bf1ff9b4c1f4b">
+        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.4.0_d640fbefed5858dd2fbef0ff4e5724b3877aceaf/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -196,7 +196,7 @@
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
-        sha1="a49ab17398392fd85ab5795958d5f609b7cb8e06">
+        sha1="5716c6c615bb834c394993e5385c058accf86fc2">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_601c5bcc72891c6a7927a85ef74fddc7f2c7f58e/classes.dex" />
     </item>
     <item
@@ -331,7 +331,7 @@
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
-        sha1="d510b903259c97a36d3575e26adf370e6e791db9">
+        sha1="1474988a5b88217b5237229f6e0198e8bb4984c3">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a6306dfc0363ef6ee4003a6c1cc1afd17c2e5127/classes.dex" />
     </item>
 
