@@ -95,6 +95,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
 
         mGestureDetector = new GestureDetector(this);
 
+
         chatListWhole.setOnTouchListener(this);
 
         new Thread(new Runnable() {

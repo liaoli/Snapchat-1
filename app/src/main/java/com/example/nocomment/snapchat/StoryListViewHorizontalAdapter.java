@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by guomingsun on 10/10/16.
  */
@@ -16,8 +18,8 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    public StoryListViewHorizontalAdapter(Context con){
-        mInflater= LayoutInflater.from(con);
+    public StoryListViewHorizontalAdapter(Context context){
+        mInflater= LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
@@ -28,10 +30,11 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
     public Object getItem(int position) {
         return position;
     }
-    private ViewHolder vh    =new ViewHolder();
+    private ViewHolder viewHolder    =new ViewHolder();
     private static class ViewHolder {
 
-        private ImageView im;
+        private ImageView imageItem;
+        private TextView textItem;
     }
     @Override
     public long getItemId(int position) {
@@ -42,12 +45,12 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null){
             convertView = mInflater.inflate(R.layout.item_in_story_listview, null);
-            vh.im=(ImageView)convertView.findViewById(R.id.imgStory);
+            viewHolder.imageItem=(ImageView)convertView.findViewById(R.id.imgStory);
+            viewHolder.textItem = (TextView) convertView.findViewById(R.id.textStory);
 
-            convertView.setTag(vh);
-        }else{
-            vh=(ViewHolder)convertView.getTag();
         }
+
+        viewHolder.textItem.setText("Test done");
         return convertView;
     }
 }

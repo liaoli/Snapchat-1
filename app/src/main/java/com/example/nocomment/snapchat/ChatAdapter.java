@@ -131,6 +131,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
                     .centerCrop()
                     .into(imgMsg);
 
+
 //            URL newurl = null;
 //            try {
 //                newurl = new URL(getItem(position).getMsg());

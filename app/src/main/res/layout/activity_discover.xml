@@ -12,7 +12,7 @@
         android:layout_height="50sp"
         android:background="@color/white">
         <TextView
-            android:id="@+id/chatTitle"
+            android:id="@+id/discoverTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center"
@@ -32,5 +32,13 @@
 
 
     </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/themeFrame"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>

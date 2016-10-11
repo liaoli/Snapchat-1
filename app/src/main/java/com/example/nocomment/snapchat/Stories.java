@@ -15,7 +15,7 @@ public class Stories extends AppCompatActivity{
 
     private ImageView backToChat;
     private ImageView storyGoToDcv;
-//    private RelativeLayout storiesLayout;
+    private RelativeLayout storiesLayout;
     private StoryListViewHorizontal storyListView;
     private StoryListViewHorizontalAdapter storyListViewAdapter;
 
@@ -32,14 +32,14 @@ public class Stories extends AppCompatActivity{
         mGestureDetector = new GestureDetector(this, mOnGesture);
 
         backToChat = (ImageView) findViewById(R.id.storyBackToCma);
-//        storiesLayout = (RelativeLayout) findViewById(R.id.storiesLayout);
+        storiesLayout = (RelativeLayout) findViewById(R.id.storiesLayout);
         storyGoToDcv = (ImageView) findViewById(R.id.storyGoToDcv);
 //
 //        storiesLayout.setOnTouchListener(this);
-//        storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
-//        storyListViewAdapter = new StoryListViewHorizontalAdapter(this);
-//        storyListViewAdapter.notifyDataSetChanged();
-//        storyListView.setAdapter(storyListViewAdapter);
+        storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
+        storyListViewAdapter = new StoryListViewHorizontalAdapter(this);
+        storyListViewAdapter.notifyDataSetChanged();
+        storyListView.setAdapter(storyListViewAdapter);
 
         backToChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +60,17 @@ public class Stories extends AppCompatActivity{
                 startActivity(intent);
                 overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 Stories.this.finish();
+            }
+        });
+
+        storyListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(mGestureDetector.onTouchEvent(motionEvent)){
+                    return false;
+                }
+                return true;
+
             }
         });
 

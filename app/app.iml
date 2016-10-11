@@ -133,6 +133,7 @@
     <orderEntry type="library" exported="" name="play-services-base-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="quickblox-android-sdk-core-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
+    <orderEntry type="library" exported="" name="jsoup-1.9.2" level="project" />
     <orderEntry type="library" exported="" name="quickblox-android-sdk-videochat-webrtc-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-impl-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-core-9.4.0" level="project" />
