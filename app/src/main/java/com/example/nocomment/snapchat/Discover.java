@@ -23,6 +23,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Discover extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
@@ -38,13 +40,12 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
 
-    private String url = "http://edition.cnn.com";
+    private String url = "http://edition.cnn.com/2016/10/11/politics/donald-trump-republican-paul-ryan-2016-election/index.html";
     private String url2 = "http://www.mobile01.com";
+    private ArrayList<String> bunchUrl = new ArrayList<String>();
+    private ArrayList<String> imageUrlArray = new ArrayList<String>();
+    private ArrayList<String> bunchTitle = new ArrayList<String>();
 
-    private String source[] = {
-            "https://www.google.com.au/imgres?imgurl=http%3A%2F%2Fwww.halloweenradio.net%2Fimages%2Flayout%2Fsnapcode.png&imgrefurl=http%3A%2F%2Fwww.halloweenradio.net%2Fsnapchat.php&docid=x7kaJi9UA0bwjM&tbnid=jLydJaD1fbjN1M%3A&w=1024&h=1024&client=safari&bih=917&biw=1751&ved=0ahUKEwjbsYytqtLPAhVHXD4KHf8NBOgQMwgzKAMwAw&iact=mrc&uact=8",
-            "https://www.google.com.au/imgres?imgurl=http%3A%2F%2Fi2.cdn.turner.com%2Fmoney%2Fdam%2Fassets%2F160329142702-snapchat-maturing-780x439.jpg&imgrefurl=http%3A%2F%2Fmoney.cnn.com%2F2016%2F03%2F29%2Ftechnology%2Fsnapchat%2F&docid=Rf2yJdlTyM_nRM&tbnid=d2eqaRRsG87TrM%3A&w=780&h=439&client=safari&bih=917&biw=1751&ved=0ahUKEwjbsYytqtLPAhVHXD4KHf8NBOgQMwhsKDQwNA&iact=mrc&uact=8"
-    };
 
     String title;
     String imgUrl;
@@ -83,26 +84,54 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
         @Override
         public void run() {
             try {
-                Document doc = Jsoup.connect(url).get();
+
+                bunchUrl.add("http://edition.cnn.com/2016/10/11/politics/donald-trump-republican-paul-ryan-2016-election/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/12/politics/lavrov-russia-us-election/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/11/arts/michael-wolf-photography/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/10/politics/hillary-clinton-donald-trump-nasty-race/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/10/arts/maurizio-savini-singapore-chewing-gum-art/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/05/arts/stolen-dutch-artworks-westfries-museum/index.html");
+                bunchUrl.add("http://money.cnn.com/2016/09/28/technology/volkswagen-id-electric/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/03/arts/painting-bought-for-25-dollars-could-be-an-original-raphael/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/03/design/former-jails-transformed/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/03/autos/laferrari-aperta-paris-motor-show/index.html");
+                bunchUrl.add("http://money.cnn.com/2016/10/11/news/economy/south-africa-pravin-gordhan-fraud/index.html");
+                bunchUrl.add("http://edition.cnn.com/2016/10/08/politics/donald-trump-video-women-remarks-republicans/index.html");
 
 
-                Elements featureImage = doc.getElementsByTag("img");
-                int index = 0;
-                for (Element el : featureImage) {
-                    //for each element  get the srs url
-                    if(index == 0){
-                        imgUrl = el.absUrl("src");
+                for(int i = 0; i < bunchUrl.size(); i++){
+                    Document doc = Jsoup.connect(bunchUrl.get(i)).get();
+                    Elements featureImage = doc.getElementsByTag("img");
+                    int index = 0;
+                    for (Element el : featureImage) {
+                        //for each element  get the srs url
+                        if(index == 3)
+                            imageUrlArray.add(el.absUrl("src"));
+                        index++;
                     }
-
-
+                    String tempTitle = doc.title();
+                    bunchTitle.add(tempTitle);
 
                 }
-                title = doc.title();
-//                imgUrl = getImageFromLinkRel(doc);
+
+//                Document doc = Jsoup.connect(url).get();
+//
+//
+//                Elements featureImage = doc.getElementsByTag("img");
+//                int index = 0;
+//                for (Element el : featureImage) {
+//                    //for each element  get the srs url
+//
+//                    if(index == 3)
+//                        imgUrl= el.absUrl("src");
+//
+//                    index++;
+//                }
+//                title = doc.title();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            handler.sendEmptyMessage(5);
+            handler.sendEmptyMessage(0);
         }
     };
 
@@ -112,27 +141,37 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
         public void handleMessage(Message msg){
             super.handleMessage(msg);
 
-            WebItem[] webItem = {
-                    new WebItem("Snap", source[0]),
-                    new WebItem("Chat", source[1]),
-                    new WebItem("Snap1", imgUrl),
-                    new WebItem("Chat1", imgUrl),
-                    new WebItem("Chat2", imgUrl),
-                    new WebItem("Snap2", imgUrl),
-                    new WebItem("Chat2", imgUrl),
-                    new WebItem("Snap2", imgUrl),
-                    new WebItem("Chat2", imgUrl),
-                    new WebItem("Snap2", imgUrl),
-                    new WebItem("Chat2", imgUrl),
-                    new WebItem("Snap2", imgUrl),
-                    new WebItem("Chat2", imgUrl),
-                    new WebItem("Snap2", imgUrl),
+//            WebItem[] webItem = {
+//                    new WebItem(title, imgUrl),
+//                    new WebItem("Chat", imgUrl),
+//                    new WebItem("Snap1", imgUrl)
+////                    new WebItem("Chat1", imgUrl[2]),
+////                    new WebItem("Chat2", imgUrl[3]),
+////                    new WebItem("Snap2", imgUrl[4]),
+////                    new WebItem("Chat2", imgUrl[5]),
+////                    new WebItem("Snap2", imgUrl[6]),
+////                    new WebItem("Chat2", imgUrl[7]),
+//
+//            };
 
+            WebItem webItem0 = new WebItem(bunchTitle.get(0), imageUrlArray.get(0), bunchUrl.get(0));
+            WebItem webItem1 = new WebItem(bunchTitle.get(1), imageUrlArray.get(1), bunchUrl.get(1));
+            WebItem webItem2 = new WebItem(bunchTitle.get(2), imageUrlArray.get(2), bunchUrl.get(2));
+            WebItem webItem3 = new WebItem(bunchTitle.get(3), imageUrlArray.get(3), bunchUrl.get(3));
+            WebItem webItem4 = new WebItem(bunchTitle.get(4), imageUrlArray.get(4), bunchUrl.get(4));
+            WebItem webItem5 = new WebItem(bunchTitle.get(5), imageUrlArray.get(5), bunchUrl.get(5));
+            WebItem webItem6 = new WebItem(bunchTitle.get(6), imageUrlArray.get(6), bunchUrl.get(6));
+            WebItem webItem7 = new WebItem(bunchTitle.get(7), imageUrlArray.get(7), bunchUrl.get(7));
+            WebItem webItem8 = new WebItem(bunchTitle.get(8), imageUrlArray.get(8), bunchUrl.get(8));
+            WebItem webItem9 = new WebItem(bunchTitle.get(9), imageUrlArray.get(9), bunchUrl.get(9));
+            WebItem webItem10 = new WebItem(bunchTitle.get(10), imageUrlArray.get(10), bunchUrl.get(10));
+            WebItem webItem11 = new WebItem(bunchTitle.get(11), imageUrlArray.get(11), bunchUrl.get(11));
+
+            WebItem[] webItem = {
+                    webItem0, webItem1, webItem2, webItem3, webItem4, webItem5, webItem6, webItem7,
+                    webItem8, webItem9, webItem10, webItem11
             };
 
-            webItem[0].setWebTitle(title);
-            webItem[0].setWebUrl(imgUrl);
-            webItem[1].setWebUrl(imgUrl);
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
             RecylerViewAdapter recylerViewAdapter = new RecylerViewAdapter(Discover.this, webItem);
             recyclerView.setAdapter(recylerViewAdapter);

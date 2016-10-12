@@ -3,6 +3,15 @@
 
     <item
         is-multidex="true"
+        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="21.1.2"
+        sha1="6d7d803871e3203465f71a163e7af104f807b446">
+        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.1.1_ba0b92d8e84b0493e8183ded7875cfe8f23d99ec/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -36,15 +45,6 @@
         revision="21.1.2"
         sha1="c10df7344e31161852c20bb8143fc37319aa10ec">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-9.4.0_bb6db9910fe9c349d00b2f6cec282b2be81fa151/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="21.1.2"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_77f72bfe98573d854b7fd50e65b3863cced22ad2/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -108,6 +108,15 @@
         revision="21.1.2"
         sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_e59f70984c1c51a12ae09b474821aa04ec60e637/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.github.chrisbanes/PhotoView/1.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="21.1.2"
+        sha1="81d41e53c215976ce172b9f61ef1e8fc2d67cf79">
+        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.chrisbanes-PhotoView-1.3.0_c3cb8a6136bfd0b4a5bacc3b8d10b3f506a84e49/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -192,12 +201,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/guomingsun/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jar="/Users/guomingsun/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.1.1/support-annotations-24.1.1.jar"
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_470fa5653d16b811a8f7026a241ec96bcdc21e8f/classes.dex" />
+        sha1="3af19f153122737b372622fa6c81dd11a1c6b999">
+        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.1.1_33bec1780f9e4d41d48b6319e7918cac8c25890e/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -205,7 +214,7 @@
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
-        sha1="4eadd97cffd9eb50ca8eb46e451e0bbfa4c9b54c">
+        sha1="3e36c1e88ca059124dfbfc31d85890934aff99e6">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_601c5bcc72891c6a7927a85ef74fddc7f2c7f58e/classes.dex" />
     </item>
     <item
@@ -246,15 +255,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="21.1.2"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_174585faf673f74f9482870e8247187a27bcbea0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/guomingsun/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
         jumboMode="true"
         optimize="true"
@@ -288,6 +288,15 @@
         revision="21.1.2"
         sha1="a11e3fa0d9a7c44815a0346bd1db1b18f3950770">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-resolver-minidns-4.1.6-SNAPSHOT_ac1ef4cd158f60771fe8d34bb850cd86b5f9afe5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.1/jars/libs/internal_impl-24.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="21.1.2"
+        sha1="f78c2f395cb096f9dc1dc07e729922b8fcd3c4f5">
+        <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.1.1_86f04071977e85ffd518b2bbd3180bb3128e7192/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -340,7 +349,7 @@
         jumboMode="true"
         optimize="true"
         revision="21.1.2"
-        sha1="94f47b3de31b8c562840adc09f18a2b72d74d57e">
+        sha1="f8b5966c98e081d6239826c8f133bf347f3610e1">
         <dex dex="/Users/guomingsun/Documents/Android/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a6306dfc0363ef6ee4003a6c1cc1afd17c2e5127/classes.dex" />
     </item>
 

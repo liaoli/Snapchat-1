@@ -1,9 +1,11 @@
 package com.example.nocomment.snapchat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,13 +43,22 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+
+        Picasso.with(context)
+                .load(webItem[position].getWebUrl())
+
+                .into(holder.imgItem);
+
         holder.txtItem.setText(webItem[position].getWebTitle());
-//        Picasso.with(context)
-//                .load(webItem[position].getWebUrl())
-//                .resize(100, 100)
-//                .centerCrop()
-//                .into(holder.imgItem);
+
+        holder.imgItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webItem[position].getWebViewUrl()));
+                context.startActivity(intent);
+            }
+        });
 
 //        InputStream input = null;
 //        try {

@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -202,7 +203,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         date = (TextView) findViewById(R.id.dateToday);
         chatUserName = (TextView) findViewById(R.id.chatUserName);
 
-
         Bundle extras = getIntent().getExtras();
         userName = extras.getString("userName");
         chatTitle.setText(userName);
@@ -306,9 +306,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 cameraBtn.setVisibility(View.INVISIBLE);
             }
         }, 6000);
-
-
-
 
     }
 

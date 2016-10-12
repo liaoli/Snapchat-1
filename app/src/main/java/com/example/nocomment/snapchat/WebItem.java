@@ -8,11 +8,13 @@ public class WebItem {
 
     private String webTitle;
     private String webUrl;
+    private String webViewUrl;
 
 
-    public WebItem(String webTitle, String webUrl) {
+    public WebItem(String webTitle, String webUrl, String webViewUrl) {
         this.webTitle = webTitle;
         this.webUrl = webUrl;
+        this.webViewUrl = webViewUrl;
     }
 
     public void setWebTitle(String webTitle) {
@@ -29,5 +31,13 @@ public class WebItem {
 
     public String getWebUrl() {
         return webUrl;
+    }
+
+    public String getWebViewUrl() {
+        return webViewUrl;
+    }
+
+    public void setWebViewUrl(String webViewUrl) {
+        this.webViewUrl = webViewUrl;
     }
 }
