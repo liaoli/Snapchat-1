@@ -252,4 +252,8 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
     }
 
 
+
+
+
+
 }

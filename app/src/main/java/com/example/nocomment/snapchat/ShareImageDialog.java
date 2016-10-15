@@ -45,6 +45,7 @@ public class ShareImageDialog extends DialogFragment {
 
     Button btnStory;
     Button btnShare;
+    Button btnShareWithFriends;
     Bitmap bitmap;
     LinearLayout shareImageFrag;
     ArrayList<String> selectedFriends;
@@ -112,6 +113,9 @@ public class ShareImageDialog extends DialogFragment {
 
         shareImageFrag.setVisibility(View.VISIBLE);
 
+        friendListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+
         btnStory = (Button) view.findViewById(R.id.story);
         btnStory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,15 +125,35 @@ public class ShareImageDialog extends DialogFragment {
         });
 
 
-        btnShare = (Button) view.findViewById(R.id.share);
-        btnShare.setOnClickListener(new View.OnClickListener() {
+        btnShareWithFriends = (Button) view.findViewById(R.id.shareWithFriends);
+        btnShareWithFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (friendListView.getVisibility() == View.VISIBLE) {
                     friendListView.setVisibility(View.GONE);
                 }
                 else {
-                    ShareImage();
+                    showFriends();
+                }
+
+                if (friendListView != null) {
+                    if (btnShare.getVisibility() == View.VISIBLE) {
+                        btnShare.setVisibility(View.GONE);
+                    } else {
+                        btnShare.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
+
+
+        btnShare = (Button) view.findViewById(R.id.share);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!selectedFriends.isEmpty()) {
+                    shareImage();
                 }
 
             }
@@ -141,14 +165,21 @@ public class ShareImageDialog extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = chatListAdapter.getItem(position);
 
+                friendListView.setItemChecked(position, true);
+                friendListView.setSelection(position);
+
+
+
                 if (selectedFriends.contains(item)) {
+
                     selectedFriends.remove(item);
                 }
                 else {
                     selectedFriends.add(item);
                 }
 
-                Toast.makeText(getActivity(), "You clicked " + item , Toast.LENGTH_LONG)
+
+                Toast.makeText(getActivity(), selectedFriends.toString(), Toast.LENGTH_LONG)
                         .show();
             }
         });
@@ -190,14 +221,13 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
-    private void sendImage() {
+    private void shareImage() {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 String loggedInUser = getLoggedInUserId();
-
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -206,8 +236,9 @@ public class ShareImageDialog extends DialogFragment {
 
                 String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                Util.postImage(loggedInUser, encodedImage, false);
+                String imageLink = Util.postImage(loggedInUser, encodedImage, false);
 
+                Util.sendNotification(Login.getLoggedinUserId(), selectedFriends, imageLink, 2);
             }
         }).start();
 
@@ -219,7 +250,7 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
-    private void ShareImage() {
+    private void showFriends() {
 
         new Thread(new Runnable() {
             @Override
