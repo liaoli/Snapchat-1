@@ -25,7 +25,7 @@ public class CameraScreen extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String response =util.sendFriendRequest("a","b");
+//                        String response =util.sendFriendRequest("a","b");
 
                     }
                 }).start();
@@ -38,15 +38,17 @@ public class CameraScreen extends AppCompatActivity {
 
 
             public void onClick(View v){
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(CameraScreen.this, Webview.class);
+//
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Intent intent = new Intent(CameraScreen.this, Webview.class);
+//                        startActivity(intent);
+//
+//                    }
+//                }).start();
+                Intent intent = new Intent(CameraScreen.this, Discover.class);
                         startActivity(intent);
-
-                    }
-                }).start();
             }
 
         });

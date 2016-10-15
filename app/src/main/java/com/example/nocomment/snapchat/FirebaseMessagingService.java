@@ -15,6 +15,8 @@ import com.google.firebase.messaging.RemoteMessage;
  * Created by Luna on 17/09/2016.
  */
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+
+
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
     //onMessageReceived() get called if a new message is received from Firebase Cloud Message
     @Override
@@ -42,10 +44,14 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
     private void sendMessage(String userid,String message){
         Intent intent = new Intent(this, FriendShipRequest.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);
         intent.putExtra("message",message);
         startActivity(intent);
+
+
     }
 
     private void sendImage(String userid,String message){
