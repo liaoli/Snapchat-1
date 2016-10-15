@@ -452,5 +452,158 @@ public class Util {
         return reponse;
     }
 
+    public static String postSubscribe(String id,String topicName){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            URL url = new URL("http://130.56.252.250/snapchat/subscribe.php");
+
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(15000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            OutputStream os = connection.getOutputStream();
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            postDataParams.put("topicName", topicName);
+
+            writer.write(Util.getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+    /*{"discovery":[{"tagName":"CNN","item":[{"iconUrl":"https:\/\/pbs.twimg.com\/media\/CuAK2a8WAAQNlj5.jpg","url":"http:\/\/people.com\/celebrity\/sean-penn-leila-george-event-girlfriend\/"},{"iconUrl":"https:\/\/pbs.twimg.com\/media\/CuAK2a8WAAQNlj5.jpg","url":"http:\/\/people.com\/tv\/ashton-kutcher-mad-laura-prepon-kept-ben-foster-engagement-secret\/"}]},{"tagName":"People","item":[{"iconUrl":"https:\/\/assets01.magshop.com\/au\/assets\/product\/0006015_australian-womens-weekly-food-single-issues_220.jpeg","url":"http:\/\/www.heraldsun.com.au\/lifestyle\/food\/tastecomau-seasons\/dill-salmon-tikka\/news-story\/112db7ffd0a08c066fdf3a4672edccec"},{"iconUrl":"https:\/\/assets01.magshop.com\/au\/assets\/product\/0006015_australian-womens-weekly-food-single-issues_220.jpeg","url":"http:\/\/www.heraldsun.com.au\/lifestyle\/food\/tastecomau-seasons\/dill-salmon-tikka\/news-story\/112db7ffd0a08c066fdf3a4672edccec"}]},{"tagName":"MTV","item":[]}]}
+   */
+    public static String getDiscovery(){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+
+            String str="http://130.56.252.250/snapchat/getDiscovery.php";
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+    public static String getSubscribeDiscovery(String id){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            String paramater= Util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getSubscription.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+    /*{"stories":[{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8710a8cb54.png","time":"2016-10-08 04:07:38"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8713bc0f72.png","time":"2016-10-08 04:08:27"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8714838f3e.png","time":"2016-10-08 04:08:40"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8716f5ab87.png","time":"2016-10-08 04:09:19"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f87324140a0.png","time":"2016-10-08 04:16:36"},{"user":"c","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8735f16c18.png","time":"2016-10-08 04:17:35"},{"user":"d","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8748e391ba.png","time":"2016-10-08 04:22:38"}]}  */
+    public static String getStories(String id){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            String paramater= Util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
 
 }

@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -26,12 +27,12 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    private WebItem[] webItem;
+    private ArrayList<WebItem> webItems;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, WebItem[] webItem) {
+    public RecyclerViewAdapter(Context context, ArrayList<WebItem> webItems) {
         this.context = context;
-        this.webItem = webItem;
+        this.webItems = webItems;
     }
 
     @Override
@@ -46,17 +47,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Picasso.with(context)
-                .load(webItem[position].getWebUrl())
+                .load(webItems.get(position).getWebUrl())
 
                 .into(holder.imgItem);
 
-        holder.txtItem.setText(webItem[position].getWebTitle());
+
+        holder.txtItem.setText(webItems.get(position).getWebTitle());
 
         holder.imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webItem[position].getWebViewUrl()));
+//
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webItems.get(position).getWebViewUrl()));
+//                context.startActivity(intent);
+
+                Intent intent = new Intent(context, WebViewWindows.class);
+                intent.putExtra("url", webItems.get(position).getWebViewUrl());
                 context.startActivity(intent);
+
             }
         });
 
@@ -75,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return webItem.length;
+        return webItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

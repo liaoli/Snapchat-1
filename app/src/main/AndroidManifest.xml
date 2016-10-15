@@ -56,6 +56,7 @@
         <activity android:name=".DeviceListActivity"/>
         <activity android:name=".QRScanner"/>
         <activity android:name=".AddFriend"/>
+        <activity android:name=".WebViewWindows"/>
 
         <service android:name=".FirebaseMessagingService">
             <intent-filter>

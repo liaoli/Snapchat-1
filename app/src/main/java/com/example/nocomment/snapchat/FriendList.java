@@ -92,9 +92,6 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                     });
 
 
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

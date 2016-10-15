@@ -38,6 +38,7 @@ public class ChatFriendListAdapter extends ArrayAdapter<String>{
             convertView = mInflater.inflate(R.layout.item_in_friend_list, null);
             ImageView addFriend = (ImageView) convertView.findViewById(R.id.addFriend);
             TextView friend = (TextView) convertView.findViewById(R.id.userNameFriend);
+
             addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
