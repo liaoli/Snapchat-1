@@ -169,7 +169,6 @@ public class ShareImageDialog extends DialogFragment {
                 friendListView.setSelection(position);
 
 
-
                 if (selectedFriends.contains(item)) {
 
                     selectedFriends.remove(item);
@@ -177,7 +176,6 @@ public class ShareImageDialog extends DialogFragment {
                 else {
                     selectedFriends.add(item);
                 }
-
 
                 Toast.makeText(getActivity(), selectedFriends.toString(), Toast.LENGTH_LONG)
                         .show();
@@ -206,7 +204,8 @@ public class ShareImageDialog extends DialogFragment {
 
                 String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                Util.postImage(loggedInUser, encodedImage, true);
+                String imageLink = Util.postImage(loggedInUser, encodedImage, true);
+                Util.sendNotification(Login.getLoggedinUserId(), selectedFriends, imageLink, 3);
 
 
             }
@@ -239,12 +238,16 @@ public class ShareImageDialog extends DialogFragment {
                 String imageLink = Util.postImage(loggedInUser, encodedImage, false);
 
                 Util.sendNotification(Login.getLoggedinUserId(), selectedFriends, imageLink, 2);
+
+
             }
         }).start();
 
-//        Toast.makeText(getActivity().getApplicationContext(), "Story Saved Successfully",
-//                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Shared Successfully",
+                Toast.LENGTH_SHORT).show();
+
         shareImageFrag.setVisibility(View.GONE);
+        selectedFriends.clear();
         dismiss();
 
     }

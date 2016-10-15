@@ -23,7 +23,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     public static final String FRIEND_MESSAGE_ACCEPTED = "FRIEND_MESSAGE_ACCEPTED";
     public static final String FRIEND_IMAGE_ACCEPTED = "FRIEND_IMAGE_ACCEPTED";
-
+    public static final String FRIEND_STORY_RECEIVED = "FRIEND_STORY_RECEIVED";
 
     //onMessageReceived() get called if a new message is received from Firebase Cloud Message
     @Override
@@ -38,6 +38,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 break;
             case "sendImage":
                 sendImage(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
+                break;
+            case "sendStory":
+                sendStory(remoteMessage.getData().get("user"));
         }
         // showNotification(remoteMessage.getData().get("type"),remoteMessage.getData().get("message"));
     }
@@ -65,6 +68,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
     }
+
+
+    private void sendStory(String userid){
+        Intent intent = new Intent(FRIEND_STORY_RECEIVED);
+        intent.putExtra("userid",userid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+    }
+
+
     //  show a notification for received message
     private void showNotification(String name, String remoteMessage){
         Intent intent = new Intent(this, MainActivity.class);
