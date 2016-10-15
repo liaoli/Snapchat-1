@@ -1,9 +1,14 @@
 package com.example.nocomment.snapchat;
 
+import android.app.Activity;
+import android.content.Context;
+
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -22,6 +27,12 @@ import java.util.Map;
  * Created by Luna on 17/09/2016.
  */
 public class Util {
+
+    private Context context;
+
+    public Util(Context context) {
+        this.context = context;
+    }
 
     public static String getPostDataString(HashMap<String, String> params){
         try {
@@ -290,7 +301,7 @@ public class Util {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
             String paramater= Util.getPostDataString(postDataParams);
-            String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
+            String str="http://130.56.252.250/snapchat/getFriends.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
@@ -440,7 +451,6 @@ public class Util {
         }
         return reponse;
     }
-
 
 
 }

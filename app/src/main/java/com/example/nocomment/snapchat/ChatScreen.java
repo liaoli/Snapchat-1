@@ -4,9 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
@@ -16,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +29,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -47,6 +54,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -57,10 +70,13 @@ import com.google.android.gms.common.server.converter.StringToIntConverter;
 
 import java.util.ArrayList;
 
+import org.jivesoftware.smack.chat.Chat;
 import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatScreen extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
@@ -86,38 +102,36 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private LinearLayout chatSrnLayout;
     private GestureDetector mGestureDetector;
     private TextView chatTitle;
+    private TextView chatUserName;
 
     private TextView date;
 
-    private ImageView discoverBtn;
-    private ImageView scanBtn;
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
+
+    private String userName;
+    private IntentFilter filter;
+
+
+    // send and receive related constants (result code)
+    private int PICK_IMAGE = 5;
+    private String selectedImagePath;
+
+    /*
+     * video call related
+     */
+    String login = "login";
+
 
 
 
     private final int CAMERA_PIC_REQUEST = 2;
 
+    private FirebaseMessagingService mChatService = null;
+    public static final int MESSAGE_READ = 2;
+    public static final int IMAGE_READ = 3;
 
-
-    /* *******************************
-     * Bluetooth related declaration *
-     * *******************************
-     */
-    // local bluetooth adapter
-    private BluetoothAdapter mBluetoothAdapter = null;
-
-    // member object for the bluetooth chat services
-    private BluetoothService mChatService = null;
-
-    private String mConnectedDeviceName = null;
-
-    private StringBuffer mOutStringBuffer;
-
-    // intent request code
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
 
 
     /**
@@ -133,14 +147,14 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         super.onCreate(savedInstanceState);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.chat_drawer_user);
-
-        // get bluetooth adapter
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        setupChat();
 
 
-//        if(mBluetoothAdapter == null){
-//            openDialog("Warning", "Your device does not have bluetooth supports");
-//        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(FirebaseMessagingService.FRIEND_MESSAGE_ACCEPTED));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mImageReceiver,
+                new IntentFilter(FirebaseMessagingService.FRIEND_IMAGE_ACCEPTED));
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -151,34 +165,22 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
-        if(mChatService != null)
-            mChatService.stop();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(mChatService != null){
-            if(mChatService.getState() == BluetoothService.STATE_NONE);{
-                mChatService.start();
-            }
-        }
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-
-        } else{
-            if(mChatService == null)
-                setupChat();
-        }
     }
 
     private void setupChat(){
@@ -199,9 +201,12 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatSrnLayout = (LinearLayout) findViewById(R.id.chatSrnLayout);
         chatTitle = (TextView) findViewById(R.id.chatTitle);
         date = (TextView) findViewById(R.id.dateToday);
+        chatUserName = (TextView) findViewById(R.id.chatUserName);
 
-        discoverBtn = (ImageView) findViewById(R.id.discoverableBtn);
-        scanBtn = (ImageView) findViewById(R.id.scanBtn);
+        Bundle extras = getIntent().getExtras();
+        userName = extras.getString("userName");
+        chatTitle.setText(userName);
+        chatUserName.setText(userName);
 
         // set up top textview to day of the week
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
@@ -210,31 +215,32 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         date.setText("Today" + " / " + dateForToday);
 
         // enable gesture for going back chat list
+//        mGestureDetector = new GestureDetector(this);
         mGestureDetector = new GestureDetector(this);
+
+
+        // enable gesture on listview but also disable gesture to open drawer
+        msgContainer.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(mGestureDetector.onTouchEvent(motionEvent)){
+                    return true;
+                }
+                return false;
+            }
+        });
+
         chatSrnLayout.setOnTouchListener(this);
 
         // initialize and set adapter for chat msg container
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 
-        // notification for the user
-        openDialog("Notification", "By clicking Circle upper left corner can make device " +
-                "\"Discoverable\"" +
-                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
-
-//        // get bluetooth adapter
-//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//
-//        // ask user to turn on the bluetooth
-//        if(!mBluetoothAdapter.isEnabled()){
-//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//        }
-//
-//        if(mBluetoothAdapter == null){
-//            openDialog("Warning", "Your device does not have bluetooth supports");
-//        }
-
+//        // notification for the user
+//        openDialog("Notification", "By clicking Circle upper left corner can make device " +
+//                "\"Discoverable\"" +
+//                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
 
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
@@ -274,9 +280,16 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+//                Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                intent.setType("image/*");
+//                startActivityForResult(intent, 0);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
+
             }
         });
 
@@ -288,32 +301,56 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
-        discoverBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mBluetoothAdapter.isEnabled())
-                    ensureDiscoverable();
-
+        cameraBtn.postDelayed(new Runnable() {
+            public void run() {
+                cameraBtn.setVisibility(View.INVISIBLE);
             }
-        });
-
-        scanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mBluetoothAdapter.isEnabled()){
-                    Intent intent = new Intent();
-                    intent.setClass(ChatScreen.this, DeviceListActivity.class);
-                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SECURE);
-                }
-
-            }
-        });
-
-        mChatService = new BluetoothService(ChatScreen.this, mHandler);
-        mOutStringBuffer = new StringBuffer("");
-
+        }, 6000);
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            // do decode and send image
+            Uri selectedImageUri = data.getData();
+            final Bitmap bitmap;
+            selectedImagePath = getPath(selectedImageUri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                sendImg(selectedImagePath, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here
+        return uri.getPath();
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -347,11 +384,123 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    private void sendMsg(String msg) {
-        byte[] send = msg.getBytes();
-        mChatService.write(send);
-        mOutStringBuffer.setLength(0);
 
+
+    private void sendMsg(String msg) {
+//        byte[] send = msg.getBytes();
+        final String newMsg = msg;
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg sendMsg = new ChatMsg(ChatMsg.RIGHT_MSG, msg, timeForNow);
+        chatAdapter.add(sendMsg);
+        scrollMyListViewToBottom();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> friend = new ArrayList<String>();
+                friend.add(userName);
+                String response = Util.sendNotification("b", friend, newMsg, 1);
+
+            }
+        }).start();
+
+    }
+
+    private void sendImg(String img, final Bitmap bitmap){
+        final String newImg = img;
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        final String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg sendImg = new ChatMsg(ChatMsg.RIGHT_IMG, img, timeForNow);
+        chatAdapter.add(sendImg);
+        scrollMyListViewToBottom();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> friend = new ArrayList<String>();
+                friend.add(userName);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+
+
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                String response = Util.postImage(Login.getLoggedinUserId(), encodedImage, false);
+                Util.sendNotification(Login.getLoggedinUserId(), friend, response, 2);
+
+            }
+        }).start();
+    }
+
+    public void receiveMsg(String msg){
+
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg rcvMsg = new ChatMsg(ChatMsg.LEFT_MSG, msg, timeForNow);
+        chatAdapter.add(rcvMsg);
+        scrollMyListViewToBottom();
+
+    }
+    public void receiveImg(String img){
+
+        Calendar rightNow = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String timeForNow = sdf.format(rightNow.getTime());
+        ChatMsg rcvImg = new ChatMsg(ChatMsg.LEFT_IMG, img, timeForNow);
+        chatAdapter.add(rcvImg);
+        scrollMyListViewToBottom();
+
+    }
+
+    public Bitmap loadBitmap(String url)
+    {
+        Bitmap bm = null;
+        InputStream is = null;
+        BufferedInputStream bis = null;
+        try
+        {
+            URLConnection conn = new URL(url).openConnection();
+            conn.connect();
+            is = conn.getInputStream();
+            bis = new BufferedInputStream(is, 8192);
+            bm = BitmapFactory.decodeStream(bis);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (bis != null)
+            {
+                try
+                {
+                    bis.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            if (is != null)
+            {
+                try
+                {
+                    is.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bm;
     }
 
     @Override
@@ -418,7 +567,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // TODO Auto-generated method stub
-                                //按下按鈕後執行的動作，沒寫則退出Dialog
+
                             }
                         }
                 )
@@ -436,94 +585,26 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         });
     }
 
-    // confirm device is discoverable
-    private void ensureDiscoverable(){
-        if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-            startActivity(discoverableIntent);
-        }
-    }
-
-    private boolean me = true;
-
-    // handler that gets information back from the BluetoothChatService
-    private final Handler mHandler = new Handler(){
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
-        public void handleMessage(Message msg){
-            switch (msg.what){
-                case Constants.MESSAGE_STATE_CHANGE:
-                    switch (msg.arg1){
-                        case BluetoothService.STATE_CONNECTED:
-                            chatTitle.setText(mConnectedDeviceName);
-                            chatAdapter.clear();
-                            break;
-                        case BluetoothService.STATE_CONNECTING:
-                            chatTitle.setText(R.string.title_connecting);
-                            break;
-                        case BluetoothService.STATE_LISTEN:
-                            break;
-                        case BluetoothService.STATE_NONE:
-                            chatTitle.setText(R.string.title_not_connected);
-                            break;
-                    }
-                    break;
-                case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMsg = new String (writeBuf);
-                    Calendar rightNow = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-                    String timeForNow = sdf.format(rightNow.getTime());
-                    ChatMsg sendMsg = new ChatMsg(me, writeMsg, timeForNow);
-                    chatAdapter.add(sendMsg);
-                    scrollMyListViewToBottom();
-                    break;
-                case Constants.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    String readMsg = new String(readBuf, 0, msg.arg1);
-                    Calendar rightNowRcv = Calendar.getInstance();
-                    SimpleDateFormat sdfRcv = new SimpleDateFormat("hh:mm a");
-                    String timeForNowRcv = sdfRcv.format(rightNowRcv.getTime());
-                    ChatMsg rcvMsg = new ChatMsg(!me, readMsg, timeForNowRcv);
-                    chatAdapter.add(rcvMsg);
-                    scrollMyListViewToBottom();
-                    break;
-                case Constants.MESSAGE_DEVICE_NAME:
-                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-                    Toast.makeText(ChatScreen.this,
-                            "Connected to " + mConnectedDeviceName,
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                case Constants.MESSAGE_TOAST:
-                        Toast.makeText(ChatScreen.this,
-                                msg.getData().getString(Constants.TOAST),
-                                Toast.LENGTH_SHORT).show();
-                    break;
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(FirebaseMessagingService.FRIEND_MESSAGE_ACCEPTED)){
+                String msg=intent.getStringExtra("message");
+                receiveMsg(msg);
+            }
+
+
+        }};
+
+    private BroadcastReceiver mImageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(FirebaseMessagingService.FRIEND_IMAGE_ACCEPTED)){
+                String img=intent.getStringExtra("image");
+                receiveImg(img);
             }
         }
     };
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        switch (requestCode){
-            case REQUEST_CONNECT_DEVICE_SECURE:
-                if(resultCode == Activity.RESULT_OK){
-                    String address =
-                            data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                    mChatService.connect(device);
-                }
-                break;
-            case REQUEST_ENABLE_BT:
-                if(resultCode == Activity.RESULT_OK){
-                    setupChat();
-                } else {
-                    openDialog("Warning", "Bluetooth is still not enabled");
-                }
-        }
-    }
 
 
 

@@ -12,8 +12,11 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
+import android.util.Size;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -27,6 +30,8 @@ import android.hardware.Camera;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 
@@ -40,8 +45,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
-
+import java.util.List;
 
 
 public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -75,6 +81,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Bitmap photo, bitmap;
 
     HandDrawing drawing;
+
+    private List<Camera.Size> supportedPreviewSizes;
+    private Camera.Size previewSize;
 
 
 
@@ -119,6 +128,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         imageCryView = new ImageView(getApplicationContext());
 
 
+
 //        surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View view) {
@@ -141,7 +151,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
             public void onSwipeRight() {
 //                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(CameraView.this, Discover.class);
+                Intent i = new Intent(CameraView.this, ChatList.class);
                 startActivity(i);
             }
             public void onSwipeLeft() {
@@ -220,9 +230,11 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
                 imageLayout.setDrawingCacheEnabled(false);
 
+
                 FragmentManager fm = getFragmentManager();
                 ShareImageDialog imageDialog = new ShareImageDialog(tempImage);
                 imageDialog.show(fm, "Share Image");
+
 
             }
         });
@@ -1058,6 +1070,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+
     public void switchCamera() {
 
         int cameraFacing = 0;
@@ -1126,6 +1139,43 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         camera.startPreview();
 
     }
+
+
+
+
+    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio=(double)h / w;
+
+        if (sizes == null) return null;
+
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        int targetHeight = h;
+
+        for (Camera.Size size : sizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - targetHeight) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - targetHeight);
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+        }
+        return optimalSize;
+    }
+
+
 
 
 
@@ -1394,9 +1444,19 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             btnFlashOff.setVisibility(View.GONE);
         }
 
+//        supportedPreviewSizes = parameters.getSupportedPreviewSizes();
+//
+//        if (supportedPreviewSizes != null) {
+//            previewSize = getOptimalPreviewSize(supportedPreviewSizes,
+//                    getWindowManager().getDefaultDisplay().getWidth(),
+//                    getWindowManager().getDefaultDisplay().getHeight());
+//        }
+//
+//
+//        parameters.setPreviewSize(previewSize.width, previewSize.height);
+
 
         camera.setParameters(parameters);
-
         camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(surfaceHolder);

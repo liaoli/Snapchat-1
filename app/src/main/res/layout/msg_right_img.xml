@@ -19,7 +19,8 @@
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        >
 
         <View
             android:layout_width="0dp"
@@ -34,23 +35,34 @@
             android:layout_gravity="bottom"
             android:textSize="12sp"
             android:textColor="@color/black"/>
-
-        <ImageView
-            android:id="@+id/imgMsg"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/me_msg_pic"
+            android:orientation="vertical"
             android:minWidth="100dp"
             android:minHeight="100dp"
-            android:maxWidth="2000dp"
-            android:maxHeight="200dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp" />
+
+            android:background="@drawable/me_msg_pic">
+
+            <ImageView
+                android:id="@+id/imgMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:minWidth="100dp"
+                android:minHeight="100dp"
+                android:maxWidth="2000dp"
+                android:maxHeight="200dp"
+                />
+
+        </LinearLayout>
+
+
+
 
 
     </LinearLayout>
+
 
 
 </RelativeLayout>

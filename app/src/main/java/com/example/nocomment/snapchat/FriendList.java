@@ -1,18 +1,38 @@
 package com.example.nocomment.snapchat;
 
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static android.R.attr.onClick;
 
 /**
  * Created by guomingsun on 30/9/16.
@@ -23,7 +43,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
     private ListView friendList;
     private ImageView backToChatList;
-
+    private final int MESSAGE_RETRIEVED = 0;
     private ChatFriendListAdapter frdAdapter;
 
     private GestureDetector mGestureDetector;
@@ -31,21 +51,72 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
     private int verticalMinDistance = 10;
     private int minVelocity = 0;
+    private int topVisiblePosition = -1;
+    private TextView topHeader;
+
+    private ArrayList<String> listdata;
+
+    android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
+
+        public boolean handleMessage(Message message) {
+            if (message.what==MESSAGE_RETRIEVED){
+                // update UI
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                try {
+                    JSONObject jObject = new JSONObject(message.obj.toString());
+                    JSONArray jArray = jObject.getJSONArray("user");
+                    listdata = new ArrayList<String>();
+
+                    if (jArray != null) {
+                        for (int i=0;i<jArray.length();i++){
+                            listdata.add(jArray.get(i).toString());
+                        }
+                    }
+                    frdAdapter = new ChatFriendListAdapter(FriendList.this, listdata);
+                    friendList.setAdapter(frdAdapter);
+                    friendList.setOnScrollListener(new AbsListView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                            if (firstVisibleItem != topVisiblePosition) {
+//                                topVisiblePosition = firstVisibleItem;
+//                                final String header = listdata.get(firstVisibleItem).substring(0,1);
+//                                topHeader.setText(header);
+                            }
+                        }
+                    });
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_friend_list);
 
-        friendList = (ListView) findViewById(R.id.chatFriendList);
         backToChatList = (ImageView) findViewById(R.id.backToChatList);
         friendLayout = (RelativeLayout) findViewById(R.id.friendLayout);
-        ArrayList<String> a = new ArrayList<String>();
-        a.add("hello");
-        a.add("bye bye");
+        topHeader = (TextView) findViewById(R.id.frientListHeader);
 
-        frdAdapter = new ChatFriendListAdapter(this, a);
-        friendList.setAdapter(frdAdapter);
+        friendList = (ListView) findViewById(R.id.chatFriendList);
+
+
+
 
         mGestureDetector = new GestureDetector(this);
 
@@ -62,9 +133,33 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
+        ImageView add = (ImageView) findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String loggedInUser = getLoggedInUserId();
+                        String b = Util.getFriends(loggedInUser);
+                        ArrayList<String> a = new ArrayList<String>();
+                        a.add(b);
+                        a.add("bye bye");
+                        Message message = new Message();
+                        message.what = MESSAGE_RETRIEVED;
+                        message.obj = b;
+                        handler.sendMessage(message);
+
+                    }
+                }).start();
+            }
+        });
 
 
     }
+
+
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -113,8 +208,39 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
         return false;
     }
 
+
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return false;
     }
+
+
+
+    private String getLoggedInUserId () {
+        String loggedInUser = "";
+
+        if (Login.getLoggedinUserId() == "") {
+            FileInputStream fis = null;
+
+            try {
+                fis = openFileInput("user");
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+                loggedInUser = bufferedReader.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            loggedInUser = Login.getLoggedinUserId();
+        }
+
+
+        return loggedInUser;
+
+    }
+
+
 }

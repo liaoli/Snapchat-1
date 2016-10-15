@@ -3,18 +3,35 @@ package com.example.nocomment.snapchat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
@@ -24,20 +41,38 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
 public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
     private ArrayList<ChatMsg> msgList;
-    private Activity context;
+    private Context context;
+
+
 
     public ChatAdapter (Context context, ArrayList<ChatMsg> msg) {
         super(context, R.layout.msg_right ,msg);
+        this.context = context;
     }
 
 
     @Override
     public  int getItemViewType(int position){
         ChatMsg item = getItem(position);
-        if(item.isMe())
-            return 1;
-        else
-            return 0;
+
+        int returnType = 5;
+        switch (item.getMsgType()){
+            case(ChatMsg.RIGHT_MSG):
+                returnType = 0;
+                break;
+            case(ChatMsg.LEFT_MSG):
+                returnType = 1;
+                break;
+            case(ChatMsg.RIGHT_IMG):
+                returnType = 2;
+                break;
+            case(ChatMsg.LEFT_IMG):
+                returnType = 3;
+                break;
+
+        }
+
+        return returnType;
     }
 
     // prevent msgContainer clickable
@@ -48,15 +83,15 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        
-        
+
+//
         int viewType = getItemViewType(position);
         // Allign the position of the messages which current user sends
-        if(viewType == 1){
+        if(viewType == 0){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right, parent, false);
-            
+
             ChatMsg chatMsg = getItem(position);
-            
+
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsg);
             TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfo);
             textView.setText(getItem(position).getMsg());
@@ -64,39 +99,54 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.me_msg_pic);
 
-        }else {
+        }else if(viewType == 1){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left, parent, false);
-            
+
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsgRcv);
             TextView txtInfo = (TextView) convertView.findViewById(R.id.txtInfoRcv);
             textView.setText(getItem(position).getMsg());
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.frd_msg_pic);
+        }else if(viewType == 2){
+
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right_img, parent, false);
+
+            PhotoViewAttacher mAttacher;
+            final ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsg);
+            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfo);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 10;
+            imgMsg.setImageBitmap(BitmapFactory.decodeFile(getItem(position).getMsg(),options));
+            imgInfo.setText(getItem(position).getTime());
+
+            mAttacher = new PhotoViewAttacher(imgMsg);
+//            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+//            Display display = wm.getDefaultDisplay();
+
+
+//            textView.setBackgroundResource(R.drawable.frd_msg_pic);
+        } else if(viewType == 3){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left_img, parent, false);
+
+            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsgRcv);
+            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfoRcv);
+            Picasso.with(context)
+                    .load(getItem(position).getMsg())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(imgMsg);
+
+
+            imgInfo.setText(getItem(position).getTime());
+
         }
-        
-        //from name
-        //            TextView textViewMsgOwner = (TextView) convertView.findViewById(R.id.msgOwner);
-        //            textViewMsgOwner.setText(getItem(position).get);
-        
+
         return convertView;
     }
 
 
-//    private void GoToAlbum(){
-//        Intent intent;
-//        if(Build.VERSION.SDK_INT < 19){
-//            intent = new Intent();
-//            intent.setAction(Intent.ACTION_GET_CONTENT);
-//            intent.setType("image/*");
-//
-//        }else{
-//            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            intent.setType("image/*");
-//
-//
-//
-//        }
-//    }
+
+
 
 
 }

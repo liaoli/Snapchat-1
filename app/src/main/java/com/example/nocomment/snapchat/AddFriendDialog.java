@@ -49,7 +49,7 @@ public class AddFriendDialog extends DialogFragment {
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddFriend.class);
+                Intent intent = new Intent(getActivity(), FriendList.class);
                 startActivity(intent);
             }
         });
