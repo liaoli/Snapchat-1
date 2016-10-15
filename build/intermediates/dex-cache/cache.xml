@@ -205,7 +205,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="946f9b0f29b8551c231e83113a3745ad114a30be">
+        sha1="25ff1b268e1a5e8e98705cb40aa8c995dc416a01">
         <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_f739dfc8818dd655da169535ebec2f8269ed77ae\classes.dex" />
     </item>
     <item
@@ -304,7 +304,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="b2d35424f494fb7db9bcccab1ca1197c91c20503">
+        sha1="052e3192d936838f1909b9747bf0a53c0debc004">
         <dex dex="C:\Users\sina\StudioProjects\Snapchat\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_bd6196fa35dc1fe72da1009e589b685ed3b8d42d\classes.dex" />
     </item>
     <item

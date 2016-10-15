@@ -45,10 +45,9 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="100dp"
         android:gravity="center_horizontal"
-        android:textColor="#FFFFFF"
-        android:listSelector="#FFFFFF"
+        android:listSelector="@color/gray"
         android:textSize="10pt"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 
     <Button

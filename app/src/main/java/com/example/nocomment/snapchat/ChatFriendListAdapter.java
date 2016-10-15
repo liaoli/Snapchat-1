@@ -1,6 +1,7 @@
 package com.example.nocomment.snapchat;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class ChatFriendListAdapter extends ArrayAdapter<String>{
         super(context, R.layout.item_in_friend_list, frdList);
         mContext = context;
         mFrdList = frdList;
+
     }
 
 
