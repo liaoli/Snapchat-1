@@ -3,11 +3,13 @@ package com.example.nocomment.snapchat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,6 +23,23 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button loginButton;
     Button signupButton;
+
+    private final int MESSAGE_RETRIEVED = 0;
+    android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
+
+        public boolean handleMessage(Message message) {
+            if (message.what==MESSAGE_RETRIEVED){
+                // update UI
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, message.obj.toString(), duration);
+
+                toast.show();
+
+            }
+            return false;
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 loginButton.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v){
-                        Intent intent = new Intent(MainActivity.this, Login.class);
+                        Intent intent = new Intent(MainActivity.this, FriendShipRequest.class);
                         startActivity(intent);
                     }
 
@@ -50,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 });
                 if(checkUserLogin()){
-                    Intent intent = new Intent(MainActivity.this,CameraScreen.class);
+                    Intent intent = new Intent(MainActivity.this,FriendShipRequest.class);
                     startActivity(intent);
                 }
             }
@@ -74,14 +93,18 @@ public class MainActivity extends AppCompatActivity {
 
             if(response.equals("login successfully"))
             {result = true;}
+            else{ Message message = new Message();
+                message.what = MESSAGE_RETRIEVED;
+                message.obj = response;
+                handler.sendMessage(message);}
             bufferedReader.close();
             isr.close();fis.close();
             return result;
         } catch (FileNotFoundException e) {
-            Log.e("",e.getMessage());
+
             return false;
         } catch (IOException e) {
-            Log.e("", e.getMessage());
+
             return false;
         }
     }
