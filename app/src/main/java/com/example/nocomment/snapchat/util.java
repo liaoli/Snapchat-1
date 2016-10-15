@@ -134,13 +134,13 @@ public class util {
             connection.disconnect();
             }
          catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+             response=e.getMessage();
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         }
 
         return response;
