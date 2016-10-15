@@ -268,13 +268,14 @@ public class util {
         }
         return reponse;
     }
-    public static String getUsers(String id){
+    public static String getUsers(String id,String keyword){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
         String reponse="";
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
+            postDataParams.put("keyword",keyword);
             String paramater= util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
             URL url = new URL(str);
@@ -300,6 +301,42 @@ public class util {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return reponse;
+    }
+    public static String getUserByPhone(String phone){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("phone",phone);
+
+            String paramater= util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getUserByPhone.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //like 'a'
         return reponse;
     }
     public static String getFriends(String id){
@@ -478,7 +515,7 @@ public class util {
             postDataParams.put("ID",id);
             postDataParams.put("topicName",topicName);
             String paramater= util.getPostDataString(postDataParams);
-            String str="http://130.56.252.250/snapchat/subscribe.php?"+paramater;
+            String str="http://130.56.252.250/snapchat/getSubscription.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
@@ -513,6 +550,40 @@ public class util {
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
+            String paramater= util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+    public static String addClickCount(String urlClick){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("URL",urlClick);
             String paramater= util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
             URL url = new URL(str);

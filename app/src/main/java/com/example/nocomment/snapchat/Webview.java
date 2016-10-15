@@ -16,32 +16,18 @@ public class Webview extends AppCompatActivity {
 
     WebView myWebView;
     int index = 0;
-ImageView imageView;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-//        Context context = getApplicationContext();
-//        imageView=(ImageView)findViewById(R.id.imageViewWeb);
-//        Picasso.with(context).load("https://developer.android.com/guide/webapps/webview.html").into(imageView);
 
         myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        stringList.add("http://edition.cnn.com/2016/10/05/arts/stolen-dutch-artworks-westfries-museum/index.html");
-        stringList.add("https://developer.android.com/guide/webapps/webview.html");
 
-        myWebView.loadUrl(stringList.get(index));
-//
-//
-//        SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-//        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                // Insert your code here
-////                myWebView.loadUrl("https://developer.android.com/guide/webapps/webview.html"); // refreshes the WebView
-//            }
-//        });
+        myWebView.loadUrl("https://developer.android.com/guide/webapps/webview.html");
+
     }
 
 
