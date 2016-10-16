@@ -53,7 +53,6 @@
         <activity android:name=".Stories" />
         <activity android:name=".Discover" />
         <activity android:name=".FriendList"/>
-        <activity android:name=".DeviceListActivity"/>
         <activity android:name=".QRScanner"/>
         <activity android:name=".AddFriend"/>
         <activity android:name=".WebViewWindows"/>

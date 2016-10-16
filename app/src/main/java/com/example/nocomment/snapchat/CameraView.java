@@ -3,7 +3,6 @@ package com.example.nocomment.snapchat;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
@@ -12,11 +11,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
-import android.util.Size;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -30,24 +25,16 @@ import android.hardware.Camera;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 
 public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -82,9 +69,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
     HandDrawing drawing;
 
-    private List<Camera.Size> supportedPreviewSizes;
-    private Camera.Size previewSize;
-
 
 
     public static Camera getCameraInstance() {
@@ -96,6 +80,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         }
         return cameraInstance; // returns null if camera is unavailable
     }
+
+
 
 
     @Override
@@ -132,15 +118,13 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 //        surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View view) {
-//                camera = getCameraInstance();
 //                parameters = camera.getParameters();
 //
-//                if (parameters.getSupportedFlashModes() != null) {
-//                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-//                }
-//                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//                if (parameters.getMaxNumDetectedFaces()>0){
+//                    camera.startFaceDetection();
+//                    camera.setParameters(parameters);
 //
-//                camera.setParameters(parameters);
+//                }
 //
 //                return false;
 //            }
@@ -152,11 +136,13 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             public void onSwipeRight() {
 //                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, ChatList.class);
+                overridePendingTransition(R.anim.from_left, R.anim.to_right);
                 startActivity(i);
             }
             public void onSwipeLeft() {
 //                Toast.makeText(CameraView.this, "left", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, Stories.class);
+                overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 startActivity(i);
             }
 
@@ -251,6 +237,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
             }
         });
+
+
+
 
 
 
@@ -1143,42 +1132,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
-        final double ASPECT_TOLERANCE = 0.1;
-        double targetRatio=(double)h / w;
-
-        if (sizes == null) return null;
-
-        Camera.Size optimalSize = null;
-        double minDiff = Double.MAX_VALUE;
-
-        int targetHeight = h;
-
-        for (Camera.Size size : sizes) {
-            double ratio = (double) size.width / size.height;
-            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
-            if (Math.abs(size.height - targetHeight) < minDiff) {
-                optimalSize = size;
-                minDiff = Math.abs(size.height - targetHeight);
-            }
-        }
-
-        if (optimalSize == null) {
-            minDiff = Double.MAX_VALUE;
-            for (Camera.Size size : sizes) {
-                if (Math.abs(size.height - targetHeight) < minDiff) {
-                    optimalSize = size;
-                    minDiff = Math.abs(size.height - targetHeight);
-                }
-            }
-        }
-        return optimalSize;
-    }
-
-
-
-
-
     public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraId, info);
@@ -1227,87 +1180,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
-
-
-
-//    private void createStory() {
-//        String loggedInUser = "";
-//
-//        if (Login.getLoggedinUserId() == "") {
-//            FileInputStream fis = null;
-//
-//            try {
-//                fis = CameraView.this.openFileInput("user");
-//                InputStreamReader isr = new InputStreamReader(fis);
-//                BufferedReader bufferedReader = new BufferedReader(isr);
-//                loggedInUser = bufferedReader.readLine();
-//            }
-//            catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        else {
-//            loggedInUser = Login.getLoggedinUserId();
-//        }
-//
-//
-//        imageLayout.setDrawingCacheEnabled(true);
-//        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
-//        imageLayout.setDrawingCacheEnabled(false);
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-//        byte[] byteArray = byteArrayOutputStream.toByteArray();
-//
-//        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-//
-//        Util.postImage(loggedInUser, encodedImage, true);
-//
-//    }
-//
-//
-//
-//    private void sendImage() {
-//        String loggedInUser = "";
-//
-//        if (Login.getLoggedinUserId() == "") {
-//            FileInputStream fis = null;
-//
-//            try {
-//                fis =CameraView.this.openFileInput("user");
-//                InputStreamReader isr = new InputStreamReader(fis);
-//                BufferedReader bufferedReader = new BufferedReader(isr);
-//                loggedInUser = bufferedReader.readLine();
-//            }
-//            catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        else {
-//            loggedInUser = Login.getLoggedinUserId();
-//        }
-//
-//        imageLayout.setDrawingCacheEnabled(true);
-//        Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
-//        imageLayout.setDrawingCacheEnabled(false);
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        tempImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-//        byte[] byteArray = byteArrayOutputStream.toByteArray();
-//
-//        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-//
-//        Util.postImage(loggedInUser, encodedImage, false);
-//
-//    }
 
 
 
@@ -1444,16 +1316,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             btnFlashOff.setVisibility(View.GONE);
         }
 
-//        supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-//
-//        if (supportedPreviewSizes != null) {
-//            previewSize = getOptimalPreviewSize(supportedPreviewSizes,
-//                    getWindowManager().getDefaultDisplay().getWidth(),
-//                    getWindowManager().getDefaultDisplay().getHeight());
-//        }
-//
-//
-//        parameters.setPreviewSize(previewSize.width, previewSize.height);
+
 
 
         camera.setParameters(parameters);
@@ -1482,6 +1345,5 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         camera.release();
     }
-
 
 }

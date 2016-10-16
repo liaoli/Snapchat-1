@@ -1,5 +1,7 @@
 package com.example.nocomment.snapchat;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -88,6 +90,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.txtItem.setText(webItems.get(position).getWebTitle());
         }
 
+        holder.imgItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                FragmentManager fm = ((Activity) context).getFragmentManager();
+                SubscribeDialog subscribeDialog = new SubscribeDialog(context, webItems.get(position).getWebTitle());
+                subscribeDialog.show(fm, "Hi");
+                return false;
+            }
+        });
+
         holder.imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +110,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(context, WebViewWindows.class);
                 intent.putExtra("url", webItems.get(position).getWebViewUrl());
                 context.startActivity(intent);
+
 
             }
         });

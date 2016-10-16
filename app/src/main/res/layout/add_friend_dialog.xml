@@ -12,10 +12,9 @@
 
 
         <ImageView
-            android:id="@+id/ghostLogo"
-            android:layout_height="80dp"
+            android:id="@+id/qrCode"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:src="@drawable/ghost"
             android:layout_marginTop="30dp" />
 
         <TextView
@@ -29,7 +28,7 @@
             android:textColor="@color/azure"
             android:textSize="10pt"
             android:visibility="visible"
-            android:layout_below="@+id/ghostLogo"/>
+            android:layout_below="@+id/qrCode"/>
 
 
         <Button
@@ -39,9 +38,19 @@
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="100dp"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="Add Friend" />
+
+        <Button
+            android:id="@+id/myFriends"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="My Friends" />
 
 
 

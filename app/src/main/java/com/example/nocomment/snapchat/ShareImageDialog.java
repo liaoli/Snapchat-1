@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
 /**
  * Created by Sina on 10/8/2016.
  */
@@ -50,10 +51,10 @@ public class ShareImageDialog extends DialogFragment {
     LinearLayout shareImageFrag;
     ArrayList<String> selectedFriends;
     private ListView friendListView;
-    private int topVisiblePosition = -1;
     String userId = "";
     private final int MESSAGE_RETRIEVED = 0;
-    private ChatListAdapter chatListAdapter;
+    ArrayAdapter<String> chatListAdapter;
+
 
     public ShareImageDialog() {
         super();
@@ -71,21 +72,34 @@ public class ShareImageDialog extends DialogFragment {
         public boolean handleMessage(Message message) {
             if (message.what == MESSAGE_RETRIEVED) {
                 // update UI
-                Context context = getActivity();
+                final Context context = getActivity();
                 int duration = Toast.LENGTH_SHORT;
+
                 ArrayList<String> friendsList = new ArrayList<>();
+
                 try {
                     JSONObject jObject = new JSONObject(message.obj.toString());
                     JSONArray jArray = jObject.getJSONArray("user");
 
-                    if (jArray != null) {
+                    if (jArray.length() > 0) {
                         for (int i = 0; i < jArray.length(); i++) {
                             friendsList.add(jArray.get(i).toString());
                         }
+
+                        chatListAdapter = new ArrayAdapter<>(context,
+                                R.layout.list_view, friendsList);
+
+                        friendListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                        friendListView.setAdapter(chatListAdapter);
+                        friendListView.setVisibility(View.VISIBLE);
+                        btnShare.setVisibility(View.VISIBLE);
                     }
-                    chatListAdapter = new ChatListAdapter(getActivity(), friendsList);
-                    friendListView.setAdapter(chatListAdapter);
-                    friendListView.setVisibility(View.VISIBLE);
+
+                    else {
+
+                        Toast.makeText(getActivity(),"No friends found",Toast.LENGTH_LONG).show();
+
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -105,15 +119,17 @@ public class ShareImageDialog extends DialogFragment {
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
         userId = getLoggedInUserId();
         selectedFriends = new ArrayList<>();
 
         friendListView = (ListView) view.findViewById(R.id.friendsList);
         shareImageFrag = (LinearLayout) view.findViewById(R.id.shareImageFrag);
 
+
+
         shareImageFrag.setVisibility(View.VISIBLE);
 
-        friendListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
         btnStory = (Button) view.findViewById(R.id.story);
@@ -129,23 +145,16 @@ public class ShareImageDialog extends DialogFragment {
         btnShareWithFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (friendListView.getVisibility() == View.VISIBLE) {
                     friendListView.setVisibility(View.GONE);
+                    btnShare.setVisibility(View.GONE);
                 }
                 else {
                     showFriends();
                 }
-
-                if (friendListView != null) {
-                    if (btnShare.getVisibility() == View.VISIBLE) {
-                        btnShare.setVisibility(View.GONE);
-                    } else {
-                        btnShare.setVisibility(View.VISIBLE);
-                    }
-                }
             }
         });
-
 
 
         btnShare = (Button) view.findViewById(R.id.share);
@@ -154,6 +163,9 @@ public class ShareImageDialog extends DialogFragment {
             public void onClick(View view) {
                 if (!selectedFriends.isEmpty()) {
                     shareImage();
+                }
+                else {
+                    Toast.makeText(getActivity(),"Select a friend first",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -165,20 +177,15 @@ public class ShareImageDialog extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = chatListAdapter.getItem(position);
 
-                friendListView.setItemChecked(position, true);
-                friendListView.setSelection(position);
-
-
                 if (selectedFriends.contains(item)) {
-
                     selectedFriends.remove(item);
+
                 }
                 else {
+                    friendListView.setItemChecked(position, true);
                     selectedFriends.add(item);
                 }
 
-                Toast.makeText(getActivity(), selectedFriends.toString(), Toast.LENGTH_LONG)
-                        .show();
             }
         });
 
@@ -205,14 +212,14 @@ public class ShareImageDialog extends DialogFragment {
                 String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                 String imageLink = Util.postImage(loggedInUser, encodedImage, true);
-                Util.sendNotification(Login.getLoggedinUserId(), selectedFriends, imageLink, 3);
+                Util.sendNotification(loggedInUser, selectedFriends, imageLink, 3);
 
 
             }
         }).start();
 
 
-        Toast.makeText(getActivity().getApplicationContext(), "Story Saved Successfully",
+        Toast.makeText(getActivity().getApplicationContext(), "Story Created Successfully",
                 Toast.LENGTH_SHORT).show();
         shareImageFrag.setVisibility(View.GONE);
         dismiss();
@@ -237,7 +244,7 @@ public class ShareImageDialog extends DialogFragment {
 
                 String imageLink = Util.postImage(loggedInUser, encodedImage, false);
 
-                Util.sendNotification(Login.getLoggedinUserId(), selectedFriends, imageLink, 2);
+                Util.sendNotification(loggedInUser, selectedFriends, imageLink, 2);
 
 
             }
@@ -258,13 +265,10 @@ public class ShareImageDialog extends DialogFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String b = Util.getFriends(getLoggedInUserId());
-                ArrayList<String> a = new ArrayList<String>();
-                a.add(b);
-                a.add("bye bye");
+                String response = Util.getFriends(getLoggedInUserId());
                 Message message = new Message();
                 message.what = MESSAGE_RETRIEVED;
-                message.obj = b;
+                message.obj = response;
                 handler.sendMessage(message);
             }
         }).start();
@@ -296,7 +300,6 @@ public class ShareImageDialog extends DialogFragment {
         return loggedInUser;
 
     }
-
 }
 
 
@@ -309,52 +312,3 @@ public class ShareImageDialog extends DialogFragment {
 
 
 
-
-
-
-
-
-
-
-
-
-//    @Override
-//    public void run() {
-//        friendsListString = Util.getFriends(userId);
-//
-//        try {
-//
-//            JSONObject jObject = new JSONObject(friendsListString.toString());
-//            JSONArray jArray = jObject.getJSONArray("user");
-//            friendsList = new ArrayList<String>();
-//
-//            if (jArray != null) {
-//                for (int i = 0; i < jArray.length(); i++) {
-//                    friendsList.add(jArray.get(i).toString());
-//                }
-//            }
-//        }
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        friendsListAdapter = new ChatFriendListAdapter(getActivity(), friendsList);
-//        friendListView.setAdapter(friendsListAdapter);
-//        friendListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                if (firstVisibleItem != topVisiblePosition) {
-////                                topVisiblePosition = firstVisibleItem;
-////                                final String header = listdata.get(firstVisibleItem).substring(0,1);
-////                                topHeader.setText(header);
-//                }
-//            }
-//        });
-//
-//    }

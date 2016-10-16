@@ -169,12 +169,37 @@
                 android:src="@drawable/ghost"
                 android:layout_gravity="center"/>
 
-            <TextView
-                android:id="@+id/chatUserName"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:paddingTop="250dp"
-                android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/azure"
+                    android:gravity="center"
+                    android:text="User:"
+                    android:textSize="25dp"
+                    />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/chatUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/azure"
+                    android:text="UserName"
+                    android:textSize="25dp" />
+
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -191,22 +216,26 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:paddingLeft="10dp"
-                    android:src="@mipmap/snapchat"/>
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/editname"/>
                 <Button
                     android:id="@+id/editName"
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:textColor="@color/darkgray"
-                    android:textSize="15dp"
-                    android:gravity="start"
-                    android:paddingLeft="10dp"
+                    android:textSize="20dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="20dp"
                     android:text="Edit Name"
                     android:background="@color/transparent" />
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -214,9 +243,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:paddingLeft="10dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/block"/>
 
                 <Button
@@ -224,13 +254,17 @@
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:textColor="@color/darkgray"
-                    android:textSize="15dp"
-                    android:gravity="start"
-                    android:paddingLeft="10dp"
+                    android:textSize="20dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="20dp"
                     android:text="Block"
                     android:background="@color/transparent" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -238,9 +272,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:paddingLeft="10dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/remove"/>
 
                 <Button
@@ -248,9 +283,9 @@
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:textColor="@color/darkgray"
-                    android:textSize="15dp"
-                    android:gravity="start"
-                    android:paddingLeft="10dp"
+                    android:textSize="20dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="20dp"
                     android:background="@color/transparent"
                     android:text="Remove" />
             </LinearLayout>

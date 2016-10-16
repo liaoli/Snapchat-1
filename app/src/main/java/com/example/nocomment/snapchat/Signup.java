@@ -59,43 +59,55 @@ public class Signup extends AppCompatActivity {
                     public void run() {
                         String response = "";
 
-                            if (!pwd.getText().toString().equals(compwd.getText().toString())) {
-                                response = "Password is not consistent";
-                            } else {
-                                response = Util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
-                                if (response.trim().equals("Create user success!")) {
-                                    FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
-                                    firebaseInstanceIDService.registerToken(userName.getText().toString());
+                        if (!pwd.getText().toString().equals(compwd.getText().toString())) {
+                            response = "Password is not consistent";
+                        } else {
+                            response = Util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
+                            if (response.trim().equals("Create user success!")) {
+                                FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
+                                firebaseInstanceIDService.registerToken(userName.getText().toString());
 
-                                    Context context = getApplicationContext();
+                                Context context = getApplicationContext();
 
-                                    FileOutputStream outputStream;
+                                FileOutputStream outputStream;
 
-                                    try {
-                                        outputStream = openFileOutput("user", Context.MODE_PRIVATE);
-                                        outputStream.write(userName.getText().toString().getBytes());
-                                        outputStream.write("\n".getBytes());
-                                        outputStream.write(pwd.getText().toString().getBytes());
-                                        outputStream.close();
+                                try {
+                                    outputStream = openFileOutput("user", Context.MODE_PRIVATE);
+                                    outputStream.write(userName.getText().toString().getBytes());
+                                    outputStream.write("\n".getBytes());
+                                    outputStream.write(pwd.getText().toString().getBytes());
+                                    outputStream.close();
 
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
 
+                                Message message = new Message();
+                                message.what = MESSAGE_RETRIEVED;
+                                message.obj = response;
+                                handler.sendMessage(message);
                             }
-                            Message message = new Message();
-                            message.what = MESSAGE_RETRIEVED;
-                            message.obj = response;
-                            handler.sendMessage(message);
+
+                            else {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+
+                                        Toast.makeText(Signup.this,"Problem with signup, please try again"
+                                                ,Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
 
                         }
-                    }).start();
-                }
-            });
-        }
 
 
-
-
+                    }
+                }).start();
+            }
+        });
     }
+
+
+
+
+}

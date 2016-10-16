@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stories extends AppCompatActivity{
+public class Stories extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
     private ImageView backToChat;
     private ImageView storyGoToDcv;
@@ -60,6 +60,10 @@ public class Stories extends AppCompatActivity{
     private final int MESSAGE_RETRIEVED = 0;
     private final int MESSAGE_RETRIEVED_SUBSCRIBED = 1;
     private final int MESSAGE_RETRIEVED_LIVE = 2;
+
+
+    private int verticalMinDistance = 10;
+    private int minVelocity = 0;
 
     private WebItem[] webItem;
 
@@ -221,6 +225,10 @@ public class Stories extends AppCompatActivity{
 
         liveText = (TextView) findViewById(R.id.liveText);
         subscribedText = (TextView) findViewById(R.id.subscribedStories);
+
+        mGestureDetector = new GestureDetector(this);
+
+        storiesLayout.setOnTouchListener(this);
 //
 //        storiesLayout.setOnTouchListener(this);
         storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
@@ -312,6 +320,67 @@ public class Stories extends AppCompatActivity{
 
         return loggedInUser;
 
+    }
+
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+
+        if (e1.getX() - e2.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
+
+            Intent intent = new Intent();
+            intent.setClass(Stories.this, Discover.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.from_right, R.anim.to_left);
+            Stories.this.finish();
+
+
+        } else if (e2.getX() - e1.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
+
+            Intent intent = new Intent();
+            intent.setClass(Stories.this, CameraView.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.from_left, R.anim.to_right);
+            Stories.this.finish();
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        return mGestureDetector.onTouchEvent(me);
     }
 
 }

@@ -136,7 +136,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(ChatList.this, Stories.class);
+                intent.setClass(ChatList.this, CameraView.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 ChatList.this.finish();
@@ -202,7 +202,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (e1.getX() - e2.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
             Intent intent = new Intent();
-            intent.setClass(ChatList.this, Stories.class);
+            intent.setClass(ChatList.this, CameraView.class);
             startActivity(intent);
             overridePendingTransition(R.anim.from_right, R.anim.to_left);
             ChatList.this.finish();

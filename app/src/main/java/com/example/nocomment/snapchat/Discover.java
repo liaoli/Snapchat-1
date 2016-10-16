@@ -121,6 +121,8 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
 
         discoverLayout.setOnTouchListener(this);
 
+        recyclerView.setOnTouchListener(this);
+
         backToStory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
