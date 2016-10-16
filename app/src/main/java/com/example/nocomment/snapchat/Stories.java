@@ -42,6 +42,7 @@ public class Stories extends AppCompatActivity{
     private StoryListViewHorizontalAdapter friendStoryAdapter;
     private RecyclerView recyclerView;
     private TextView liveText;
+    private TextView subscribedText;
 
     private ArrayList<String> bunchUrl = new ArrayList<String>();
     private ArrayList<String> imageUrlArray = new ArrayList<String>();
@@ -96,6 +97,9 @@ public class Stories extends AppCompatActivity{
 
 
                     }
+                    if(imageUrlArray.size() > 0){
+                        storyListView.setVisibility(View.VISIBLE);
+                    }
 
 
 
@@ -147,6 +151,11 @@ public class Stories extends AppCompatActivity{
 //                    WebItem webItem9 = new WebItem(bunchTitle.get(9), imageUrlArray.get(9), bunchUrl.get(9));
 //                    WebItem webItem10 = new WebItem(bunchTitle.get(10), imageUrlArray.get(10), bunchUrl.get(10));
 //                    WebItem webItem11 = new WebItem(bunchTitle.get(11), imageUrlArray.get(11), bunchUrl.get(11));
+                    if(imageUrlArrayDiscover.size() > 0){
+                        subscribedText.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,8 +189,11 @@ public class Stories extends AppCompatActivity{
                         friendStory.setAdapter(friendStoryAdapter);
 
                     }
-                    liveText.setVisibility(View.VISIBLE);
-                    friendStory.setVisibility(View.VISIBLE);
+                    if(imageUrlArrayLive.size() > 0){
+                        liveText.setVisibility(View.VISIBLE);
+                        friendStory.setVisibility(View.VISIBLE);
+                    }
+
 
 
                 } catch (JSONException e) {
@@ -208,6 +220,7 @@ public class Stories extends AppCompatActivity{
         storyGoToDcv = (ImageView) findViewById(R.id.storyGoToDcv);
 
         liveText = (TextView) findViewById(R.id.liveText);
+        subscribedText = (TextView) findViewById(R.id.subscribedStories);
 //
 //        storiesLayout.setOnTouchListener(this);
         storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);

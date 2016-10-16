@@ -83,16 +83,6 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
                             webItemList.add(new WebItem(bunchTitle.get(i), imageUrlArray.get(i), bunchUrl.get(i)));
                         }
 
-//                        WebItem webItem0 = new WebItem(bunchTitle.get(0), imageUrlArray.get(0), bunchUrl.get(0));
-//                        WebItem webItem1 = new WebItem(bunchTitle.get(1), imageUrlArray.get(1), bunchUrl.get(1));
-//
-//                        WebItem[] webItem = {
-//                                webItem0
-//                                , webItem1
-////                            webItem2, webItem3, webItem4, webItem5, webItem6, webItem7,
-////                            webItem8, webItem9, webItem10, webItem11
-//                        };
-
                         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                         RecyclerViewAdapter recylerViewAdapter = new RecyclerViewAdapter(Discover.this, webItemList);
                         recyclerView.setAdapter(recylerViewAdapter);
@@ -325,3 +315,8 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
         return mGestureDetector.onTouchEvent(me);
     }
 }
+
+
+
+
+

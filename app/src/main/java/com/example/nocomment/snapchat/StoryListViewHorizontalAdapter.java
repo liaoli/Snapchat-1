@@ -1,6 +1,10 @@
 package com.example.nocomment.snapchat;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -61,11 +63,32 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
 
 
         }
+        final int radius = 100;
+        final int margin = 0;
+        final Transformation transformation = new RoundedCornersTransformation(radius, margin);
 
         viewHolder.textItem.setText(webItems.get(position).getWebTitle());
         Picasso.with(context)
                 .load(webItems.get(position).getWebUrl())
+                .transform(transformation)
                 .into(viewHolder.imageItem);
+
+        //0x9933FF
+
+        // 0xFF99CC
+        // 0xFF9999
+        final String tempUrl = webItems.get(position).getWebUrl();
+        viewHolder.imageItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImageViewWindows.class);
+                intent.putExtra("url", tempUrl);
+                context.startActivity(intent);
+            }
+        });
+
+
+
         return convertView;
     }
 

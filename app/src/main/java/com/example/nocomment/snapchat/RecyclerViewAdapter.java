@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,13 +47,46 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        Picasso.with(context)
-                .load(webItems.get(position).getWebUrl())
+        int remainder = position % 5;
 
-                .into(holder.imgItem);
+        switch (remainder){
+            case 0:
+                Picasso.with(context)
+                        .load(webItems.get(position).getWebUrl())
+                        .transform(new ColorLayerImmutable(0x99FF99))
+                        .into(holder.imgItem);
+                break;
+            case 1:
+                Picasso.with(context)
+                        .load(webItems.get(position).getWebUrl())
+                        .transform(new ColorLayerImmutable(0x33FFFF))
+                        .into(holder.imgItem);
+                break;
+            case 2:
+                Picasso.with(context)
+                        .load(webItems.get(position).getWebUrl())
+                        .transform(new ColorLayerImmutable(0x9933FF))
+                        .into(holder.imgItem);
+                break;
+            case 4:
+                Picasso.with(context)
+                        .load(webItems.get(position).getWebUrl())
+                        .transform(new ColorLayerImmutable(0x0066FF))
+                        .into(holder.imgItem);
+                break;
+            case 5:
+                Picasso.with(context)
+                        .load(webItems.get(position).getWebUrl())
+                        .transform(new ColorLayerImmutable(0x3399FF))
+                        .into(holder.imgItem);
+                break;
+        }
 
+        if(position == 3 || position == 5){
 
-        holder.txtItem.setText(webItems.get(position).getWebTitle());
+        } else {
+            holder.txtItem.setText(webItems.get(position).getWebTitle());
+        }
 
         holder.imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +101,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
-
-//        InputStream input = null;
-//        try {
-//            input = new java.net.URL(webItem[position].getWebUrl()).openStream();
-//            holder.imgItem.setImageBitmap(BitmapFactory.decodeStream(input));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        // Decode Bitmap
-
 
     }
 

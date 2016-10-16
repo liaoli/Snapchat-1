@@ -1,39 +1,20 @@
 package com.example.nocomment.snapchat;
 
-import android.app.Activity;
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by guomingsun on 30/08/2016.
@@ -42,6 +23,9 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
     private ArrayList<ChatMsg> msgList;
     private Context context;
+
+    private Animator mCurrentAnimator;
+    private int mShortAnimationDuration;
 
 
 
@@ -82,7 +66,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
 
 //
         int viewType = getItemViewType(position);
@@ -111,7 +95,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right_img, parent, false);
 
-            PhotoViewAttacher mAttacher;
+//            PhotoViewAttacher mAttacher;
             final ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsg);
             TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfo);
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -119,9 +103,21 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             imgMsg.setImageBitmap(BitmapFactory.decodeFile(getItem(position).getMsg(),options));
             imgInfo.setText(getItem(position).getTime());
 
-            mAttacher = new PhotoViewAttacher(imgMsg);
+//            mAttacher = new PhotoViewAttacher(imgMsg);
 //            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 //            Display display = wm.getDefaultDisplay();
+
+
+
+            imgMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ImageViewBitmapWindows.class);
+                    intent.putExtra("url", getItem(position).getMsg());
+                    context.startActivity(intent);
+                }
+            });
+
 
 
 //            textView.setBackgroundResource(R.drawable.frd_msg_pic);
@@ -139,10 +135,22 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
 
             imgInfo.setText(getItem(position).getTime());
 
+            imgMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ImageViewWindows.class);
+                    intent.putExtra("url", getItem(position).getMsg());
+                    context.startActivity(intent);
+                }
+            });
+
+
+
         }
 
         return convertView;
     }
+
 
 
 

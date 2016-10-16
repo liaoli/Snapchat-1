@@ -301,12 +301,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
-        cameraBtn.postDelayed(new Runnable() {
-            public void run() {
-                cameraBtn.setVisibility(View.INVISIBLE);
-            }
-        }, 6000);
-
     }
 
     @Override

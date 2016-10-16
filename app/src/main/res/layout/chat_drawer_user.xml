@@ -44,26 +44,6 @@
                 android:src="@drawable/chatsetting"/>
 
             <ImageView
-                android:id="@+id/discoverableBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="65dp"
-                android:textSize="15dp"
-                android:src="@drawable/discoverable"
-                android:layout_gravity="center_vertical|left"
-                />
-
-
-            <ImageView
-                android:id="@+id/scanBtn"
-                android:layout_width="32dp"
-                android:layout_height="44dp"
-                android:layout_marginRight="70dp"
-                android:layout_gravity="center_vertical|right"
-                android:src="@drawable/scanbtn"
-                />
-
-            <ImageView
                 android:id="@+id/chatBackToChatList"
                 android:layout_width="32dp"
                 android:layout_height="44dp"
@@ -95,38 +75,14 @@
                     android:layout_height="30dp"
                     android:src="@drawable/photo"/>
                 <View
-                    android:layout_width="35dp"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"/>
-
-
-                <ImageView
-                    android:id="@+id/phoneCall"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/call" />
-
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"/>
-
 
                 <ImageView
                     android:id="@+id/cameraBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/camera" />
-
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"/>
-
-                <ImageView
-                    android:id="@+id/videoCallBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/videocall"
-                    android:layout_gravity="left"
-                    />
 
 
             </LinearLayout>
@@ -303,8 +259,6 @@
 
 
     </RelativeLayout>
-
-
 
 
 

@@ -54,18 +54,24 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     }
     private void sendMessage(String userid,String message){
         Intent intent = new Intent(FRIEND_MESSAGE_ACCEPTED);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);
         intent.putExtra("message",message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+
 
 
     }
 
     private void sendImage(String userid,String image){
         Intent intent = new Intent(FRIEND_IMAGE_ACCEPTED);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);
         intent.putExtra("image",image);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+
 
     }
 
