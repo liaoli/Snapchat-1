@@ -302,6 +302,15 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
+        editName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                EditNameDialog editNameDialog = new EditNameDialog(ChatScreen.this);
+                editNameDialog.show(fm, "Hi");
+            }
+        });
+
     }
 
     @Override

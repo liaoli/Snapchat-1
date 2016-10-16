@@ -62,7 +62,7 @@ public class Util {
     public static String login(String user,String password){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
-        String response="";
+        String reponse="";
         try {
             URL url = new URL("http://130.56.252.250/snapchat/login.php");
             connection = (HttpURLConnection) url.openConnection();
@@ -87,23 +87,23 @@ public class Util {
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                response = br.readLine();
+                reponse = br.readLine();
                 br.close();
 
             } else {
-                response= "fail";
+                reponse= "fail";
             }
             connection.disconnect();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            reponse=e.getMessage();
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            reponse=e.getMessage();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            reponse=e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            reponse=e.getMessage();
         }
-        return response;
+        return reponse;
     }
 
     public static String signUP(String user,String email,String password){
@@ -145,13 +145,13 @@ public class Util {
             connection.disconnect();
         }
         catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            response=e.getMessage();
         }
 
         return response;
