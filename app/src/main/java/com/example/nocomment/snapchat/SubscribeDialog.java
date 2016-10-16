@@ -55,7 +55,7 @@ public class SubscribeDialog extends DialogFragment {
 
         public boolean handleMessage(Message message) {
             if (message.what == MESSAGE_RETRIEVED) {
-                getDialog().dismiss();
+
             }
             return false;
         }
@@ -80,9 +80,10 @@ public class SubscribeDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             if(v == subscribeBtn){
-
+                // need to check if the discover has already subscribed
                 Thread thread = new Thread(mutiThread);
                 thread.start();
+                getDialog().dismiss();
             }
         }
     };

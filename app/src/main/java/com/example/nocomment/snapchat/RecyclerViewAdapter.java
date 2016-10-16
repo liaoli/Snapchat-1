@@ -51,6 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         int remainder = position % 5;
 
+        /*
+         *  Use different color filter on the given images
+         */
         switch (remainder){
             case 0:
                 Picasso.with(context)
@@ -84,28 +87,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 break;
         }
 
-        if(position == 3 || position == 5){
+        /*
+         * set title for each discover view
+         */
+        holder.txtItem.setText(webItems.get(position).getWebTitle());
 
-        } else {
-            holder.txtItem.setText(webItems.get(position).getWebTitle());
-        }
-
+        /*
+         *  Open the dialog for subscription when user put their thumb on the image
+         */
         holder.imgItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 FragmentManager fm = ((Activity) context).getFragmentManager();
                 SubscribeDialog subscribeDialog = new SubscribeDialog(context, webItems.get(position).getWebTitle());
-                subscribeDialog.show(fm, "Hi");
+                subscribeDialog.show(fm, "Subscription");
                 return false;
             }
         });
 
+        /*
+         *  open up the webview when user click the image
+         */
         holder.imgItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webItems.get(position).getWebViewUrl()));
-//                context.startActivity(intent);
 
                 Intent intent = new Intent(context, WebViewWindows.class);
                 intent.putExtra("url", webItems.get(position).getWebViewUrl());
@@ -117,12 +122,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-
+    /*
+     *  find how many view are needed
+     */
     @Override
     public int getItemCount() {
         return webItems.size();
     }
 
+    /*
+     * find view from the layout
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView txtItem;
         public ImageView imgItem;

@@ -65,8 +65,6 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
-
-
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -129,8 +127,6 @@ public class ShareImageDialog extends DialogFragment {
 
 
         shareImageFrag.setVisibility(View.VISIBLE);
-
-
 
         btnStory = (Button) view.findViewById(R.id.story);
         btnStory.setOnClickListener(new View.OnClickListener() {

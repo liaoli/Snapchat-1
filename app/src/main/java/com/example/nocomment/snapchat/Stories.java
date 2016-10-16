@@ -71,6 +71,10 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
 
 
 
+    /*
+     *  Handle the message which Network thread get the data from the server
+     *  The message includes Stories, Subscription
+     */
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -145,16 +149,7 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                         recyclerView.setAdapter(recylerViewAdapter);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                     }
-//                    WebItem webItem2 = new WebItem(bunchTitle.get(2), imageUrlArray.get(2), bunchUrl.get(2));
-//                    WebItem webItem3 = new WebItem(bunchTitle.get(3), imageUrlArray.get(3), bunchUrl.get(3));
-//                    WebItem webItem4 = new WebItem(bunchTitle.get(4), imageUrlArray.get(4), bunchUrl.get(4));
-//                    WebItem webItem5 = new WebItem(bunchTitle.get(5), imageUrlArray.get(5), bunchUrl.get(5));
-//                    WebItem webItem6 = new WebItem(bunchTitle.get(6), imageUrlArray.get(6), bunchUrl.get(6));
-//                    WebItem webItem7 = new WebItem(bunchTitle.get(7), imageUrlArray.get(7), bunchUrl.get(7));
-//                    WebItem webItem8 = new WebItem(bunchTitle.get(8), imageUrlArray.get(8), bunchUrl.get(8));
-//                    WebItem webItem9 = new WebItem(bunchTitle.get(9), imageUrlArray.get(9), bunchUrl.get(9));
-//                    WebItem webItem10 = new WebItem(bunchTitle.get(10), imageUrlArray.get(10), bunchUrl.get(10));
-//                    WebItem webItem11 = new WebItem(bunchTitle.get(11), imageUrlArray.get(11), bunchUrl.get(11));
+
                     if(imageUrlArrayDiscover.size() > 0){
                         subscribedText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.VISIBLE);
@@ -217,8 +212,11 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
         setContentView(R.layout.activity_stories);
 
 
-//        mGestureDetector = new GestureDetector(this, mOnGesture);
 
+
+        /*
+         *  find the view from the layout
+         */
         backToChat = (ImageView) findViewById(R.id.storyBackToCma);
         storiesLayout = (RelativeLayout) findViewById(R.id.storiesLayout);
         storyGoToDcv = (ImageView) findViewById(R.id.storyGoToDcv);
@@ -229,17 +227,15 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
         mGestureDetector = new GestureDetector(this);
 
         storiesLayout.setOnTouchListener(this);
-//
-//        storiesLayout.setOnTouchListener(this);
+
         storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
         friendStory = (StoryListViewHorizontal) findViewById(R.id.friendStory);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewStories);
 
-//        friendStoryAdapter = new StoryListViewHorizontalAdapter(this);
-//        friendStoryAdapter.notifyDataSetChanged();
-//        friendStory.setAdapter(friendStoryAdapter);
 
-
+        /*
+         * Button for going from Stories to other activities
+         */
         backToChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,6 +258,9 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
             }
         });
 
+        /*
+         *  Network thread to get the message from the server
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -297,6 +296,9 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
 
     }
 
+    /*
+     *  Get the username for retrieving data
+     */
     private String getLoggedInUserId () {
         String loggedInUser = "";
 
@@ -323,6 +325,9 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
     }
 
 
+    /*
+     *  Gesture for swiping to move activities
+     */
     @Override
     public boolean onDown(MotionEvent e) {
         return false;

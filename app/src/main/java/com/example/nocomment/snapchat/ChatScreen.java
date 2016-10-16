@@ -124,8 +124,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     String login = "login";
 
 
-
-
     private final int CAMERA_PIC_REQUEST = 2;
 
     private FirebaseMessagingService mChatService = null;
@@ -237,11 +235,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 
-//        // notification for the user
-//        openDialog("Notification", "By clicking Circle upper left corner can make device " +
-//                "\"Discoverable\"" +
-//                "\nBy clicking Magnifier upper right corner can enter \"Scanner\"");
-
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
 
@@ -281,16 +274,11 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                intent.setType("image/*");
-//                startActivityForResult(intent, 0);
+
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-
-
             }
         });
 
@@ -463,49 +451,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    public Bitmap loadBitmap(String url)
-    {
-        Bitmap bm = null;
-        InputStream is = null;
-        BufferedInputStream bis = null;
-        try
-        {
-            URLConnection conn = new URL(url).openConnection();
-            conn.connect();
-            is = conn.getInputStream();
-            bis = new BufferedInputStream(is, 8192);
-            bm = BitmapFactory.decodeStream(bis);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally {
-            if (bis != null)
-            {
-                try
-                {
-                    bis.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            if (is != null)
-            {
-                try
-                {
-                    is.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return bm;
-    }
 
     @Override
     public boolean onDown(MotionEvent e) {

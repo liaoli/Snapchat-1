@@ -55,6 +55,9 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
     private ChatListAdapter chatListAdapter;
     private ListView chatList;
 
+    /*
+     *  Handle the message when the thread get the user data from the server
+     */
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -91,25 +94,30 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_chat_list);
 
-
+        /*
+         *  find the view from the layout
+         */
         addNewChat = (ImageView) findViewById(R.id.crtNewChat);
         goToCma = (ImageView) findViewById(R.id.backToCam);
         chat = (TextView) findViewById(R.id.chatTitle);
         chatListWhole = (RelativeLayout) findViewById(R.id.chatListWhole);
         chatList = (ListView) findViewById(R.id.chatList);
 
+        /*
+         *  Enable Gesture
+         */
         mGestureDetector = new GestureDetector(this);
-
-
         chatListWhole.setOnTouchListener(this);
 
+        /*
+         * Network thread to get the friend list
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String b = Util.getFriends(getLoggedInUserId());
                 ArrayList<String> a = new ArrayList<String>();
                 a.add(b);
-                a.add("bye bye");
                 Message message = new Message();
                 message.what = MESSAGE_RETRIEVED;
                 message.obj = b;
@@ -118,6 +126,9 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
         }).start();
 
 
+        /*
+         *  Button for going from ChatList activity to other activities
+         */
         addNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,8 +140,6 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
 
         });
 
-        // supposed to go to camera
-        // since camera has not been finished, i set it go to story
         goToCma.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -139,18 +148,6 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
                 intent.setClass(ChatList.this, CameraView.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.from_right, R.anim.to_left);
-                ChatList.this.finish();
-            }
-        });
-
-
-        chat.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(ChatList.this, CameraView.class);
-                startActivity(intent);
                 ChatList.this.finish();
             }
         });
@@ -167,11 +164,19 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
                 ChatList.this.finish();
             }
         });
+
+        /*
+         *  Enable list view for swiping
+         */
         SwipeDetector swipeDetector = new SwipeDetector();
         chatList.setOnTouchListener(swipeDetector);
 
 
     }
+
+    /*
+     *  Gesture for swiping to move activities
+     */
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -226,6 +231,9 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
     }
 
 
+    /*
+     *  Get the username for retrieving data
+     */
     private String getLoggedInUserId () {
         String loggedInUser = "";
 

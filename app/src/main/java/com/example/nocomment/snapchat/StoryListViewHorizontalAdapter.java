@@ -34,6 +34,10 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
         this.webItems = webItems;
         this.size = size;
     }
+
+    /*
+     *  decide the quantities of stories
+     */
     @Override
     public int getCount() {
         return size;
@@ -43,6 +47,10 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
     public Object getItem(int position) {
         return position;
     }
+
+    /*
+     * find the view from the layout
+     */
     private ViewHolder viewHolder    =new ViewHolder();
     private static class ViewHolder {
 
@@ -54,29 +62,32 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if(convertView==null){
             convertView = mInflater.inflate(R.layout.item_in_story_listview, null);
             viewHolder.imageItem=(ImageView)convertView.findViewById(R.id.imgStory);
             viewHolder.textItem = (TextView) convertView.findViewById(R.id.textStory);
-
-
         }
+
         final int radius = 100;
         final int margin = 0;
         final Transformation transformation = new RoundedCornersTransformation(radius, margin);
 
+        /*
+         *  tranform the url to the image and give rounded corner for it
+         */
         viewHolder.textItem.setText(webItems.get(position).getWebTitle());
         Picasso.with(context)
                 .load(webItems.get(position).getWebUrl())
                 .transform(transformation)
                 .into(viewHolder.imageItem);
 
-        //0x9933FF
-
-        // 0xFF99CC
-        // 0xFF9999
+        /*
+         *  open up the webview when user click the image
+         */
         final String tempUrl = webItems.get(position).getWebUrl();
         viewHolder.imageItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +97,6 @@ public class StoryListViewHorizontalAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
-
 
         return convertView;
     }

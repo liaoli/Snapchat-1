@@ -136,13 +136,11 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             public void onSwipeRight() {
 //                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, ChatList.class);
-                overridePendingTransition(R.anim.from_left, R.anim.to_right);
                 startActivity(i);
             }
             public void onSwipeLeft() {
 //                Toast.makeText(CameraView.this, "left", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, Stories.class);
-                overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 startActivity(i);
             }
 
