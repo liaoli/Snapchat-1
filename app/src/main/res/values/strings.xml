@@ -36,6 +36,7 @@
 
     <!--friend list related-->
     <string name="recent">Recent</string>
+    <string name="results">Results</string>
 
     <!--chat-->
     <string name="send">SEND</string>

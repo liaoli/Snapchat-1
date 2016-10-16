@@ -15,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -29,9 +34,15 @@ import java.io.InputStreamReader;
 public class AddFriendDialog extends DialogFragment {
 
     Button btnAddFriend;
+    Button btnMyFriends;
     LinearLayout shareImageFrag;
     TextView showUserName;
-
+    ImageView qrCode;
+    Bitmap qrBitmap = null;
+    public final static int WHITE = 0xFFFFFFFF;
+    public final static int BLACK = 0xFF000000;
+    public final static int WIDTH = 400;
+    public final static int HEIGHT = 400;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,12 +52,32 @@ public class AddFriendDialog extends DialogFragment {
 
         shareImageFrag = (LinearLayout) view.findViewById(R.id.addFriendFrag);
         showUserName = (TextView) view.findViewById(R.id.showUserName);
-        showUser();
+        qrCode = (ImageView) view.findViewById(R.id.qrCode);
+
+
+        try {
+            qrBitmap = encodeAsBitmap(getLoggedInUserId());
+            qrCode.setImageBitmap(qrBitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        showUserName.setText(getLoggedInUserId());
 
 
 
         btnAddFriend  = (Button) view.findViewById(R.id.addFriend);
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddFriend.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btnMyFriends  = (Button) view.findViewById(R.id.myFriends);
+        btnMyFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FriendList.class);
@@ -60,8 +91,36 @@ public class AddFriendDialog extends DialogFragment {
 
 
 
-    private void showUser() {
 
+
+
+    Bitmap encodeAsBitmap(String str) throws WriterException {
+        BitMatrix result;
+        try {
+            result = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, WIDTH, HEIGHT, null);
+        } catch (IllegalArgumentException iae) {
+            // Unsupported format
+            return null;
+        }
+
+        int width = result.getWidth();
+        int height = result.getHeight();
+        int[] pixels = new int[width * height];
+        for (int y = 0; y < height; y++) {
+            int offset = y * width;
+            for (int x = 0; x < width; x++) {
+                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
+
+
+
+    private String getLoggedInUserId() {
         String loggedInUser = "";
 
         if (Login.getLoggedinUserId() == "") {
@@ -72,22 +131,19 @@ public class AddFriendDialog extends DialogFragment {
                 InputStreamReader isr = new InputStreamReader(fis);
                 BufferedReader bufferedReader = new BufferedReader(isr);
                 loggedInUser = bufferedReader.readLine();
-            }
-            catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
+        } else {
             loggedInUser = Login.getLoggedinUserId();
         }
-        showUserName.setText(loggedInUser);
+
+
+        return loggedInUser;
+
     }
-
-
 
 
 }

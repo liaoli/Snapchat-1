@@ -2,16 +2,23 @@ package com.example.nocomment.snapchat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
@@ -28,7 +35,7 @@ public class Login extends AppCompatActivity {
                 // update UI
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, message.obj.toString(), duration);
+                Toast toast = Toast.makeText(context, "Logged in Successfully", duration);
 
                 toast.show();
                 if(message.obj.toString().contains("login successfully")){
@@ -52,17 +59,18 @@ public class Login extends AppCompatActivity {
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                            String response = Util.login(userName.getText().toString(),pwd.getText().toString());
-                            if(response.trim().equals("login successfully")){
-                                FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String response = Util.login(userName.getText().toString(), pwd.getText().toString());
+                            if (response.trim().equals("login successfully")) {
+                                FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
                                 firebaseInstanceIDService.registerToken(userName.getText().toString());
                                 userId = userName.getText().toString();
 
-                                Context context=getApplicationContext ();
+                                Context context = getApplicationContext();
 
                                 FileOutputStream outputStream;
 
@@ -76,14 +84,23 @@ public class Login extends AppCompatActivity {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                            }
-                            Message message = new Message();
-                            message.what = MESSAGE_RETRIEVED;
-                            message.obj = response;
-                            handler.sendMessage(message);
 
-                    }
-                }).start();
+                                Message message = new Message();
+                                message.what = MESSAGE_RETRIEVED;
+                                message.obj = response;
+                                handler.sendMessage(message);
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+
+                                        Toast.makeText(Login.this, "Login info is incorrect", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+
+                        }
+                    }).start();
+
             }
 
         });
@@ -93,6 +110,10 @@ public class Login extends AppCompatActivity {
     public static String getLoggedinUserId() {
         return userId;
     }
+
+
+
+
 
 
 

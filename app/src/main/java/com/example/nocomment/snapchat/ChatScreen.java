@@ -55,9 +55,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -431,8 +435,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
                 String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                String response = Util.postImage(Login.getLoggedinUserId(), encodedImage, false);
-                Util.sendNotification(Login.getLoggedinUserId(), friend, response, 2);
+                String response = Util.postImage(getLoggedInUserId(), encodedImage, false);
+                Util.sendNotification(getLoggedInUserId(), friend, response, 2);
 
             }
         }).start();
@@ -607,6 +611,30 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     };
 
 
+    private String getLoggedInUserId() {
+        String loggedInUser = "";
+
+        if (Login.getLoggedinUserId() == "") {
+            FileInputStream fis = null;
+
+            try {
+                fis = getApplicationContext().openFileInput("user");
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader bufferedReader = new BufferedReader(isr);
+                loggedInUser = bufferedReader.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            loggedInUser = Login.getLoggedinUserId();
+        }
+
+
+        return loggedInUser;
+
+    }
 
 
 }

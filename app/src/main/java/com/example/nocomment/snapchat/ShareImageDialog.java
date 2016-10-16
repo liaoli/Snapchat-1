@@ -82,22 +82,25 @@ public class ShareImageDialog extends DialogFragment {
                     JSONObject jObject = new JSONObject(message.obj.toString());
                     JSONArray jArray = jObject.getJSONArray("user");
 
-                    if (jArray != null) {
+                    if (jArray.length() > 0) {
                         for (int i = 0; i < jArray.length(); i++) {
                             friendsList.add(jArray.get(i).toString());
                         }
+
+                        chatListAdapter = new ArrayAdapter<>(context,
+                                R.layout.list_view, friendsList);
+
+                        friendListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                        friendListView.setAdapter(chatListAdapter);
+                        friendListView.setVisibility(View.VISIBLE);
+                        btnShare.setVisibility(View.VISIBLE);
                     }
 
+                    else {
 
-                    chatListAdapter = new ArrayAdapter<>(context,
-                            R.layout.list_view, friendsList);
+                        Toast.makeText(getActivity(),"No friends found",Toast.LENGTH_LONG).show();
 
-
-                    friendListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    friendListView.setAdapter(chatListAdapter);
-                    friendListView.setVisibility(View.VISIBLE);
-
-
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -143,23 +146,16 @@ public class ShareImageDialog extends DialogFragment {
         btnShareWithFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (friendListView.getVisibility() == View.VISIBLE) {
                     friendListView.setVisibility(View.GONE);
+                    btnShare.setVisibility(View.GONE);
                 }
                 else {
                     showFriends();
                 }
-
-                if (friendListView != null) {
-                    if (btnShare.getVisibility() == View.VISIBLE) {
-                        btnShare.setVisibility(View.GONE);
-                    } else {
-                        btnShare.setVisibility(View.VISIBLE);
-                    }
-                }
             }
         });
-
 
 
         btnShare = (Button) view.findViewById(R.id.share);
@@ -168,6 +164,9 @@ public class ShareImageDialog extends DialogFragment {
             public void onClick(View view) {
                 if (!selectedFriends.isEmpty()) {
                     shareImage();
+                }
+                else {
+                    Toast.makeText(getActivity(),"Select a friend first",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -188,9 +187,6 @@ public class ShareImageDialog extends DialogFragment {
                     selectedFriends.add(item);
                 }
 
-
-                Toast.makeText(getActivity(), selectedFriends.toString(), Toast.LENGTH_LONG)
-                        .show();
             }
         });
 
@@ -224,7 +220,7 @@ public class ShareImageDialog extends DialogFragment {
         }).start();
 
 
-        Toast.makeText(getActivity().getApplicationContext(), "Story Saved Successfully",
+        Toast.makeText(getActivity().getApplicationContext(), "Story Created Successfully",
                 Toast.LENGTH_SHORT).show();
         shareImageFrag.setVisibility(View.GONE);
         dismiss();
@@ -270,13 +266,10 @@ public class ShareImageDialog extends DialogFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String b = Util.getFriends(getLoggedInUserId());
-                ArrayList<String> a = new ArrayList<String>();
-                a.add(b);
-                a.add("bye bye");
+                String response = Util.getFriends(getLoggedInUserId());
                 Message message = new Message();
                 message.what = MESSAGE_RETRIEVED;
-                message.obj = b;
+                message.obj = response;
                 handler.sendMessage(message);
             }
         }).start();

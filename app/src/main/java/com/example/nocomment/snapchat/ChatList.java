@@ -122,7 +122,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ChatList.this, FriendList.class);
+                intent.setClass(ChatList.this, AddFriend.class);
                 startActivity(intent);
                 ChatList.this.finish();
             }
@@ -136,7 +136,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(ChatList.this, Stories.class);
+                intent.setClass(ChatList.this, CameraView.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.from_right, R.anim.to_left);
                 ChatList.this.finish();
@@ -144,16 +144,16 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
         });
 
 
-        chat.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(ChatList.this, CameraView.class);
-                startActivity(intent);
-                ChatList.this.finish();
-            }
-        });
+//        chat.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(ChatList.this, CameraView.class);
+//                startActivity(intent);
+//                ChatList.this.finish();
+//            }
+//        });
 
         chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

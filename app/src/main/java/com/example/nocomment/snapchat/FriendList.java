@@ -13,6 +13,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -44,7 +45,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
     private ListView friendList;
     private ImageView backToChatList;
     private final int MESSAGE_RETRIEVED = 0;
-    private ChatFriendListAdapter frdAdapter;
+    ArrayAdapter<String> frdAdapter;
 
     private GestureDetector mGestureDetector;
     private RelativeLayout friendLayout;
@@ -55,6 +56,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
     private TextView topHeader;
 
     private ArrayList<String> listdata;
+
 
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
@@ -73,7 +75,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                             listdata.add(jArray.get(i).toString());
                         }
                     }
-                    frdAdapter = new ChatFriendListAdapter(FriendList.this, listdata);
+                    frdAdapter = new ArrayAdapter<>(context,
+                            R.layout.friends_list_listview, listdata);
                     friendList.setAdapter(frdAdapter);
                     friendList.setOnScrollListener(new AbsListView.OnScrollListener() {
                         @Override
@@ -90,9 +93,6 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                             }
                         }
                     });
-
-
-
 
 
                 } catch (JSONException e) {
@@ -117,10 +117,22 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
 
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String response = Util.getFriends(getLoggedInUserId());
+                Message message = new Message();
+                message.what = MESSAGE_RETRIEVED;
+                message.obj = response;
+                handler.sendMessage(message);
+
+            }
+        }).start();
+
 
         mGestureDetector = new GestureDetector(this);
 
-        friendLayout.setOnTouchListener(this);
+//        friendLayout.setOnTouchListener(this);
 
         backToChatList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,30 +144,6 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                 FriendList.this.finish();
             }
         });
-
-        ImageView add = (ImageView) findViewById(R.id.add);
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String loggedInUser = getLoggedInUserId();
-                        String b = Util.getFriends(loggedInUser);
-                        ArrayList<String> a = new ArrayList<String>();
-                        a.add(b);
-                        a.add("bye bye");
-                        Message message = new Message();
-                        message.what = MESSAGE_RETRIEVED;
-                        message.obj = b;
-                        handler.sendMessage(message);
-
-                    }
-                }).start();
-            }
-        });
-
 
     }
 
@@ -202,7 +190,12 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
             FriendList.this.finish();
 
         } else if (e2.getX() - e1.getX() > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
-
+            Intent intent = new Intent();
+            intent.setClass(FriendList.this, CameraView.class);
+            intent.putExtra("backToCamera", "True");
+            startActivity(intent);
+            overridePendingTransition(R.anim.from_left, R.anim.to_right);
+            FriendList.this.finish();
         }
 
         return false;
@@ -217,14 +210,15 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
 
 
-    private String getLoggedInUserId () {
+
+    private String getLoggedInUserId() {
         String loggedInUser = "";
 
         if (Login.getLoggedinUserId() == "") {
             FileInputStream fis = null;
 
             try {
-                fis = openFileInput("user");
+                fis = getApplicationContext().openFileInput("user");
                 InputStreamReader isr = new InputStreamReader(fis);
                 BufferedReader bufferedReader = new BufferedReader(isr);
                 loggedInUser = bufferedReader.readLine();
@@ -241,6 +235,4 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
         return loggedInUser;
 
     }
-
-
 }

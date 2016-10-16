@@ -81,13 +81,25 @@ public class Signup extends AppCompatActivity {
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
+
+                                    Message message = new Message();
+                                    message.what = MESSAGE_RETRIEVED;
+                                    message.obj = response;
+                                    handler.sendMessage(message);
+                                }
+
+                                else {
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+
+                                            Toast.makeText(Signup.this,"Problem with signup, please try again"
+                                                    ,Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
 
                             }
-                            Message message = new Message();
-                            message.what = MESSAGE_RETRIEVED;
-                            message.obj = response;
-                            handler.sendMessage(message);
+
 
                         }
                     }).start();

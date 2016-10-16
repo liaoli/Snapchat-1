@@ -30,8 +30,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         switch (remoteMessage.getData().get("type")){
-            case "fridendshipRequest":
-                fridendshipRequest(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
+            case "friendshipRequest":
+                friendshipRequest(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
                 break;
             case "sendMessage":
                 sendMessage(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
@@ -44,7 +44,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
         // showNotification(remoteMessage.getData().get("type"),remoteMessage.getData().get("message"));
     }
-    private void fridendshipRequest(String userid,String message){
+    private void friendshipRequest(String userid,String message){
         Intent intent = new Intent(this, FriendRequest.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);
@@ -87,7 +87,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("My FCM application")
+                .setContentTitle("noComment SnapChat")
                 .setContentText(name+":"+remoteMessage)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
