@@ -81,7 +81,7 @@ public class FriendShipRequest extends AppCompatActivity {
 
 
         try {
-            Bitmap bitmap = encodeAsBitmap(STR);
+            Bitmap bitmap = encodeAsBitmap("a");
             imageView.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
@@ -103,7 +103,7 @@ public class FriendShipRequest extends AppCompatActivity {
 
                         String userid=bufferedReader.readLine();
                             bufferedReader.close();
-                        util.acceptFriend(userid,user.getText().toString());
+                            Util.acceptFriend(userid,user.getText().toString());
                     } catch (FileNotFoundException e) {
                         Log.e("",e.getMessage());
 

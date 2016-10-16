@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by Luna on 17/09/2016.
  */
-public class util {
+public class Util {
 
     public  static String getPostDataString(HashMap<String, String> params){
         try {
@@ -69,7 +69,7 @@ public class util {
             postDataParams.put("ID", user);
             postDataParams.put("Password", password);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -116,7 +116,7 @@ public class util {
                 postDataParams.put("Email",email);
                 postDataParams.put("Password", password);
 
-                writer.write(util.getPostDataString(postDataParams));
+                writer.write(Util.getPostDataString(postDataParams));
 
                 writer.flush();
                 writer.close();
@@ -169,7 +169,7 @@ public class util {
             postDataParams.put("ID", id);
             postDataParams.put("friendID", friendID);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -243,7 +243,7 @@ public class util {
                     postDataParams.put("Message", message);
                     break;
             }
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -276,7 +276,7 @@ public class util {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
             postDataParams.put("keyword",keyword);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getUsers.php?"+paramater;
             URL url = new URL(str);
 
@@ -311,7 +311,7 @@ public class util {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("phone",phone);
 
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getUserByPhone.php?"+paramater;
             URL url = new URL(str);
 
@@ -346,7 +346,7 @@ public class util {
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getFriends.php?"+paramater;
             URL url = new URL(str);
 
@@ -397,7 +397,7 @@ public class util {
             postDataParams.put("imageCode",bitmap);
             postDataParams.put("user", id);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -446,7 +446,7 @@ public class util {
             postDataParams.put("ID",id);
             postDataParams.put("topicName", topicName);
 
-            writer.write(util.getPostDataString(postDataParams));
+            writer.write(Util.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             int responseCode = connection.getResponseCode();
@@ -514,7 +514,7 @@ public class util {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
             postDataParams.put("topicName",topicName);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getSubscription.php?"+paramater;
             URL url = new URL(str);
 
@@ -550,7 +550,7 @@ public class util {
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
             URL url = new URL(str);
 
@@ -584,7 +584,7 @@ public class util {
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("URL",urlClick);
-            String paramater= util.getPostDataString(postDataParams);
+            String paramater= Util.getPostDataString(postDataParams);
             String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
             URL url = new URL(str);
 

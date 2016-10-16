@@ -24,7 +24,7 @@ public class Webview extends AppCompatActivity {
 
         myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setJavaScriptEnabled(true);
 
         myWebView.loadUrl("https://developer.android.com/guide/webapps/webview.html");
 

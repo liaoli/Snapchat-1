@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity {
                             if (!pwd.getText().toString().equals(compwd.getText().toString())) {
                                 response = "Password is not consistent";
                             } else {
-                                response = util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
+                                response = Util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
                                 if (response.trim().equals("Create user success!")) {
                                     FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
                                     firebaseInstanceIDService.registerToken(userName.getText().toString());

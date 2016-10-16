@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             String user=bufferedReader.readLine();
             String password=bufferedReader.readLine();
 
-            String response = util.login(user,password).trim();
+            String response = Util.login(user,password).trim();
 
             if(response.equals("login successfully"))
             {result = true;}

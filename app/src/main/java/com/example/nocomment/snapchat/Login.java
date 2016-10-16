@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                            String response =util.login(userName.getText().toString(),pwd.getText().toString());
+                            String response =Util.login(userName.getText().toString(),pwd.getText().toString());
                             if(response.trim().equals("login successfully")){
 
                                 FirebaseInstanceIDService firebaseInstanceIDService=new FirebaseInstanceIDService();
