@@ -12,15 +12,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
+
+
+/**
+ * A class that handles new user's signup, after successful signup, the user is logged in and the
+ * user info are saved in local storage of the phone/tablet
+ */
+
 public class Signup extends AppCompatActivity {
 
     EditText userName;
     EditText email;
     EditText pwd;
     EditText compwd;
-    Button singup;
+    Button signup;
 
     private final int MESSAGE_RETRIEVED = 0;
+    // UI update handler
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -49,9 +57,10 @@ public class Signup extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         pwd = (EditText) findViewById(R.id.pwd);
         compwd = (EditText) findViewById(R.id.compwd);
-        singup = (Button) findViewById(R.id.sign_up);
+        signup = (Button) findViewById(R.id.sign_up);
 
-        singup.setOnClickListener(new View.OnClickListener() {
+        // handling signup button clicks
+        signup.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 new Thread(new Runnable() {
@@ -61,7 +70,16 @@ public class Signup extends AppCompatActivity {
 
                         if (!pwd.getText().toString().equals(compwd.getText().toString())) {
                             response = "Password is not consistent";
-                        } else {
+                        }
+                        else if (userName.getText().toString().isEmpty() |
+                                email.getText().toString().isEmpty() |
+                                pwd.getText().toString().isEmpty() |
+                                compwd.getText().toString().isEmpty() |
+                                signup.getText().toString().isEmpty()) {
+                            response = "Please fill in all fields";
+                        }
+
+                        else {
                             response = Util.signUP(userName.getText().toString(), email.getText().toString(), pwd.getText().toString());
                             if (response.trim().equals("Create user success!")) {
                                 FirebaseInstanceIDService firebaseInstanceIDService = new FirebaseInstanceIDService();
@@ -82,23 +100,17 @@ public class Signup extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
-                                Message message = new Message();
-                                message.what = MESSAGE_RETRIEVED;
-                                message.obj = response;
-                                handler.sendMessage(message);
+
                             }
 
-                            else {
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-
-                                        Toast.makeText(Signup.this,"Problem with signup, please try again"
-                                                ,Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
 
                         }
+
+
+                        Message message = new Message();
+                        message.what = MESSAGE_RETRIEVED;
+                        message.obj = response;
+                        handler.sendMessage(message);
 
 
                     }

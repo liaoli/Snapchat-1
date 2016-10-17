@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 /**
  * Created by Sina on 10/12/2016.
+ * A dialog fragment that shows the QR code version of the user's username,
+ * along with the options to a user to see his/her friends list and the ability to add a new friend
  */
 
 public class AddFriendDialog extends DialogFragment {
@@ -44,6 +46,7 @@ public class AddFriendDialog extends DialogFragment {
     public final static int HEIGHT = 400;
 
 
+    // a method that initializes view of the layout and available options(buttons)
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -89,10 +92,7 @@ public class AddFriendDialog extends DialogFragment {
     }
 
 
-
-
-
-
+    // encoding the username (string) to a QR code bitmap
     Bitmap encodeAsBitmap(String str) throws WriterException {
         BitMatrix result;
         try {
@@ -119,6 +119,8 @@ public class AddFriendDialog extends DialogFragment {
 
 
 
+    // getting the userId of the logged in user by checking the local storage or the username used
+    // in login page if this is the first time the user is logging in
     private String getLoggedInUserId() {
         String loggedInUser = "";
 

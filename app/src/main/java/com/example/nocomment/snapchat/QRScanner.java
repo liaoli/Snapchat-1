@@ -17,6 +17,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by Sina on 10/10/2016.
+ * a QR scanner class that handles the creation of a QR code based on a string and also reading
+ * a QR code and converting it back to a string
  */
 
 public class QRScanner extends Activity implements ZXingScannerView.ResultHandler {
@@ -53,8 +55,6 @@ public class QRScanner extends Activity implements ZXingScannerView.ResultHandle
 
     @Override
     public void handleResult(Result rawResult) {
-//        Toast.makeText(this, "Contents = " + rawResult.getText() +
-//                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
         intent.setClass(QRScanner.this, AddFriend.class);
@@ -62,17 +62,6 @@ public class QRScanner extends Activity implements ZXingScannerView.ResultHandle
         startActivity(intent);
         QRScanner.this.finish();
 
-//        // Note:
-//        // * Wait 2 seconds to resume the preview.
-//        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-//        // * I don't know why this is the case but I don't have the time to figure out.
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                scannerView.resumeCameraPreview(QRScanner.this);
-//            }
-//        }, 2000);
     }
 
 
@@ -97,13 +86,13 @@ public class QRScanner extends Activity implements ZXingScannerView.ResultHandle
                 }
                 else if( Math.abs(deltaX) > MIN_DISTANCE)
                 {
-//                    swipeRightToLeft();
+
                 }
                 else if(deltaY > MIN_DISTANCE){
-//                    swipeTopToBottom();
+
                 }
                 else if( Math.abs(deltaY) > MIN_DISTANCE){
-//                    swipeBottopmToTop();
+
                 }
 
                 break;

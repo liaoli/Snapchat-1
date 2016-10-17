@@ -11,6 +11,10 @@ import android.view.View;
 
 /**
  * Created by Sina on 10/1/2016.
+ * A class that handles the hand drawing on the camera surface view, it works by following the
+ * coordinates of the touched areas of the screen by the user and drawing a color on the areas
+ * that the user continues to touch, that means when touching down, the coordinates are saved
+ * and a drawing starts to draw until the touch is up (user stops touching or swiping the screen)
  */
 
 public class HandDrawing extends View {
@@ -116,6 +120,7 @@ public class HandDrawing extends View {
     }
 
 
+    // resetting the drawing
     public void reset() {
         this.bitmap.eraseColor(Color.TRANSPARENT);
         this.path.reset();

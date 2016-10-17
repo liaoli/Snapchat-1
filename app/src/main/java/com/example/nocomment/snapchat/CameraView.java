@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,6 +35,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * Created by Sina on 10/12/2016.
+ * The main camera class which takes care of a preview of the camera both front and back side,
+ * providing options to a user to take a picture, modify it by adding movable text and pictures
+ * to it, hand draw with different color on it and save the picture. Flash and autofocus option
+ * for cameras supporting flash and autofocus are also provided.
+ */
 
 public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -71,6 +78,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // getting the camera instance if already created and creating a new one if not exists
     public static Camera getCameraInstance() {
         Camera cameraInstance = null;
         try {
@@ -84,6 +92,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that handles view of the layout and all the available options like the buttons etc.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,31 +124,14 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-//        surfaceView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                parameters = camera.getParameters();
-//
-//                if (parameters.getMaxNumDetectedFaces()>0){
-//                    camera.startFaceDetection();
-//                    camera.setParameters(parameters);
-//
-//                }
-//
-//                return false;
-//            }
-//        });
-
-
+        // a method to change current activity when swiping the camera surface view to left or right
         surfaceView.setOnTouchListener(new OnSwipeTouchListener(CameraView.this) {
 
             public void onSwipeRight() {
-//                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, ChatList.class);
                 startActivity(i);
             }
             public void onSwipeLeft() {
-//                Toast.makeText(CameraView.this, "left", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(CameraView.this, Stories.class);
                 startActivity(i);
             }
@@ -156,8 +148,9 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that initialized all the existing buttons and available functions on camera page
+    // and handles their clicks
     public void initialize() {
-
 
 
         btnTakePhoto = (Button) findViewById(R.id.btnTakePhoto);
@@ -235,10 +228,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
             }
         });
-
-
-
-
 
 
 
@@ -975,6 +964,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method to handle taking a photo by camera
     public void takePhoto() {
         camera.takePicture(new Camera.ShutterCallback() {
             @Override
@@ -1020,6 +1010,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that saves the images(from camera's surface view) to local storage
     public void saveImage() {
         File dir = new File(Environment.getExternalStoragePublicDirectory
                 (Environment.DIRECTORY_PICTURES), "noComment.SnapChat");
@@ -1058,6 +1049,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method to handles switching camera to front or back facing camera
     public void switchCamera() {
 
         int cameraFacing = 0;
@@ -1096,6 +1088,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method to handle turning the camera flash on or off if supported on the camera
     public void switchFlash() {
 
         parameters = camera.getParameters();
@@ -1119,6 +1112,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // restarting the camera(resuming the preview) after the preview has stopped
     private void restartCamera() {
 
         restartCameraOptions();
@@ -1130,6 +1124,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that handles screen rotation and matches it to the camera's view(rotates the camera
+    // view according to the screen's rotation)
     public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraId, info);
@@ -1162,6 +1158,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method to hide the soft keyboard on screen when required
     private void hideKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -1169,6 +1166,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that rotates the bitmap to an arbitrary degree
     private static Bitmap rotateImage(Bitmap bitmap, int degree) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -1181,6 +1179,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // removing the pictograms(smileys) from the surface after the camera is restarted
     private void removeSmileys() {
         imageSmilingView.setImageBitmap(null);
         imageSmilingView.invalidate();
@@ -1221,6 +1220,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+    // a method to handle what options need to be shown on screen when a photo is taken
     private void takePhotoOptions() {
         btnTakePhoto.setVisibility(View.GONE);
         btnAddFriend.setVisibility(View.GONE);
@@ -1239,6 +1239,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+    // a method to handle what options need to be shown on screen when the camera is restarted
     private void restartCameraOptions () {
         btnSavePhoto.setVisibility(View.GONE);
         btnDelete.setVisibility(View.GONE);
@@ -1271,6 +1272,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method to handle releasing the camera on activity pause
     @Override
     protected void onPause() {
         super.onPause();
@@ -1278,6 +1280,8 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+    // a method that handles what needs to be shown if activity is resumed(or started) from specific
+    // activity(in this instance from friendslist page)
     @Override
     protected void onResume() {
         super.onResume();
@@ -1290,6 +1294,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+    // a method that initializes the camera surface view when its created(setting camera parameters)
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
@@ -1338,6 +1343,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     }
 
 
+    // handling releasing the camera when the surface is destroyed
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 

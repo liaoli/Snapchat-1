@@ -37,6 +37,7 @@ import static android.R.attr.onClick;
 
 /**
  * Created by guomingsun on 30/9/16.
+ * A class that handles showing the current friends list of a user
  */
 
 public class FriendList extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
@@ -58,6 +59,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
     private ArrayList<String> listdata;
 
 
+    // UI update handler
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -132,7 +134,6 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
         mGestureDetector = new GestureDetector(this);
 
-//        friendLayout.setOnTouchListener(this);
 
         backToChatList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +212,8 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
 
 
 
+    // getting the userId of the logged in user by checking the local storage or the username used
+    // in login page if this is the first time the user is logging in
     private String getLoggedInUserId() {
         String loggedInUser = "";
 

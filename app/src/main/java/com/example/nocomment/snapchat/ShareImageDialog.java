@@ -40,6 +40,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Sina on 10/8/2016.
+ * A dialog fragment that handles the image sharing or story creating, it obtains the current image
+ * on surface view and provides option to send it to a friend or save it as a story in database
  */
 
 public class ShareImageDialog extends DialogFragment {
@@ -65,6 +67,7 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
+    // UI update handler
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -191,6 +194,7 @@ public class ShareImageDialog extends DialogFragment {
 
 
 
+    // a method to create a story (save the image to the database and notifying all friends of it)
     private void createStory() {
 
         new Thread(new Runnable() {
@@ -223,6 +227,7 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
+    // a method that handles sending an image to a friend
     private void shareImage() {
 
         new Thread(new Runnable() {
@@ -256,6 +261,7 @@ public class ShareImageDialog extends DialogFragment {
     }
 
 
+    // a method that shows all the friends of a user in a list
     private void showFriends() {
 
         new Thread(new Runnable() {
@@ -272,6 +278,8 @@ public class ShareImageDialog extends DialogFragment {
 
 
 
+    // getting the userId of the logged in user by checking the local storage or the username used
+    // in login page if this is the first time the user is logging in
     private String getLoggedInUserId () {
         String loggedInUser = "";
 

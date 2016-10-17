@@ -81,7 +81,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Singup"
+            android:text="Signup"
             android:background="@color/pink"
             android:id="@+id/sign_up"
             android:textColor="#ffffff"

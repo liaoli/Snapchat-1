@@ -11,6 +11,9 @@ import android.view.View.OnTouchListener;
 
 /**
  * Created by Sina on 10/11/2016.
+ * A class that handles swiping the screen in different directions by a user.
+ * after each swiping a method is implemented to do an action
+ * swiping is handles by recording the coordinates of a user's touch on screen
  */
 
 
@@ -27,6 +30,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
         return gestureDetector.onTouchEvent(event);
     }
 
+    // a method that listens on the gestures(touch) and handles the users touch
     private final class GestureListener extends SimpleOnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 100;

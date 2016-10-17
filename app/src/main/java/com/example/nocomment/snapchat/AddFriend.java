@@ -47,6 +47,13 @@ import java.util.HashMap;
 
 /**
  * Created by Sina on 10/12/2016.
+ * A class that handles adding a new friend in 3 different ways,
+ * 1. search by a known username
+ * 2. search by a QR code provided by a user
+ * 3. search for users that are already in the contact list of the phone/tablet by matching their
+ * phone number to their phone number of the users on the database
+ * after finding the corresponding user, a request is sent to that user waiting confirmation
+ * to add him/her as a new friend
  */
 
 public class AddFriend extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener {
@@ -63,7 +70,6 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
-
     EditText searchText;
     String userId;
     String scannedUserId;
@@ -71,6 +77,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+    // UI update handler
     android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
 
         public boolean handleMessage(Message message) {
@@ -150,6 +157,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
         mGestureDetector = new GestureDetector(this);
 
 
+        // handling search user clicks
         searchUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +194,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+        // handling search by contact list's phone clicks
         searchContact.setOnClickListener(new View.OnClickListener() {
             String response = "";
             JSONArray jsonUsersArray;
@@ -237,6 +246,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+        // handling search by QR code clicks
         searchQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,10 +260,10 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+        // handling swiping on the friends list view to go back to camera if swiped
         friendsListView.setOnTouchListener(new OnSwipeTouchListener(AddFriend.this) {
 
             public void onSwipeRight() {
-//                Toast.makeText(CameraView.this, "right", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(AddFriend.this, CameraView.class);
                 startActivity(i);
             }
@@ -356,6 +366,8 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+    // getting the userId of the logged in user by checking the local storage or the username used
+    // in login page if this is the first time the user is logging in
     private String getLoggedInUserId () {
         String loggedInUser = "";
 
@@ -383,6 +395,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+    // hiding the soft keyboard on screen
     private void hideKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -391,6 +404,7 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
 
 
 
+    // retrieving all the phone numbers from the contact list on phone/tablet
     public ArrayList<String> getNumbers(Context context) {
         ContentResolver cr = getContentResolver();
         ArrayList<String> alContacts = new ArrayList<String>();
@@ -401,10 +415,16 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
             do {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 
-                if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+                if (Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                        (ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+
+                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+
                     while (pCur.moveToNext()) {
-                        String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        String contactNumber = pCur.getString(pCur.getColumnIndex
+                                (ContactsContract.CommonDataKinds.Phone.NUMBER));
                         alContacts.add(contactNumber);
                         break;
                     }

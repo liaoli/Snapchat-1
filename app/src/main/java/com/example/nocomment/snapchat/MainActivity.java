@@ -15,6 +15,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+/**
+ * Main activity, app starts from this page, it checks for previously logged in users on a device
+ * if it exists, they are directed to camera page (CameraView class), if not they will have to
+ * either signup or login
+ */
+
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -32,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 loginButton = (Button)findViewById(R.id.login);
                 signupButton = (Button) findViewById(R.id.signup);
 
+                // login button click handler
                 loginButton.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v){
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+                // signup button click handler
                 signupButton.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v){
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
     }
+    // a method to check if user has previously logged in on this device by checking the local storage
     private boolean checkUserLogin(){
         boolean result=false;
         try {
