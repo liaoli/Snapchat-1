@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -54,6 +55,16 @@ public class FriendRequest extends AppCompatActivity {
                             String userid=bufferedReader.readLine();
                             bufferedReader.close();
                             Util.acceptFriend(userid,user.getText().toString());
+                            FriendRequest.this.finish();
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(FriendRequest.this,"Friend successfully added",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
                         } catch (FileNotFoundException e) {
                             Log.e("",e.getMessage());
 
@@ -68,6 +79,15 @@ public class FriendRequest extends AppCompatActivity {
         });
         deny.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                FriendRequest.this.finish();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(FriendRequest.this,"Friendship request denied",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
 

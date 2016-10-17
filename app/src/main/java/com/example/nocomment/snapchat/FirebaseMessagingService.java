@@ -30,8 +30,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         switch (remoteMessage.getData().get("type")){
-            case "fridendshipRequest":
-                fridendshipRequest(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
+            case "friendshipRequest":
+                friendshipRequest(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
                 break;
             case "sendMessage":
                 sendMessage(remoteMessage.getData().get("user"),remoteMessage.getData().get("message"));
@@ -44,7 +44,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
         // showNotification(remoteMessage.getData().get("type"),remoteMessage.getData().get("message"));
     }
-    private void fridendshipRequest(String userid,String message){
+    private void friendshipRequest(String userid,String message){
         Intent intent = new Intent(this, FriendRequest.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("userid",userid);

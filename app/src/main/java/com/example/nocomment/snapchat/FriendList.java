@@ -89,9 +89,7 @@ public class FriendList extends AppCompatActivity implements View.OnTouchListene
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                             if (firstVisibleItem != topVisiblePosition) {
-//                                topVisiblePosition = firstVisibleItem;
-//                                final String header = listdata.get(firstVisibleItem).substring(0,1);
-//                                topHeader.setText(header);
+
                             }
                         }
                     });

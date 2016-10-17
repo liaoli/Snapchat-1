@@ -55,6 +55,7 @@
         <activity android:name=".FriendList"/>
         <activity android:name=".QRScanner"/>
         <activity android:name=".AddFriend"/>
+        <activity android:name=".FriendRequest"/>
         <activity android:name=".WebViewWindows"/>
         <activity android:name=".ImageViewWindows"/>
         <activity android:name=".ImageViewBitmapWindows"/>
