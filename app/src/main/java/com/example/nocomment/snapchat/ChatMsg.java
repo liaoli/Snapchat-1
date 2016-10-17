@@ -15,6 +15,7 @@ public class ChatMsg {
     public static final int LEFT_MSG = 1;
     public static final int RIGHT_IMG = 2;
     public static final int LEFT_IMG = 3;
+    public static final int RIGHT_CAMERA = 4;
 
     public ChatMsg(int msgType, String msg, String time) {
 

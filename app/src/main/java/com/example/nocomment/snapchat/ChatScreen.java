@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -20,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -56,8 +60,12 @@ import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -73,10 +81,13 @@ import java.util.ArrayList;
 import org.jivesoftware.smack.chat.Chat;
 import org.w3c.dom.Text;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.R.attr.bitmap;
 
 public class ChatScreen extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
@@ -104,6 +115,8 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private TextView chatTitle;
     private TextView chatUserName;
 
+    private int MESSAGE_RETRIEVED = 100;
+
     private TextView date;
 
 
@@ -113,23 +126,22 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private String userName;
     private IntentFilter filter;
 
+    private Uri photoUri;
+
 
     // send and receive related constants (result code)
-    private int PICK_IMAGE = 5;
+    private final int CAMERA_PIC_REQUEST = 1;
+    private final int PICK_IMAGE = 0;
+    static final int REQUEST_TAKE_PHOTO = 2;
     private String selectedImagePath;
+    private String tempImagePath;
+
+    String mCurrentPhotoPath;
 
     /*
      * video call related
      */
     String login = "login";
-
-
-    private final int CAMERA_PIC_REQUEST = 2;
-
-    private FirebaseMessagingService mChatService = null;
-    public static final int MESSAGE_READ = 2;
-    public static final int IMAGE_READ = 3;
-
 
 
     /**
@@ -286,8 +298,21 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+//                dispatchTakePictureIntent();
+
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, "CaptureImage");
+                values.put(MediaStore.Images.Media.BUCKET_ID, "CaptureImage");
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                photoUri = ChatScreen.this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                Intent CaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                CaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(CaptureIntent, CAMERA_PIC_REQUEST);
+
             }
         });
 
@@ -300,6 +325,66 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             }
         });
 
+    }
+
+    private File createTemporaryFile(String part, String ext) throws Exception
+    {
+        File tempDir= Environment.getExternalStorageDirectory();
+        tempDir=new File(tempDir.getAbsolutePath()+"/.temp/");
+        if(!tempDir.exists())
+        {
+            tempDir.mkdirs();
+        }
+        return File.createTempFile(part, ext, tempDir);
+    }
+
+
+
+    // return unique image file name
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra("uri", photoURI);
+                startActivityForResult(takePictureIntent, CAMERA_PIC_REQUEST);
+            }
+        }
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
     @Override
@@ -317,6 +402,19 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
                 sendImg(selectedImagePath, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else if(requestCode == CAMERA_PIC_REQUEST && resultCode == Activity.RESULT_OK){
+            String string = Environment.getExternalStorageDirectory().toString();
+            final Bitmap bitmap;
+            String path;
+            path = photoUri.getPath();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                sendImgFromCamera(path, bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -431,6 +529,34 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         }).start();
     }
 
+    private void sendImgFromCamera(String img, final Bitmap bitmap){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> friend = new ArrayList<String>();
+                friend.add(userName);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+
+
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                String response = Util.postImage(Login.getLoggedinUserId(), encodedImage, false);
+                Message msgImg = new Message();
+                msgImg.what = MESSAGE_RETRIEVED;
+                msgImg.obj = response;
+                handler.sendMessage(msgImg);
+                Util.sendNotification(Login.getLoggedinUserId(), friend, response, 2);
+
+            }
+        }).start();
+    }
+
+
     public void receiveMsg(String msg){
 
         Calendar rightNow = Calendar.getInstance();
@@ -451,6 +577,23 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         scrollMyListViewToBottom();
 
     }
+
+    android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
+
+        public boolean handleMessage(Message message) {
+            if (message.what==MESSAGE_RETRIEVED){
+                // update UI
+                Calendar rightNow = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+                final String timeForNow = sdf.format(rightNow.getTime());
+                ChatMsg sendImg = new ChatMsg(ChatMsg.RIGHT_CAMERA, message.obj.toString(), timeForNow);
+                chatAdapter.add(sendImg);
+                scrollMyListViewToBottom();
+
+            }
+            return false;
+        }
+    });
 
 
     @Override
@@ -506,23 +649,6 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         return false;
     }
 
-    // provide suggestion (warning) to the user
-    private void openDialog(String title, String content) {
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(content)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        }
-                )
-                .show();
-    }
 
     // each time new message is come or sent, the list view will be update to last line
     private void scrollMyListViewToBottom() {

@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,6 +30,7 @@ public class SubscribeDialog extends DialogFragment {
     private Button subscribeBtn;
     private Context context;
     private String tagName;
+    private TextView subscribeTxt;
     private int MESSAGE_RETRIEVED = 0;
 
 
@@ -44,6 +48,8 @@ public class SubscribeDialog extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         subscribeBtn = (Button) convertView.findViewById(R.id.subscribeBtn);
+        subscribeTxt = (TextView) convertView.findViewById(R.id.subscribeTxt);
+        subscribeTxt.setText("Want to subscribe " + tagName + " ?");
 
         subscribeBtn.setOnClickListener(sendListener);
 
@@ -51,28 +57,13 @@ public class SubscribeDialog extends DialogFragment {
         return convertView;
     }
 
-    android.os.Handler handler = new android.os.Handler(new Handler.Callback() {
-
-        public boolean handleMessage(Message message) {
-            if (message.what == MESSAGE_RETRIEVED) {
-
-            }
-            return false;
-        }
-    });
-
-
 
     private Runnable mutiThread = new Runnable(){
         public void run(){
 
-            subscribeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final String myid = getLoggedInUserId();
-                    Util.postSubscribe(myid, tagName);
-                }
-            });
+            final String myid = getLoggedInUserId();
+            Util.postSubscribe(myid, tagName);
+
         }
     };
 
@@ -112,6 +103,5 @@ public class SubscribeDialog extends DialogFragment {
         return loggedInUser;
 
     }
-
 
 }

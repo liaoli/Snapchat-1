@@ -565,12 +565,12 @@ public class Util {
     public static String getSubscribeDiscovery(String id){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
-        String response="";
+        String reponse="";
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("ID",id);
             String paramater= Util.getPostDataString(postDataParams);
-            String str="http://130.56.252.250/snapchat/subscribe.php?"+paramater;
+            String str="http://130.56.252.250/snapchat/getSubscription.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
@@ -578,11 +578,11 @@ public class Util {
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                response = br.readLine();
+                reponse = br.readLine();
                 br.close();
 
             } else {
-                response= "fail";
+                reponse= "fail";
             }
             connection.disconnect();
         } catch (UnsupportedEncodingException e) {
@@ -594,7 +594,7 @@ public class Util {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return response;
+        return reponse;
     }
 
     /*{"stories":[{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8710a8cb54.png","time":"2016-10-08 04:07:38"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8713bc0f72.png","time":"2016-10-08 04:08:27"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8714838f3e.png","time":"2016-10-08 04:08:40"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8716f5ab87.png","time":"2016-10-08 04:09:19"},{"user":"b","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f87324140a0.png","time":"2016-10-08 04:16:36"},{"user":"c","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8735f16c18.png","time":"2016-10-08 04:17:35"},{"user":"d","imageUrl":"http:\/\/130.56.252.250\/snapchat\/image\/57f8748e391ba.png","time":"2016-10-08 04:22:38"}]}  */
@@ -723,12 +723,12 @@ public class Util {
     public static String addClickCount(String urlClick){
         BufferedWriter writer=null;
         HttpURLConnection connection=null;
-        String response="";
+        String reponse="";
         try {
             HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("URL",urlClick);
+            postDataParams.put("url",urlClick);
             String paramater= Util.getPostDataString(postDataParams);
-            String str="http://130.56.252.250/snapchat/getFriendsStories.php?"+paramater;
+            String str="http://130.56.252.250/snapchat/clickCount.php?"+paramater;
             URL url = new URL(str);
 
             connection = (HttpURLConnection) url.openConnection();
@@ -736,11 +736,11 @@ public class Util {
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                response = br.readLine();
+                reponse = br.readLine();
                 br.close();
 
             } else {
-                response= "fail";
+                reponse= "fail";
             }
             connection.disconnect();
         } catch (UnsupportedEncodingException e) {
@@ -752,8 +752,45 @@ public class Util {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return response;
+        return reponse;
     }
+    public static String requestSubscription(String id, String topicName){
+        BufferedWriter writer=null;
+        HttpURLConnection connection=null;
+        String reponse="";
+        try {
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("ID",id);
+            postDataParams.put("topicName",topicName);
+            String paramater= Util.getPostDataString(postDataParams);
+            String str="http://130.56.252.250/snapchat/getSubscriptionRequest.php?"+paramater;
+            URL url = new URL(str);
+
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reponse = br.readLine();
+                br.close();
+
+            } else {
+                reponse= "fail";
+            }
+            connection.disconnect();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reponse;
+    }
+
+
 
 
 }

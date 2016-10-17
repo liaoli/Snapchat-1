@@ -116,18 +116,18 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                     e.printStackTrace();
                 }
 
-            } else if (message.what==MESSAGE_RETRIEVED_SUBSCRIBED){
+            } else if (message.what==MESSAGE_RETRIEVED_SUBSCRIBED) {
                 try {
                     JSONObject jObject = new JSONObject(message.obj.toString());
                     JSONArray jArray = jObject.getJSONArray("discovery");
 
                     if (jArray != null) {
-                        for (int i=0;i<jArray.length();i++){
+                        for (int i = 0; i < jArray.length(); i++) {
                             JSONObject tempObject = (JSONObject) jArray.get(i);
                             tempObject.get("tagName");
 
                             JSONArray tempObjectArray = tempObject.getJSONArray("item");
-                            for(int j = 0; j < tempObjectArray.length(); j++){
+                            for (int j = 0; j < tempObjectArray.length(); j++) {
                                 JSONObject imgUrl = (JSONObject) tempObjectArray.get(j);
                                 bunchTitleDiscover.add(tempObject.get("tagName").toString());
                                 imageUrlArrayDiscover.add(imgUrl.get("iconUrl").toString());
@@ -136,12 +136,10 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                         }
 
 
-
-                        ArrayList<WebItem> webItemList= new ArrayList<WebItem>();
-                        for(int i = 0; i < imageUrlArrayDiscover.size(); i++){
+                        ArrayList<WebItem> webItemList = new ArrayList<WebItem>();
+                        for (int i = 0; i < imageUrlArrayDiscover.size(); i++) {
                             webItemList.add(new WebItem(bunchTitleDiscover.get(i), imageUrlArrayDiscover.get(i), bunchUrlDiscover.get(i)));
                         }
-
 
 
                         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
@@ -150,7 +148,7 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                     }
 
-                    if(imageUrlArrayDiscover.size() > 0){
+                    if (imageUrlArrayDiscover.size() > 0) {
                         subscribedText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.VISIBLE);
                     }
@@ -159,46 +157,47 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else if (message.what==MESSAGE_RETRIEVED_LIVE){
-                try {
-                    JSONObject jObject = new JSONObject(message.obj.toString());
-                    JSONArray jArray = jObject.getJSONArray("stories");
-
-                    if (jArray != null) {
-                        for (int i=0;i<jArray.length();i++){
-                            JSONObject tempObject = (JSONObject) jArray.get(i);
-                            tempObject.get("user");
-                            bunchTitleLive.add(tempObject.get("user").toString());
-                            imageUrlArrayLive.add(tempObject.get("imageUrl").toString());
-                            bunchUrlLive.add(tempObject.get("imageUrl").toString());
-
-                        }
-
-                        ArrayList<WebItem> webItemList= new ArrayList<WebItem>();
-                        for(int i = 0; i < imageUrlArrayLive.size(); i++){
-                            webItemList.add(new WebItem(bunchTitleLive.get(i),
-                                    imageUrlArrayLive.get(i),
-                                    bunchUrlLive.get(i)));
-                        }
-
-                        friendStoryAdapter = new StoryListViewHorizontalAdapter(Stories.this,
-                                webItemList,
-                                imageUrlArrayLive.size());
-                        friendStoryAdapter.notifyDataSetChanged();
-                        friendStory.setAdapter(friendStoryAdapter);
-
-                    }
-                    if(imageUrlArrayLive.size() > 0){
-                        liveText.setVisibility(View.VISIBLE);
-                        friendStory.setVisibility(View.VISIBLE);
-                    }
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
+//            } else if (message.what==MESSAGE_RETRIEVED_LIVE){
+//                try {
+//                    JSONObject jObject = new JSONObject(message.obj.toString());
+//                    JSONArray jArray = jObject.getJSONArray("stories");
+//
+//                    if (jArray != null) {
+//                        for (int i=0;i<jArray.length();i++){
+//                            JSONObject tempObject = (JSONObject) jArray.get(i);
+//                            tempObject.get("user");
+//                            bunchTitleLive.add(tempObject.get("user").toString());
+//                            imageUrlArrayLive.add(tempObject.get("imageUrl").toString());
+//                            bunchUrlLive.add(tempObject.get("imageUrl").toString());
+//
+//                        }
+//
+//                        ArrayList<WebItem> webItemList= new ArrayList<WebItem>();
+//                        for(int i = 0; i < imageUrlArrayLive.size(); i++){
+//                            webItemList.add(new WebItem(bunchTitleLive.get(i),
+//                                    imageUrlArrayLive.get(i),
+//                                    bunchUrlLive.get(i)));
+//                        }
+//
+//                        friendStoryAdapter = new StoryListViewHorizontalAdapter(Stories.this,
+//                                webItemList,
+//                                imageUrlArrayLive.size());
+//                        friendStoryAdapter.notifyDataSetChanged();
+//                        friendStory.setAdapter(friendStoryAdapter);
+//
+//                    }
+//                    if(imageUrlArrayLive.size() > 0){
+//                        liveText.setVisibility(View.VISIBLE);
+//                        friendStory.setVisibility(View.VISIBLE);
+//                    }
+//
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             return false;
         }
     });

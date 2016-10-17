@@ -53,6 +53,9 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             case(ChatMsg.LEFT_IMG):
                 returnType = 3;
                 break;
+            case(ChatMsg.RIGHT_CAMERA):
+                returnType = 4;
+                break;
 
         }
 
@@ -66,12 +69,12 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
 //
         int viewType = getItemViewType(position);
         // Allign the position of the messages which current user sends
-        if(viewType == 0){
+        if (viewType == 0) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right, parent, false);
 
             ChatMsg chatMsg = getItem(position);
@@ -83,7 +86,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.me_msg_pic);
 
-        }else if(viewType == 1){
+        } else if (viewType == 1) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left, parent, false);
 
             TextView textView = (TextView) convertView.findViewById(R.id.txtMsgRcv);
@@ -91,7 +94,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             textView.setText(getItem(position).getMsg());
             txtInfo.setText(getItem(position).getTime());
             textView.setBackgroundResource(R.drawable.frd_msg_pic);
-        }else if(viewType == 2){
+        } else if (viewType == 2) {
 
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right_img, parent, false);
 
@@ -100,13 +103,12 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfo);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 10;
-            imgMsg.setImageBitmap(BitmapFactory.decodeFile(getItem(position).getMsg(),options));
+            imgMsg.setImageBitmap(BitmapFactory.decodeFile(getItem(position).getMsg(), options));
             imgInfo.setText(getItem(position).getTime());
 
 //            mAttacher = new PhotoViewAttacher(imgMsg);
 //            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 //            Display display = wm.getDefaultDisplay();
-
 
 
             imgMsg.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +121,8 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
             });
 
 
-
 //            textView.setBackgroundResource(R.drawable.frd_msg_pic);
-        } else if(viewType == 3){
+        } else if (viewType == 3) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left_img, parent, false);
 
             ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsgRcv);
@@ -144,17 +145,57 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
                 }
             });
 
+        } else if (viewType == 3) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left_img, parent, false);
+
+            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsgRcv);
+            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfoRcv);
+            Picasso.with(context)
+                    .load(getItem(position).getMsg())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(imgMsg);
 
 
+            imgInfo.setText(getItem(position).getTime());
+
+            imgMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ImageViewWindows.class);
+                    intent.putExtra("url", getItem(position).getMsg());
+                    context.startActivity(intent);
+                }
+            });
+
+            return convertView;
+        } else if (viewType == 4) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right_img, parent, false);
+
+            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsg);
+            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfo);
+            Picasso.with(context)
+                    .load(getItem(position).getMsg())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(imgMsg);
+
+
+            imgInfo.setText(getItem(position).getTime());
+
+            imgMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ImageViewWindows.class);
+                    intent.putExtra("url", getItem(position).getMsg());
+                    context.startActivity(intent);
+                }
+            });
+
+            return convertView;
         }
 
-        return convertView;
+        return null;
     }
-
-
-
-
-
-
 
 }
