@@ -30,6 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <FrameLayout
+            android:id="@+id/face"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <EditText
             android:id="@+id/text"
             android:layout_width="match_parent"
@@ -53,6 +58,15 @@
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal|bottom"
             android:background="@drawable/take_photo" />
+
+
+        <Button
+            android:id="@+id/btnFace"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="left|bottom"
+            android:background="@drawable/face" />
+
 
 
         <Button

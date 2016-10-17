@@ -145,30 +145,6 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
                 }
             });
 
-        } else if (viewType == 3) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_left_img, parent, false);
-
-            ImageView imgMsg = (ImageView) convertView.findViewById(R.id.imgMsgRcv);
-            TextView imgInfo = (TextView) convertView.findViewById(R.id.imgInfoRcv);
-            Picasso.with(context)
-                    .load(getItem(position).getMsg())
-                    .resize(50, 50)
-                    .centerCrop()
-                    .into(imgMsg);
-
-
-            imgInfo.setText(getItem(position).getTime());
-
-            imgMsg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ImageViewWindows.class);
-                    intent.putExtra("url", getItem(position).getMsg());
-                    context.startActivity(intent);
-                }
-            });
-
-            return convertView;
         } else if (viewType == 4) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.msg_right_img, parent, false);
 
@@ -192,10 +168,10 @@ public class ChatAdapter extends ArrayAdapter<ChatMsg>{
                 }
             });
 
-            return convertView;
+
         }
 
-        return null;
+        return convertView;
     }
 
 }

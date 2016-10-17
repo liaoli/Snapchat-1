@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -44,9 +46,9 @@ import java.util.Date;
  * for cameras supporting flash and autofocus are also provided.
  */
 
-public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback {
+public class CameraView extends AppCompatActivity implements SurfaceHolder.Callback, Camera.PreviewCallback {
 
-    Button btnTakePhoto, btnSwitchCamera;
+    Button btnTakePhoto, btnSwitchCamera, btnFace;
     Button btnSavePhoto, btnDelete;
     Button btnFlash, btnFlashOff;
     Button btnSend, btnAddFriend;
@@ -62,10 +64,11 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
             imageShitView, imageShockedView, imageKissView, imageCoolView;
 
     private static boolean isBackCamera = false;
+    private static boolean faceDetectionRunning = false;
 
     SurfaceHolder surfaceHolder;
     SurfaceView surfaceView;
-    FrameLayout imageLayout, drawingPad, allColors, allEmojis;
+    FrameLayout imageLayout, drawingPad, allColors, allEmojis, face;
     ImageView capturedImageView;
     EditText text;
 
@@ -75,6 +78,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     Bitmap photo, bitmap;
 
     HandDrawing drawing;
+    FaceDetectionListener fDListener;
 
 
 
@@ -91,6 +95,38 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
+    // a method that handles starting face recognition of the camera
+    public int doFaceDetection() {
+        if (faceDetectionRunning) {
+            return 0;
+        }
+        // check if face detection is supported or not
+        // using Camera.Parameters
+        if (parameters.getMaxNumDetectedFaces() <= 0) {
+            Log.e("Face Detection, Camera", "Face Detection not supported");
+            return -1;
+        }
+
+        fDListener = new FaceDetectionListener(this);
+        camera.setFaceDetectionListener(fDListener);
+        camera.startFaceDetection();
+        face.addView(fDListener);
+        faceDetectionRunning = true;
+        return 1;
+    }
+
+
+    // a method that handles starting face recognition of the camera
+    public int stopFaceDetection() {
+        if (faceDetectionRunning) {
+            face.removeView(fDListener);
+            camera.stopFaceDetection();
+            faceDetectionRunning = false;
+            return 1;
+        }
+        return 0;
+    }
+
 
     // a method that handles view of the layout and all the available options like the buttons etc.
     @Override
@@ -104,6 +140,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         imageLayout = (FrameLayout) findViewById(R.id.imageLayout);
         capturedImageView = (ImageView) findViewById(R.id.imageView);
         drawingPad = (FrameLayout) findViewById(R.id.drawingPad);
+        face = (FrameLayout) findViewById(R.id.face);
         allColors = (FrameLayout) findViewById(R.id.colors);
         text = (EditText) findViewById(R.id.text);
         text.setSingleLine();
@@ -123,22 +160,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
         imageCryView = new ImageView(getApplicationContext());
 
 
-
-        // a method to change current activity when swiping the camera surface view to left or right
-        surfaceView.setOnTouchListener(new OnSwipeTouchListener(CameraView.this) {
-
-            public void onSwipeRight() {
-                Intent i = new Intent(CameraView.this, ChatList.class);
-                startActivity(i);
-            }
-            public void onSwipeLeft() {
-                Intent i = new Intent(CameraView.this, Stories.class);
-                startActivity(i);
-            }
-
-        });
-
-
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -151,6 +172,40 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     // a method that initialized all the existing buttons and available functions on camera page
     // and handles their clicks
     public void initialize() {
+
+
+
+        // a method to change current activity when swiping the camera surface view to left or right
+        surfaceView.setOnTouchListener(new OnSwipeTouchListener(CameraView.this) {
+
+            public void onSwipeRight() {
+                stopFaceDetection();
+                Intent i = new Intent(CameraView.this, ChatList.class);
+                startActivity(i);
+            }
+            public void onSwipeLeft() {
+                stopFaceDetection();
+                Intent i = new Intent(CameraView.this, Stories.class);
+                startActivity(i);
+            }
+
+        });
+
+
+        btnFace = (Button) findViewById(R.id.btnFace);
+        btnFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (faceDetectionRunning) {
+                    stopFaceDetection();
+                    Toast.makeText(getApplicationContext(),"Face detection stopped",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    doFaceDetection();
+                    Toast.makeText(getApplicationContext(),"Face detection started",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         btnTakePhoto = (Button) findViewById(R.id.btnTakePhoto);
@@ -979,6 +1034,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
                 int screenOrientation = getResources().getConfiguration().orientation;
 
                 bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                stopFaceDetection();
                 camera.stopPreview();
 
                 if (isBackCamera) {
@@ -1054,6 +1110,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
         int cameraFacing = 0;
 
+        stopFaceDetection();
         camera.stopPreview();
         isBackCamera = (!isBackCamera);
 
@@ -1115,6 +1172,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     // restarting the camera(resuming the preview) after the preview has stopped
     private void restartCamera() {
 
+        stopFaceDetection();
         restartCameraOptions();
         removeSmileys();
         camera.startPreview();
@@ -1224,6 +1282,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     private void takePhotoOptions() {
         btnTakePhoto.setVisibility(View.GONE);
         btnAddFriend.setVisibility(View.GONE);
+        btnFace.setVisibility(View.GONE);
         btnSavePhoto.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.VISIBLE);
         btnSend.setVisibility(View.VISIBLE);
@@ -1242,6 +1301,7 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     // a method to handle what options need to be shown on screen when the camera is restarted
     private void restartCameraOptions () {
         btnSavePhoto.setVisibility(View.GONE);
+        btnFace.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.GONE);
         btnSend.setVisibility(View.GONE);
         btnFlashOff.setVisibility(View.VISIBLE);
@@ -1276,6 +1336,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     protected void onPause() {
         super.onPause();
+        if (faceDetectionRunning) {
+            faceDetectionRunning = false;
+            face.removeView(fDListener);
+        }
         camera.release();
     }
 
@@ -1321,7 +1385,6 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
 
 
-
         camera.setParameters(parameters);
         camera.setDisplayOrientation(90);
         try {
@@ -1340,6 +1403,10 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
+        if (faceDetectionRunning) {
+            faceDetectionRunning = false;
+            face.removeView(fDListener);
+        }
     }
 
 
@@ -1347,7 +1414,16 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+        if (faceDetectionRunning) {
+            faceDetectionRunning = false;
+            face.removeView(fDListener);
+        }
         camera.release();
+    }
+
+    @Override
+    public void onPreviewFrame(byte[] data, Camera camera) {
+
     }
 
 }

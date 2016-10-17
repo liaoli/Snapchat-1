@@ -68,7 +68,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
                 try {
                     JSONObject jObject = new JSONObject(message.obj.toString());
                     JSONArray jArray = jObject.getJSONArray("user");
-                    listdata = new ArrayList<String>();
+                    listdata = new ArrayList<>();
 
                     if (jArray != null) {
                         for (int i = 0; i < jArray.length(); i++) {
@@ -115,12 +115,10 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String b = Util.getFriends(getLoggedInUserId());
-                ArrayList<String> a = new ArrayList<String>();
-                a.add(b);
+                String response = Util.getFriends(getLoggedInUserId());
                 Message message = new Message();
                 message.what = MESSAGE_RETRIEVED;
-                message.obj = b;
+                message.obj = response;
                 handler.sendMessage(message);
             }
         }).start();
@@ -133,7 +131,7 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ChatList.this, FriendList.class);
+                intent.setClass(ChatList.this, AddFriend.class);
                 startActivity(intent);
                 ChatList.this.finish();
             }
@@ -258,10 +256,6 @@ public class ChatList extends AppCompatActivity implements View.OnTouchListener,
         return loggedInUser;
 
     }
-
-
-
-
 
 
 }
