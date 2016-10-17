@@ -1,6 +1,7 @@
 package com.example.nocomment.snapchat;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -158,46 +159,7 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
                     e.printStackTrace();
                 }
             }
-//            } else if (message.what==MESSAGE_RETRIEVED_LIVE){
-//                try {
-//                    JSONObject jObject = new JSONObject(message.obj.toString());
-//                    JSONArray jArray = jObject.getJSONArray("stories");
-//
-//                    if (jArray != null) {
-//                        for (int i=0;i<jArray.length();i++){
-//                            JSONObject tempObject = (JSONObject) jArray.get(i);
-//                            tempObject.get("user");
-//                            bunchTitleLive.add(tempObject.get("user").toString());
-//                            imageUrlArrayLive.add(tempObject.get("imageUrl").toString());
-//                            bunchUrlLive.add(tempObject.get("imageUrl").toString());
-//
-//                        }
-//
-//                        ArrayList<WebItem> webItemList= new ArrayList<WebItem>();
-//                        for(int i = 0; i < imageUrlArrayLive.size(); i++){
-//                            webItemList.add(new WebItem(bunchTitleLive.get(i),
-//                                    imageUrlArrayLive.get(i),
-//                                    bunchUrlLive.get(i)));
-//                        }
-//
-//                        friendStoryAdapter = new StoryListViewHorizontalAdapter(Stories.this,
-//                                webItemList,
-//                                imageUrlArrayLive.size());
-//                        friendStoryAdapter.notifyDataSetChanged();
-//                        friendStory.setAdapter(friendStoryAdapter);
-//
-//                    }
-//                    if(imageUrlArrayLive.size() > 0){
-//                        liveText.setVisibility(View.VISIBLE);
-//                        friendStory.setVisibility(View.VISIBLE);
-//                    }
-//
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+
             return false;
         }
     });
@@ -230,6 +192,26 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
         storyListView = (StoryListViewHorizontal) findViewById(R.id.storyList);
         friendStory = (StoryListViewHorizontal) findViewById(R.id.friendStory);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewStories);
+
+        recyclerView.setOnTouchListener(new OnSwipeTouchListener(this) {
+
+            public void onSwipeRight() {
+                Intent intent = new Intent();
+                intent.setClass(Stories.this, Camera.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.from_left, R.anim.to_right);
+                Stories.this.finish();
+            }
+
+            public void onSwipeLeft(){
+                Intent intent = new Intent();
+                intent.setClass(Stories.this, Discover.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.from_right, R.anim.to_left);
+                Stories.this.finish();
+
+            }
+        });
 
 
         /*

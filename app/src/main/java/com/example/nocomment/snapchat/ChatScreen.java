@@ -289,11 +289,18 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             public void onClick(View v) {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 chatUserName.setText(userName);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                if(!mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
 
             }
         });
+
+
 
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
