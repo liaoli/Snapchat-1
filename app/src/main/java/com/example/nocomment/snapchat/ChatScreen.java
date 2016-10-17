@@ -204,6 +204,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         Bundle extras = getIntent().getExtras();
         userName = extras.getString("userName");
         chatTitle.setText(userName);
+        chatUserName.setText(userName);
 
 
         // set up top textview to day of the week

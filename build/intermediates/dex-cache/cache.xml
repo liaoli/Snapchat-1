@@ -313,7 +313,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="8e37cd0d1d18c43da091ab84792bacc84ba101d5">
+        sha1="b5144eeadda99fd60e4ccc6223a0a8f885fd4032">
         <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_24680d2f37ea5769d4ad6dfad4e292d268f7b3ff/classes.dex" />
     </item>
     <item
@@ -439,7 +439,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.1"
-        sha1="7fe3c60979d60de78c5261377b4357b79fc5da75">
+        sha1="f97e773fb80fb87a5f0a9af30c0e4bb87d261e66">
         <dex dex="/Users/Sina/AndroidStudioProjects/Snapchat/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_2c3d849308178ca64ddf681da06e3807703f2e34/classes.dex" />
     </item>
     <item
