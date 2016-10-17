@@ -40,7 +40,7 @@ public class Discover extends AppCompatActivity implements View.OnTouchListener,
 
     private GestureDetector mGestureDetector;
 
-    private int verticalMinDistance = 10;
+    private int verticalMinDistance = 150;
     private int minVelocity = 0;
 
     private String url = "http://edition.cnn.com/2016/10/11/politics/donald-trump-republican-paul-ryan-2016-election/index.html";

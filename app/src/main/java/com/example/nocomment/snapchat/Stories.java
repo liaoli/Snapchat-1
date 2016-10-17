@@ -62,7 +62,7 @@ public class Stories extends AppCompatActivity implements View.OnTouchListener, 
     private final int MESSAGE_RETRIEVED_LIVE = 2;
 
 
-    private int verticalMinDistance = 10;
+    private int verticalMinDistance = 150;
     private int minVelocity = 0;
 
     private WebItem[] webItem;

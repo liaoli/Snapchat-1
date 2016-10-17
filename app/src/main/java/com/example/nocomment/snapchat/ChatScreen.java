@@ -120,7 +120,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     private TextView date;
 
 
-    private int verticalMinDistance = 10;
+    private int verticalMinDistance = 200;
     private int minVelocity = 0;
 
     private String userName;
@@ -248,6 +248,13 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         chatAdapter = new ChatAdapter(this, new ArrayList<ChatMsg>());
         msgContainer.setAdapter(chatAdapter);
 
+        msgET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollMyListViewToBottom();
+            }
+        });
+
 
         backToChatList.setOnClickListener(new View.OnClickListener(){
 
@@ -271,6 +278,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
                 }else{
                     sendMsg(msg);
                     msgET.setText("");
+
                 }
             }
         });
@@ -281,6 +289,9 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
             public void onClick(View v) {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 chatUserName.setText(userName);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
             }
         });
 
@@ -322,6 +333,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
         });
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -379,31 +391,31 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
     }
 
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        View v = getCurrentFocus();
-
-        if (v != null &&
-                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
-                v instanceof EditText &&
-                !v.getClass().getName().startsWith("android.webkit.")) {
-            int scrcoords[] = new int[2];
-            v.getLocationOnScreen(scrcoords);
-            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
-            float y = ev.getRawY() + v.getTop() - scrcoords[1];
-
-            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-                hideKeyboard(this);
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        View v = getCurrentFocus();
+//
+//        if (v != null &&
+//                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+//                v instanceof EditText &&
+//                !v.getClass().getName().startsWith("android.webkit.")) {
+//            int scrcoords[] = new int[2];
+//            v.getLocationOnScreen(scrcoords);
+//            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+//            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+//
+//            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+//                //hideKeyboard(this);
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
+//
+//    public static void hideKeyboard(Activity activity) {
+//        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+//            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+//        }
+//    }
 
 
     private void scroll() {
@@ -463,6 +475,7 @@ public class ChatScreen extends AppCompatActivity implements View.OnTouchListene
 
             }
         }).start();
+        scrollMyListViewToBottom();
     }
 
     private void sendImgFromCamera(String img, final Bitmap bitmap){
