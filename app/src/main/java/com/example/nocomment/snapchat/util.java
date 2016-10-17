@@ -2,6 +2,10 @@ package com.example.nocomment.snapchat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Matrix;
+import android.hardware.Camera;
+import android.view.OrientationEventListener;
+import android.view.Surface;
 
 import org.json.JSONArray;
 
@@ -31,6 +35,7 @@ import java.util.Map;
 public class Util {
 
     private Context context;
+    private static final int ORIENTATION_HYSTERESIS = 5;
 
     public Util(Context context) {
         this.context = context;
@@ -755,5 +760,19 @@ public class Util {
         return response;
     }
 
+
+
+    // a method to prepare the display orientation matrix
+    public static void prepareMatrix(Matrix matrix, boolean mirror, int displayOrientation,
+                                     int viewWidth, int viewHeight) {
+        // Need mirror for front camera.
+        matrix.setScale(mirror ? -1 : 1, 1);
+        // This is the value for android.hardware.Camera.setDisplayOrientation.
+        matrix.postRotate(displayOrientation);
+        // Camera driver coordinates range from (-1000, -1000) to (1000, 1000).
+        // UI coordinates range from (0, 0) to (width, height).
+        matrix.postScale(viewWidth / 2000f, viewHeight / 2000f);
+        matrix.postTranslate(viewWidth / 2f, viewHeight / 2f);
+    }
 
 }
