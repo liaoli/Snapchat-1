@@ -30,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -260,11 +262,14 @@ public class CameraView extends AppCompatActivity implements SurfaceHolder.Callb
 
                 imageLayout.setDrawingCacheEnabled(true);
                 Bitmap tempImage = Bitmap.createBitmap(imageLayout.getDrawingCache());
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                tempImage.compress(Bitmap.CompressFormat.JPEG, 50, out);
+                Bitmap finalImage = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
                 imageLayout.setDrawingCacheEnabled(false);
 
 
                 FragmentManager fm = getFragmentManager();
-                ShareImageDialog imageDialog = new ShareImageDialog(tempImage);
+                ShareImageDialog imageDialog = new ShareImageDialog(finalImage);
                 imageDialog.show(fm, "Share Image");
 
 

@@ -214,30 +214,66 @@ public class AddFriend extends AppCompatActivity implements View.OnTouchListener
                     @Override
                     public void run() {
 
-                        for (int i = 0; i < phones.size(); i++) {
-                            String phone = phones.get(i).replace("(","").replace(")", "")
-                                    .replace("-", "").replace(" ", "");
-                            Log.d(TAG, phone);
-                            response = Util.findUserByPhone(phone);
-                            Log.d("Response", response);
-                            String newResponse = response.substring(10, response.length()-5);
-                            Log.d("Modified Response", newResponse.toString());
-                            jsonUsersArray.put(newResponse);
-                            Log.d("Test", jsonUsersArray.toString());
+                        if (!phones.isEmpty()) {
+
+                            for (int i = 0; i < phones.size(); i++) {
+                                String phone = phones.get(i).replace("(", "").replace(")", "")
+                                        .replace("-", "").replace(" ", "");
+                                Log.d(TAG, phone);
+                                response = Util.findUserByPhone(phone);
+
+                                Log.d("Response", response);
+                                String newResponse = response.substring(10, response.length() - 3);
+                                Log.d("Modified Response", newResponse.toString());
+
+                                if (!newResponse.isEmpty()) {
+                                    String finalResponse = newResponse.substring(0, newResponse.length() - 2);
+                                    Log.d("Final Response", finalResponse.toString());
+                                    jsonUsersArray.put(finalResponse);
+                                    Log.d("Test", jsonUsersArray.toString());
+
+
+                                    try {
+                                        if (jsonUsersArray.length() > 0) {
+                                            jsonUsersObject.put("user", jsonUsersArray);
+                                            Log.d("Final", jsonUsersObject.toString());
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+
+                            }
+
+                            if (jsonUsersArray.length() == 0) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+
+                                        Toast.makeText(AddFriend.this,"No matching users found",Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+
                         }
 
-                        try {
-                            jsonUsersObject.put("user", jsonUsersArray);
-                            Log.d("Final", jsonUsersObject.toString());
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
+                        else {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+
+                                    Toast.makeText(AddFriend.this,"No contacts found",Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
 
                         Message message = new Message();
                         message.what = MESSAGE_RETRIEVED;
                         message.obj = jsonUsersObject;
                         handler.sendMessage(message);
+
+
                     }
                 }).start();
 
